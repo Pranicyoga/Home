@@ -126,7 +126,7 @@ const SPECIAL = [
 const MEMBERSHIPS = [
   { name: "41 Days Plan", price: "₹999", featured: false,
     features: ["Daily live sessions", "Beginner foundation", "Community group access"],
-    link: "#" /* paste your payment / join link here */ },
+    link: "https://rzp.io/l/your-actual-payment-link" /* paste your payment / join link here */ },
   { name: "82 Days Plan", price: "₹1,799", featured: true,
     features: ["Daily live sessions", "Recordings for 6 months", "Monthly 1:1 check-in", "Community group access"],
     link: "#" },
