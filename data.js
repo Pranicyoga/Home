@@ -13,7 +13,7 @@ const SITE = {
   formsUrl: "https://script.google.com/macros/s/AKfycbylL_46SDlib409fsWxv5k0LpIXr2UKG-cdas-ocqjLL84Ts01o2fHGQ2bw6kSnCKty/exec",
   whatsapp: "https://wa.me/917032632374?text=Namaskaram!+May+I+know+more+about+Pranic+Yoga+classes&utm_source=chatgpt.com",
   waGreeting: "Namaste! Want to join a free yoga class? Tap here and chat with us on WhatsApp.", /* chat pop-up text */
-  address: "Online & Offline classes, Andhra Pradesh, India",
+  address: "Online & Offline classes, India",
   instagram: "#", youtube: "#", facebook: "#",
   hero: {
     // IMAGE: 640 x 780 px (portrait, shown inside an arch frame on the right). Optional – a gradient shows if missing
@@ -41,21 +41,31 @@ const FORM = {
    type: "Free" or "Paid"  |  price: shown only when type is "Paid"
    thumb  IMAGE: 800 x 600 px (4:3)      banner IMAGE: 1600 x 600 px          */
 const CLASSES = [
-  {
-    id: "morning-pranayama",
-    title: "Morning Pranayama Basics",
-    date: "02 Nov 2026", time: "6:00 AM – 7:00 AM IST", mode: "Online (Zoom)",
-    type: "Free", price: "",
-    thumb: "images/class-1.jpg", banner: "images/class-1-banner.jpg",
-    short: "Gentle breathing practices to start your day calm and focused.",
-    about: "A beginner-friendly hour of breath awareness, simple pranayama and short meditation. No experience needed.",
-    benefits: ["Reduces stress and anxiety", "Improves lung capacity", "Better focus and sleep"],
-    bring: "Yoga mat, loose clothing, water bottle.",
-    instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
-    tagline: "",          // leave "" to use the main tagline, or type a custom one
-    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
+{
+    id: "morning-pranayama-basics",
+    title: "Correct Your Breathing Pattern ",
+    date: "02 Nov 2026",
+    time: "6:00 AM – 7:00 AM IST",
+    mode: "Online (Zoom)",
+    type: "Free",
+    price: "",
+    thumb: "images/class-1.jpg",
+    banner: "images/class-1-banner.jpg",
+    short: "Learn to recognise your breathing habits for more mindful breathing. No yoga experience needed.",
+    about: "Are you aware of how you breathe throughout the day? Join this free, beginner-friendly live session to understand your breathing habits and learn how to practise breathing more comfortably. We'll guide you through natural breath awareness, diaphragmatic breathing, three-part breathing, alternate-nostril breathing, gentle humming, and relaxation. No difficult yoga poses or previous experience required. Take your first step towards a more mindful breathing routine, then follow a simple 41-day practice plan to observe your progress.",
+    benefits: [
+        "Understand your everyday breathing habits",
+        "Learn to practise slow, gentle and comfortable breathing",
+        "Discover simple breathing techniques for daily relaxation",
+        "Build awareness of your breath and attention",
+        "Follow a 41-day practice plan and observe your progress"
+    ],
+    bring: "A quiet space, comfortable clothing, a yoga mat or chair, and a water bottle.",
+    instructor: "",
+    tagline: "Understand your breath. Practise better. Build a healthier daily habit.",
+    instructorImage: "",
     registerLink: "#"
-  },
+},
 ];
 
 /* ---------- SPECIAL CLASSES ----------
