@@ -15,7 +15,7 @@ const SITE = {
   instagram: "#", youtube: "#", facebook: "#",
   hero: {
     // IMAGE: 640 x 780 px (portrait, shown inside an arch frame on the right). Optional – a gradient shows if missing
-    image: "images/hero.jpg",
+    image: "images/Hero_2.jpg",
     points: ["100% free classes", "Online and in-studio", "All levels welcome"],
     title: "Free Yoga Classes for Everyone",
     text: "Learn authentic pranic yoga with breath, movement and stillness. No fees, no pressure. Just show up.",
