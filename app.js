@@ -88,6 +88,8 @@ function renderClass() {
         <h1>${c.title}</h1><p class="lead">${c.about}</p>
         <h3>What you will gain</h3><ul class="ticks">${c.benefits.map(b => `<li>${b}</li>`).join("")}</ul>
         <h3>What to bring</h3><p>${c.bring}</p>
+        <div class="by"><div class="avatar">${img(INSTRUCTOR.image)}</div>
+          <div><span>Your instructor</span><b>${c.instructor || INSTRUCTOR.name}</b><p>${c.tagline || INSTRUCTOR.tagline}</p></div></div>
       </div>
       <aside class="side">
         ${badge(c)}
