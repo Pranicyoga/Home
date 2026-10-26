@@ -56,36 +56,6 @@ const CLASSES = [
     instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
     registerLink: "#"
   },
-  {
-    id: "hatha-flow",
-    title: "Hatha Yoga Flow",
-    date: "05 Nov 2026", time: "7:00 AM – 8:00 AM IST", mode: "Offline (Studio)",
-    type: "Free", price: "",
-    thumb: "images/class-2.jpg", banner: "images/class-2-banner.jpg",
-    short: "Slow, mindful asanas to build strength and flexibility.",
-    about: "Traditional hatha postures held with steady breath, ending with deep relaxation.",
-    benefits: ["Builds strength", "Improves flexibility", "Relieves back and neck tension"],
-    bring: "Yoga mat, comfortable clothing.",
-    instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
-    tagline: "",          // leave "" to use the main tagline, or type a custom one
-    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
-    registerLink: "#"
-  },
-  {
-    id: "deep-relax-workshop",
-    title: "Deep Relaxation Workshop",
-    date: "09 Nov 2026", time: "5:00 PM – 7:00 PM IST", mode: "Online (Zoom)",
-    type: "Paid", price: "₹499",
-    thumb: "images/class-3.jpg", banner: "images/class-3-banner.jpg",
-    short: "A two-hour guided session on yoga nidra and stress release.",
-    about: "Learn yoga nidra, body scanning and guided relaxation you can practise at home.",
-    benefits: ["Deep rest and better sleep", "Calms the nervous system", "Recorded practice audio included"],
-    bring: "Mat, blanket, eye cover (optional).",
-    instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
-    tagline: "",          // leave "" to use the main tagline, or type a custom one
-    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
-    registerLink: "#"
-  }
 ];
 
 /* ---------- SPECIAL CLASSES ----------
