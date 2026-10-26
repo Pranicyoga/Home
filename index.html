@@ -15,42 +15,44 @@
 <header id="site-header"></header>
 
 <!-- 2. MAIN BANNER (text/image in data.js > SITE.hero) -->
-<section id="hero"></section>
+<section id="hero"></section> <!-- built in app.js from data.js > SITE.hero -->
 
 <!-- 3. UPCOMING CLASSES (data.js > CLASSES) -->
 <section id="classes" class="section">
-  <div class="wrap"><h2>Upcoming Classes</h2>
-  <p class="sub">Join our free live sessions. Tap a class to read the details and register.</p>
+  <div class="wrap"><div class="head"><h2>Upcoming Classes</h2><p>Join our free live sessions. Tap a class to read the details and register.</p></div>
   <div class="grid" id="class-grid"></div></div>
 </section>
 
 <!-- 4. SPECIAL CLASSES (data.js > SPECIAL) -->
 <section id="special" class="section alt">
-  <div class="wrap"><h2>Special Classes</h2>
-  <p class="sub">Focused programs for specific needs and age groups.</p>
+  <div class="wrap"><div class="head"><h2>Special Classes</h2><p>Focused programs for specific needs and age groups. Tap to see details.</p></div>
   <div class="grid" id="special-grid"></div></div>
 </section>
 
 <!-- 5. MEMBERSHIP (data.js > MEMBERSHIPS) -->
 <section id="membership" class="section">
-  <div class="wrap"><h2>Membership Plans</h2>
-  <p class="sub">Commit to a daily practice with guided support. Pick the plan that fits you.</p>
+  <div class="wrap"><div class="head"><h2>Membership Plans</h2><p>Commit to a daily practice with guided support. Pick the plan that fits you.</p></div>
   <div class="grid" id="plan-grid"></div></div>
 </section>
 
 <!-- 6. INSTRUCTOR (data.js > INSTRUCTOR) -->
-<section id="instructor" class="section alt">
-  <div class="wrap"><h2>Meet Your Instructor</h2><br>
-  <div class="two" id="instructor-box"></div></div>
+<section id="instructor" class="section dark">
+  <div class="wrap"><div id="instructor-box" class="inst"></div></div>
 </section>
 
-<!-- 7. CONTACT US (data.js > SITE) -->
+<!-- 7. FAQ (data.js > FAQ) -->
+<section id="faq" class="section">
+  <div class="wrap narrow"><div class="head"><h2>Frequently Asked Questions</h2></div>
+  <div id="faq-list"></div></div>
+</section>
+
+<!-- 8. CONTACT US (data.js > SITE) -->
 <section id="contact" class="section">
-  <div class="wrap"><h2>Contact Us</h2><br>
+  <div class="wrap"><div class="head"><h2>Contact Us</h2><p>Questions about a class or plan? We reply quickly.</p></div>
   <div class="two" id="contact-box"></div></div>
 </section>
 
-<!-- 8. FOOTER -->
+<!-- 9. FOOTER (WhatsApp floating button is added by app.js) -->
 <footer id="site-footer"></footer>
 
 <script src="data.js"></script>
