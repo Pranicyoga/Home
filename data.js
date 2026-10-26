@@ -108,6 +108,7 @@ const MEMBERSHIPS = [
 const INSTRUCTOR = {
   name: "Your Name",
   role: "Certified Yoga Instructor",
+  tagline: "Helping you breathe better, move better and live calmer.", /* shown at the bottom of every class page */
   image: "images/instructor.jpg",
   bio: ["Write a short story of your yoga journey here.", "Mention your teaching style and why you teach for free."],
   stats: [{n:"1000+",l:"Students guided"},{n:"5+",l:"Years teaching"},{n:"200hr",l:"Certified"}],
