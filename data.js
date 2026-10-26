@@ -10,6 +10,7 @@ const SITE = {
   phone: "+91 00000 00000",
   email: "hello@pranicyoga.in",
   whatsapp: "https://wa.me/910000000000",
+  waGreeting: "Namaste! Want to join a free yoga class? Tap here and chat with us on WhatsApp.", /* chat pop-up text */
   address: "Online & Offline classes, Andhra Pradesh, India",
   instagram: "#", youtube: "#", facebook: "#",
   hero: {
@@ -37,8 +38,10 @@ const CLASSES = [
     about: "A beginner-friendly hour of breath awareness, simple pranayama and short meditation. No experience needed.",
     benefits: ["Reduces stress and anxiety", "Improves lung capacity", "Better focus and sleep"],
     bring: "Yoga mat, loose clothing, water bottle.",
+    instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
+    tagline: "",          // leave "" to use the main tagline, or type a custom one
+    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
     registerLink: "#"
-    instructor: "Guest Teacher Name",tagline: "Their own tagline here",
   },
   {
     id: "hatha-flow",
@@ -50,6 +53,9 @@ const CLASSES = [
     about: "Traditional hatha postures held with steady breath, ending with deep relaxation.",
     benefits: ["Builds strength", "Improves flexibility", "Relieves back and neck tension"],
     bring: "Yoga mat, comfortable clothing.",
+    instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
+    tagline: "",          // leave "" to use the main tagline, or type a custom one
+    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
     registerLink: "#"
   },
   {
@@ -62,6 +68,9 @@ const CLASSES = [
     about: "Learn yoga nidra, body scanning and guided relaxation you can practise at home.",
     benefits: ["Deep rest and better sleep", "Calms the nervous system", "Recorded practice audio included"],
     bring: "Mat, blanket, eye cover (optional).",
+    instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
+    tagline: "",          // leave "" to use the main tagline, or type a custom one
+    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
     registerLink: "#"
   }
 ];
@@ -74,22 +83,34 @@ const SPECIAL = [
     type: "Free", price: "", thumb: "images/special-1.jpg", banner: "images/special-1-banner.jpg",
     short: "Safe, gentle practice for expecting mothers.",
     about: "Gentle postures, breathing and relaxation designed for each trimester. Please consult your doctor before joining.",
-    benefits: ["Eases back pain", "Prepares breath for labour", "Better sleep and calm"], bring: "Mat, bolster or pillow, water.", registerLink: "#" },
+    benefits: ["Eases back pain", "Prepares breath for labour", "Better sleep and calm"], bring: "Mat, bolster or pillow, water.", instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
+    tagline: "",          // leave "" to use the main tagline, or type a custom one
+    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
+    registerLink: "#" },
   { id: "yoga-for-seniors", title: "Yoga for Seniors", date: "Every Monday", time: "7:00 AM – 8:00 AM IST", mode: "Offline (Studio)",
     type: "Free", price: "", thumb: "images/special-2.jpg", banner: "images/special-2-banner.jpg",
     short: "Chair-supported movement for joints and balance.",
     about: "Slow, supported practice that keeps joints mobile and improves balance and confidence.",
-    benefits: ["Better balance", "Joint mobility", "Calm mind"], bring: "Sturdy chair, comfortable clothes.", registerLink: "#" },
+    benefits: ["Better balance", "Joint mobility", "Calm mind"], bring: "Sturdy chair, comfortable clothes.", instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
+    tagline: "",          // leave "" to use the main tagline, or type a custom one
+    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
+    registerLink: "#" },
   { id: "yoga-for-back-pain", title: "Yoga for Back Pain", date: "Every Wednesday", time: "6:30 PM – 7:30 PM IST", mode: "Online (Zoom)",
     type: "Paid", price: "₹299", thumb: "images/special-3.jpg", banner: "images/special-3-banner.jpg",
     short: "Targeted therapeutic sequences.",
     about: "Safe sequences to release the lower back, hips and shoulders and build core support.",
-    benefits: ["Relieves stiffness", "Corrects posture", "Strengthens the core"], bring: "Mat, strap or belt.", registerLink: "#" },
+    benefits: ["Relieves stiffness", "Corrects posture", "Strengthens the core"], bring: "Mat, strap or belt.", instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
+    tagline: "",          // leave "" to use the main tagline, or type a custom one
+    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
+    registerLink: "#" },
   { id: "kids-yoga", title: "Kids Yoga", date: "Every Sunday", time: "10:00 AM – 11:00 AM IST", mode: "Offline (Studio)",
     type: "Free", price: "", thumb: "images/special-4.jpg", banner: "images/special-4-banner.jpg",
     short: "Playful postures for ages 6–12.",
     about: "Stories, games and simple poses that build focus, flexibility and confidence in children.",
-    benefits: ["Improves focus", "Builds flexibility", "Fun and confidence"], bring: "Mat and water bottle.", registerLink: "#" }
+    benefits: ["Improves focus", "Builds flexibility", "Fun and confidence"], bring: "Mat and water bottle.", instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
+    tagline: "",          // leave "" to use the main tagline, or type a custom one
+    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
+    registerLink: "#" }
 ];
 
 /* ---------- MEMBERSHIPS ---------- set featured:true to highlight a plan */
