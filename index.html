@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pranic Yoga | Free Yoga Classes</title>
+<meta name="description" content="Free yoga classes, special programs and memberships at Pranic Yoga.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 1. HEADER / NAVIGATION (edit menu in app.js > renderChrome) -->
+<header id="site-header"></header>
+
+<!-- 2. MAIN BANNER (text/image in data.js > SITE.hero) -->
+<section id="hero"></section>
+
+<!-- 3. UPCOMING CLASSES (data.js > CLASSES) -->
+<section id="classes" class="section">
+  <div class="wrap"><h2>Upcoming Classes</h2>
+  <p class="sub">Join our free live sessions. Tap a class to read the details and register.</p>
+  <div class="grid" id="class-grid"></div></div>
+</section>
+
+<!-- 4. SPECIAL CLASSES (data.js > SPECIAL) -->
+<section id="special" class="section alt">
+  <div class="wrap"><h2>Special Classes</h2>
+  <p class="sub">Focused programs for specific needs and age groups.</p>
+  <div class="grid" id="special-grid"></div></div>
+</section>
+
+<!-- 5. MEMBERSHIP (data.js > MEMBERSHIPS) -->
+<section id="membership" class="section">
+  <div class="wrap"><h2>Membership Plans</h2>
+  <p class="sub">Commit to a daily practice with guided support. Pick the plan that fits you.</p>
+  <div class="grid" id="plan-grid"></div></div>
+</section>
+
+<!-- 6. INSTRUCTOR (data.js > INSTRUCTOR) -->
+<section id="instructor" class="section alt">
+  <div class="wrap"><h2>Meet Your Instructor</h2><br>
+  <div class="two" id="instructor-box"></div></div>
+</section>
+
+<!-- 7. CONTACT US (data.js > SITE) -->
+<section id="contact" class="section">
+  <div class="wrap"><h2>Contact Us</h2><br>
+  <div class="two" id="contact-box"></div></div>
+</section>
+
+<!-- 8. FOOTER -->
+<footer id="site-footer"></footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>renderHome();</script>
+</body>
+</html>
