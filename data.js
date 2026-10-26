@@ -38,6 +38,7 @@ const CLASSES = [
     benefits: ["Reduces stress and anxiety", "Improves lung capacity", "Better focus and sleep"],
     bring: "Yoga mat, loose clothing, water bottle.",
     registerLink: "#"
+    instructor: "Guest Teacher Name",tagline: "Their own tagline here",
   },
   {
     id: "hatha-flow",
