@@ -111,6 +111,18 @@ footer{background:#111b15;color:#aeb9b0;text-align:center;padding:36px 0}footer 
 .wa{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:40;transition:transform .2s}
 .wa:hover{transform:scale(1.1)}
 
+.wa::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25d366;animation:waPulse 2s infinite}
+@keyframes waPulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.7);opacity:0}}
+.wa-pop{position:fixed;right:18px;bottom:88px;width:min(270px,calc(100vw - 36px));background:#fff;border-radius:16px 16px 4px 16px;padding:14px 18px;box-shadow:0 8px 28px rgba(0,0,0,.25);z-index:41;opacity:0;transform:translateY(14px) scale(.7);transform-origin:bottom right;pointer-events:none;transition:opacity .35s,transform .35s cubic-bezier(.3,1.5,.5,1)}
+.wa-pop.show{opacity:1;transform:none;pointer-events:auto}
+.wa-pop b{display:block;color:#128c7e;font-size:.9rem}.wa-pop p{display:none;font-size:.93rem;line-height:1.45;margin-top:4px;color:var(--dark)}
+.wa-pop.typed p{display:block}.wa-pop.typed .dots{display:none}
+.wa-pop .x{position:absolute;top:2px;right:8px;border:0;background:none;font-size:1.3rem;cursor:pointer;color:#888}
+.dots{display:flex;gap:5px;padding:8px 0 4px}
+.dots i{width:8px;height:8px;border-radius:50%;background:#9aa;animation:dot 1s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
 /* MOBILE */
 @media(max-width:860px){
  .burger{display:block}
@@ -122,4 +134,4 @@ footer{background:#111b15;color:#aeb9b0;text-align:center;padding:36px 0}footer 
  .plan.featured{transform:none}.section{padding:56px 0}
  .side{position:static;margin-top:0}.detail{gap:28px}
 }
-@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media(prefers-reduced-motion:reduce){.wa::after,.dots i{animation:none}*{transition:none!important;scroll-behavior:auto!important}}
