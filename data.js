@@ -9,7 +9,7 @@ const SITE = {
   tagline: "Free yoga classes for body, breath and mind",
   phone: "+917032632374",
   email: "hello@pranicyoga.in",
-  whatsapp: "https://wa.me/910000000000",
+  whatsapp: "https://wa.me/917032632374",
   waGreeting: "Namaste! Want to join a free yoga class? Tap here and chat with us on WhatsApp.", /* chat pop-up text */
   address: "Online & Offline classes, Andhra Pradesh, India",
   instagram: "#", youtube: "#", facebook: "#",
