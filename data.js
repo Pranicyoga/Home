@@ -72,38 +72,53 @@ const CLASSES = [
    Same fields as CLASSES. Opens the same detail page when tapped.
    thumb IMAGE: 800 x 600 px   banner IMAGE: 1600 x 600 px                    */
 const SPECIAL = [
-  { id: "prenatal-yoga", title: "Prenatal Yoga", date: "Every Saturday", time: "8:00 AM – 9:00 AM IST", mode: "Online (Zoom)",
-    type: "Free", price: "", thumb: "images/special-1.jpg", banner: "images/special-1-banner.jpg",
-    short: "Safe, gentle practice for expecting mothers.",
-    about: "Gentle postures, breathing and relaxation designed for each trimester. Please consult your doctor before joining.",
-    benefits: ["Eases back pain", "Prepares breath for labour", "Better sleep and calm"], bring: "Mat, bolster or pillow, water.", instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
-    tagline: "",          // leave "" to use the main tagline, or type a custom one
-    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
-    registerLink: "#" },
-  { id: "yoga-for-seniors", title: "Yoga for Seniors", date: "Every Monday", time: "7:00 AM – 8:00 AM IST", mode: "Offline (Studio)",
-    type: "Free", price: "", thumb: "images/special-2.jpg", banner: "images/special-2-banner.jpg",
-    short: "Chair-supported movement for joints and balance.",
-    about: "Slow, supported practice that keeps joints mobile and improves balance and confidence.",
-    benefits: ["Better balance", "Joint mobility", "Calm mind"], bring: "Sturdy chair, comfortable clothes.", instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
-    tagline: "",          // leave "" to use the main tagline, or type a custom one
-    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
-    registerLink: "#" },
-  { id: "yoga-for-back-pain", title: "Yoga for Back Pain", date: "Every Wednesday", time: "6:30 PM – 7:30 PM IST", mode: "Online (Zoom)",
-    type: "Paid", price: "₹299", thumb: "images/special-3.jpg", banner: "images/special-3-banner.jpg",
-    short: "Targeted therapeutic sequences.",
-    about: "Safe sequences to release the lower back, hips and shoulders and build core support.",
-    benefits: ["Relieves stiffness", "Corrects posture", "Strengthens the core"], bring: "Mat, strap or belt.", instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
-    tagline: "",          // leave "" to use the main tagline, or type a custom one
-    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
-    registerLink: "#" },
-  { id: "kids-yoga", title: "Kids Yoga", date: "Every Sunday", time: "10:00 AM – 11:00 AM IST", mode: "Offline (Studio)",
-    type: "Free", price: "", thumb: "images/special-4.jpg", banner: "images/special-4-banner.jpg",
-    short: "Playful postures for ages 6–12.",
-    about: "Stories, games and simple poses that build focus, flexibility and confidence in children.",
-    benefits: ["Improves focus", "Builds flexibility", "Fun and confidence"], bring: "Mat and water bottle.", instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
-    tagline: "",          // leave "" to use the main tagline, or type a custom one
-    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
-    registerLink: "#" }
+{
+    id: "yoga-nidra",
+    title: "Deep Relaxation & Yoga Nidra",
+    date: "Every Day",
+    time: "10:00 PM – 10:30 PM IST",
+    mode: "Instagram Live",
+    type: "Free",
+    price: "",
+    thumb: "images/special-2.jpg",
+    banner: "images/special-2-banner.jpg",
+    short: "Release tension, calm your mind and relax deeply.",
+    about: "A guided relaxation practice combining body awareness, gentle breathing and Yoga Nidra to help you unwind from daily stress and reconnect with yourself. Suitable for beginners. Practise in a quiet, comfortable space where you can lie down without being disturbed.",
+    benefits: [
+        "Releases physical tension",
+        "Promotes calm and relaxation",
+        "Supports better sleep"
+    ],
+    bring: "Yoga mat, pillow or bolster, light blanket, and a quiet space.",
+    instructor: "",
+    tagline: "",
+    instructorImage: "",
+    registerLink: "#"
+},
+{
+    id: "mantra-meditation",
+    title: "Mantra Meditation",
+    date: "Every Sunday",
+    time: "5:00 AM – 5:30 AM IST",
+    mode: "Instagram Live",
+    type: "Free",
+    price: "",
+    thumb: "images/special-3.jpg",
+    banner: "images/special-3-banner.jpg",
+    short: "Calm your mind through the power of mantra and sound.",
+    about: "Discover the practice of mantra meditation through simple chanting, sound awareness and silent repetition. Learn how focusing on a mantra can help settle distractions, improve concentration and bring greater awareness to the present moment. Suitable for beginners, with no prior meditation experience required.",
+    benefits: [
+        "Improves focus and awareness",
+        "Encourages mental calmness",
+        "Builds a regular meditation practice"
+    ],
+    bring: "A comfortable mat or cushion, water, and a quiet space.",
+    instructor: "",
+    tagline: "",
+    instructorImage: "",
+    registerLink: "#"
+},
+
 ];
 
 /* ---------- MEMBERSHIPS ---------- featured:true highlights a plan.
