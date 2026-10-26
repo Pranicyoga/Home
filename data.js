@@ -10,7 +10,7 @@ const SITE = {
   phone: "+91 00000 00000",
   email: "hello@pranicyoga.in",
   /* FORMS: paste your Google Apps Script Web App URL below (steps in apps-script.gs) */
-  formsUrl: "PASTE_YOUR_APPS_SCRIPT_URL_HERE",
+  formsUrl: "https://script.google.com/macros/s/AKfycbylL_46SDlib409fsWxv5k0LpIXr2UKG-cdas-ocqjLL84Ts01o2fHGQ2bw6kSnCKty/exec",
   whatsapp: "https://wa.me/910000000000",
   waGreeting: "Namaste! Want to join a free yoga class? Tap here and chat with us on WhatsApp.", /* chat pop-up text */
   address: "Online & Offline classes, Andhra Pradesh, India",
