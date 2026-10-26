@@ -13,7 +13,7 @@ const SITE = {
   formsUrl: "https://script.google.com/macros/s/AKfycbylL_46SDlib409fsWxv5k0LpIXr2UKG-cdas-ocqjLL84Ts01o2fHGQ2bw6kSnCKty/exec",
   whatsapp: "https://wa.me/917032632374?text=Namaskaram!+May+I+know+more+about+Pranic+Yoga+classes&utm_source=chatgpt.com",
   waGreeting: "Namaste! Want to join a free yoga class? Tap here and chat with us on WhatsApp.", /* chat pop-up text */
-  address: "Online & Offline classes, India",
+  address: "Online Classes",
   instagram: "#", youtube: "#", facebook: "#",
   hero: {
     // IMAGE: 640 x 780 px (portrait, shown inside an arch frame on the right). Optional – a gradient shows if missing
