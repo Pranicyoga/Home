@@ -98,6 +98,10 @@ input,textarea{width:100%;padding:13px 16px;border:1px solid #cdd3cd;border-radi
 .shade{position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.25))}
 .detail{display:grid;grid-template-columns:2fr 1fr;gap:48px;padding-top:44px;padding-bottom:84px}
 .detail h1{margin:.6rem 0 1rem}.lead{font-size:1.12rem;margin-bottom:1.4rem}.main h3{margin-top:1.6rem}
+.by{display:flex;align-items:center;gap:18px;margin-top:2.4rem;padding:20px 22px;background:var(--sand);border-left:4px solid var(--gold);border-radius:14px}
+.avatar{flex:none;width:72px;height:72px;border-radius:50%;overflow:hidden;background:linear-gradient(160deg,#d9c28f,#7fa086)}
+.avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.by span{font-size:.8rem;font-weight:700;color:var(--gold)}.by b{display:block;font:700 1.5rem var(--head);color:var(--dark);line-height:1.2}.by p{margin:2px 0 0;font-size:.95rem}
 .side{background:var(--sand);padding:28px;border-radius:16px;align-self:start;position:sticky;top:96px;margin-top:-90px;position:sticky;box-shadow:0 10px 30px rgba(0,0,0,.12)}
 .side dt{font-size:.8rem;font-weight:700;color:var(--gold);margin-top:12px}.side dd{margin:0 0 4px;color:var(--dark);font-weight:600}.side .btn{margin-top:20px}
 
