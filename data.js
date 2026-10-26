@@ -7,15 +7,17 @@
 const SITE = {
   name: "Pranic Yoga",
   tagline: "Free yoga classes for body, breath and mind",
-  phone: "+917032632374",
+  phone: "+91 00000 00000",
   email: "hello@pranicyoga.in",
-  whatsapp: "https://wa.me/917032632374",
+  /* FORMS: paste your Google Apps Script Web App URL below (steps in apps-script.gs) */
+  formsUrl: "PASTE_YOUR_APPS_SCRIPT_URL_HERE",
+  whatsapp: "https://wa.me/910000000000",
   waGreeting: "Namaste! Want to join a free yoga class? Tap here and chat with us on WhatsApp.", /* chat pop-up text */
   address: "Online & Offline classes, Andhra Pradesh, India",
   instagram: "#", youtube: "#", facebook: "#",
   hero: {
     // IMAGE: 640 x 780 px (portrait, shown inside an arch frame on the right). Optional – a gradient shows if missing
-    image: "images/Hero_2.jpg",
+    image: "images/hero.jpg",
     points: ["100% free classes", "Online and in-studio", "All levels welcome"],
     title: "Free Yoga Classes for Everyone",
     text: "Learn authentic pranic yoga with breath, movement and stillness. No fees, no pressure. Just show up.",
@@ -24,36 +26,66 @@ const SITE = {
   }
 };
 
+/* ---------- FORMS (saved to your Google Sheet) ----------
+   Thank-you messages. The Apps Script URL goes in SITE.formsUrl (top of this file). */
+const FORM = {
+  thanksTitle: "Thank you!",
+  thanks: {
+    class: "Your registration is received. We will confirm your seat on WhatsApp shortly.",
+    membership: "We received your payment details. We will verify your UTR and welcome you on WhatsApp soon.",
+    contact: "Your message has been sent. We will reply as soon as possible."
+  }
+};
+
 /* ---------- UPCOMING CLASSES ----------
    type: "Free" or "Paid"  |  price: shown only when type is "Paid"
    thumb  IMAGE: 800 x 600 px (4:3)      banner IMAGE: 1600 x 600 px          */
 const CLASSES = [
-{
-    id: "morning-pranayama-basics",
-    title: "Correct Your Breathing Pattern",
-    date: "02 Nov 2026",
-    time: "6:00 AM – 7:00 AM IST",
-    mode: "Online (Zoom)",
-    type: "Free",
-    price: "",
-    thumb: "images/class-1.jpg",
-    banner: "images/class-1-banner.jpg",
-    short: "Learn to recognise your breathing habits and practise simple techniques for more comfortable, mindful breathing. No yoga experience needed.",
-    about: "Are you aware of how you breathe throughout the day? Join this free, beginner-friendly live session to understand your breathing habits and learn how to practise breathing more comfortably. We'll guide you through natural breath awareness, diaphragmatic breathing, three-part breathing, alternate-nostril breathing, gentle humming, and relaxation. No difficult yoga poses or previous experience required. Take your first step towards a more mindful breathing routine, then follow a simple 41-day practice plan to observe your progress.",
-    benefits: [
-        "Understand your everyday breathing habits",
-        "Learn to practise slow, gentle and comfortable breathing",
-        "Discover simple breathing techniques for daily relaxation",
-        "Build awareness of your breath and attention",
-        "Follow a 41-day practice plan and observe your progress"
-    ],
-    bring: "A quiet space, comfortable clothing, a yoga mat or chair, and a water bottle.",
-    instructor: "",
-    tagline: "Understand your breath. Practise better. Build a healthier daily habit.",
-    instructorImage: "",
+  {
+    id: "morning-pranayama",
+    title: "Morning Pranayama Basics",
+    date: "02 Nov 2026", time: "6:00 AM – 7:00 AM IST", mode: "Online (Zoom)",
+    type: "Free", price: "",
+    thumb: "images/class-1.jpg", banner: "images/class-1-banner.jpg",
+    short: "Gentle breathing practices to start your day calm and focused.",
+    about: "A beginner-friendly hour of breath awareness, simple pranayama and short meditation. No experience needed.",
+    benefits: ["Reduces stress and anxiety", "Improves lung capacity", "Better focus and sleep"],
+    bring: "Yoga mat, loose clothing, water bottle.",
+    instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
+    tagline: "",          // leave "" to use the main tagline, or type a custom one
+    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
     registerLink: "#"
-},
-
+  },
+  {
+    id: "hatha-flow",
+    title: "Hatha Yoga Flow",
+    date: "05 Nov 2026", time: "7:00 AM – 8:00 AM IST", mode: "Offline (Studio)",
+    type: "Free", price: "",
+    thumb: "images/class-2.jpg", banner: "images/class-2-banner.jpg",
+    short: "Slow, mindful asanas to build strength and flexibility.",
+    about: "Traditional hatha postures held with steady breath, ending with deep relaxation.",
+    benefits: ["Builds strength", "Improves flexibility", "Relieves back and neck tension"],
+    bring: "Yoga mat, comfortable clothing.",
+    instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
+    tagline: "",          // leave "" to use the main tagline, or type a custom one
+    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
+    registerLink: "#"
+  },
+  {
+    id: "deep-relax-workshop",
+    title: "Deep Relaxation Workshop",
+    date: "09 Nov 2026", time: "5:00 PM – 7:00 PM IST", mode: "Online (Zoom)",
+    type: "Paid", price: "₹499",
+    thumb: "images/class-3.jpg", banner: "images/class-3-banner.jpg",
+    short: "A two-hour guided session on yoga nidra and stress release.",
+    about: "Learn yoga nidra, body scanning and guided relaxation you can practise at home.",
+    benefits: ["Deep rest and better sleep", "Calms the nervous system", "Recorded practice audio included"],
+    bring: "Mat, blanket, eye cover (optional).",
+    instructor: "",       // leave "" to use the main instructor name, or type a guest teacher name
+    tagline: "",          // leave "" to use the main tagline, or type a custom one
+    instructorImage: "",  // leave "" to use images/instructor.jpg, or e.g. "images/guest-1.jpg"  IMAGE: 400 x 400 px (square, face centred)
+    registerLink: "#"
+  }
 ];
 
 /* ---------- SPECIAL CLASSES ----------
@@ -94,7 +126,8 @@ const SPECIAL = [
     registerLink: "#" }
 ];
 
-/* ---------- MEMBERSHIPS ---------- set featured:true to highlight a plan */
+/* ---------- MEMBERSHIPS ---------- featured:true highlights a plan.
+   link = YOUR PAYMENT LINK, shown inside the Join Now form */
 const MEMBERSHIPS = [
   { name: "41 Days Plan", price: "₹999", featured: false,
     features: ["Daily live sessions", "Beginner foundation", "Community group access"],
