@@ -14,7 +14,7 @@ const SITE = {
   instagram: "#", youtube: "#", facebook: "#",
   hero: {
     // IMAGE: 1920 x 800 px (desktop) – keep subject centred, text sits on the left
-    image: "images/hero.jpg",
+    image: "Images/hero.jpg",
     title: "Free Yoga Classes for Everyone",
     text: "Learn authentic pranic yoga with breath, movement and stillness. No fees, no pressure. Just show up.",
     buttonText: "See Upcoming Classes",
