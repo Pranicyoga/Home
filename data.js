@@ -49,8 +49,8 @@ const CLASSES = [
     mode: "Online (Zoom)",
     type: "Free",
     price: "",
-    thumb: "images/class-1.jpg",
-    banner: "images/class-1-banner.jpg",
+    thumb: "images/class-1-1.jpg",
+    banner: "images/class-1-1-banner.jpg",
     short: "Learn to recognise your breathing habits for more mindful breathing. No yoga experience needed.",
     about: "Are you aware of how you breathe throughout the day? Join this free, beginner-friendly live session to understand your breathing habits and learn how to practise breathing more comfortably. We'll guide you through natural breath awareness. No difficult yoga poses or previous experience required. Take your first step towards a more mindful breathing routine, then follow a simple 41-day practice plan to observe your progress.",
     benefits: [
