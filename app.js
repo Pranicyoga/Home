@@ -18,6 +18,7 @@ function renderChrome(home) {
     </div>`;
   $("#site-footer").innerHTML = `<div class="wrap"><p class="logo">${SITE.name}</p><p>© ${new Date().getFullYear()} ${SITE.name}. Free yoga for all.</p></div>`;
   document.querySelectorAll("nav a").forEach(a => a.addEventListener("click", () => document.body.classList.remove("nav-open")));
+  waPopup();
   document.body.insertAdjacentHTML("beforeend", `<a class="wa" href="${SITE.whatsapp}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">${WA}</a>`);
 }
 
@@ -88,7 +89,7 @@ function renderClass() {
         <h1>${c.title}</h1><p class="lead">${c.about}</p>
         <h3>What you will gain</h3><ul class="ticks">${c.benefits.map(b => `<li>${b}</li>`).join("")}</ul>
         <h3>What to bring</h3><p>${c.bring}</p>
-        <div class="by"><div class="avatar">${img(INSTRUCTOR.image)}</div>
+        <div class="by"><div class="avatar">${img(c.instructorImage || INSTRUCTOR.image)}</div>
           <div><span>Your instructor</span><b>${c.instructor || INSTRUCTOR.name}</b><p>${c.tagline || INSTRUCTOR.tagline}</p></div></div>
       </div>
       <aside class="side">
@@ -98,4 +99,20 @@ function renderClass() {
         <a class="btn gold block" href="${c.registerLink}" target="_blank" rel="noopener">Register Now</a>
       </aside>
     </div>`;
+}
+
+/* WhatsApp chat pop-up: appears once per visit after a short delay */
+function waPopup() {
+  try { if (sessionStorage.getItem("waSeen")) return; } catch (e) {}
+  const el = document.createElement("div");
+  el.className = "wa-pop";
+  el.innerHTML = `<button class="x" aria-label="Close">×</button>
+    <a href="${SITE.whatsapp}" target="_blank" rel="noopener"><b>${SITE.name}</b>
+    <span class="dots"><i></i><i></i><i></i></span><p>${SITE.waGreeting}</p></a>`;
+  document.body.appendChild(el);
+  const hide = () => { el.classList.remove("show"); try { sessionStorage.setItem("waSeen", "1"); } catch (e) {} };
+  setTimeout(() => el.classList.add("show"), 2500);   // pop up after 2.5 s
+  setTimeout(() => el.classList.add("typed"), 4300);  // "typing..." then message
+  setTimeout(hide, 18000);                            // auto-hide
+  el.querySelector(".x").addEventListener("click", hide);
 }
