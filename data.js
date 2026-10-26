@@ -6,7 +6,7 @@
 
 const SITE = {
   name: "Pranic Yoga",
-  tagline: "Free yoga classes for body, breath and mind",
+  tagline: "Return to the Breath, Return to Yourself",
   phone: "+91 70326 32374",
   email: "hello@pranicyoga.in",
   /* FORMS: paste your Google Apps Script Web App URL below (steps in apps-script.gs) */
@@ -20,7 +20,7 @@ const SITE = {
     image: "images/Hero_2.jpg",
     points: ["100% free classes", "Online and in-studio", "All levels welcome"],
     title: "Free Yoga Classes for Everyone",
-    text: "Learn authentic pranic yoga with breath, movement and stillness. No fees, no pressure. Just show up.",
+    text: "Learn authentic pranic yoga with breath, movement and stillness. No fees, no pressure. Just breath",
     buttonText: "See Upcoming Classes",
     buttonLink: "#classes"
   }
@@ -122,13 +122,13 @@ const MEMBERSHIPS = [
 
 /* ---------- INSTRUCTOR ----------  IMAGE: 700 x 900 px (portrait) */
 const INSTRUCTOR = {
-  name: "Your Name",
+  name: "Saikumar",
   role: "Certified Yoga Instructor",
   tagline: "Helping you breathe better, move better and live calmer.", /* shown at the bottom of every class page */
   image: "images/instructor.jpg",
-  bio: ["Write a short story of your yoga journey here.", "Mention your teaching style and why you teach for free."],
-  stats: [{n:"1000+",l:"Students guided"},{n:"5+",l:"Years teaching"},{n:"200hr",l:"Certified"}],
-  credentials: ["200-hr Yoga Teacher Training", "5+ years teaching experience", "1,000+ students guided"]
+  bio: ["I have been practising yoga for the past six years, learning from different masters and exploring various paths, from Sivananda to Sadhguru, and from Kriya Yoga and Karma Yoga to Vedanta, Samkhya, Tantra, and Mantra.","Through my journey of learning and teaching, I realised that all these paths share a common goal: to help us become more aware of ourselves.","Today, we live surrounded by distractions, from the moment we wake up until we go to sleep. We often forget to connect with ourselves. I believe that our breath is one of the simplest ways to begin this journey. When we learn to understand and control our breath, we can develop better awareness of our minds.","This is why I started Pranic Yoga — to help people connect with their breath through breathing practices and other forms of yoga, bringing more awareness and balance into everyday life."],
+  stats: [{n:"100+",l:"Students guided"},{n:"2+",l:"Years teaching"},{n:"200hr",l:"Certified"}],
+  credentials: ["200-hr Yoga Teacher Training", "2+ years teaching experience", "100+ students guided"]
 };
 
 /* ---------- FAQ ---------- */
