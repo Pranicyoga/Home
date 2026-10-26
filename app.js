@@ -41,12 +41,12 @@ function renderHome() {
   $("#class-grid").innerHTML = CLASSES.map(c => card(c, "class")).join("");
   $("#special-grid").innerHTML = SPECIAL.map(c => card(c, "special")).join("");
 
-  $("#plan-grid").innerHTML = MEMBERSHIPS.map(m => `
+  $("#plan-grid").innerHTML = MEMBERSHIPS.map((m, i) => `
     <div class="plan ${m.featured ? "featured" : ""}">
       ${m.featured ? '<span class="tag">Most popular</span>' : ""}
       <h3>${m.name}</h3><div class="price">${m.price}</div>
       <ul>${m.features.map(f => `<li>${f}</li>`).join("")}</ul>
-      <a class="btn" href="${m.link}" target="_blank" rel="noopener">Join Now</a>
+      <button class="btn" onclick="openJoin(${i})">Join Now</button>
     </div>`).join("");
 
   const i = INSTRUCTOR;
@@ -66,12 +66,7 @@ function renderHome() {
       <p><b>Location</b><br>${SITE.address}</p>
       <p><a class="btn" href="${SITE.whatsapp}" target="_blank" rel="noopener">Chat on WhatsApp</a></p>
       <p class="social"><a href="${SITE.instagram}">Instagram</a><a href="${SITE.youtube}">YouTube</a><a href="${SITE.facebook}">Facebook</a></p></div>
-    <form action="mailto:${SITE.email}" method="post" enctype="text/plain">
-      <input name="Name" placeholder="Your name" required>
-      <input name="Email" type="email" placeholder="Your email" required>
-      <textarea name="Message" rows="4" placeholder="Your message" required></textarea>
-      <button class="btn" type="submit">Send message</button>
-    </form>`;
+    ${contactForm()}`;
 }
 
 function renderClass() {
@@ -96,9 +91,10 @@ function renderClass() {
         ${badge(c)}
         <dl><dt>Date</dt><dd>${c.date}</dd><dt>Time</dt><dd>${c.time}</dd><dt>Mode</dt><dd>${c.mode}</dd>
         <dt>Fee</dt><dd>${c.type === "Paid" ? c.price : "Free"}</dd></dl>
-        <a class="btn gold block" href="${c.registerLink}" target="_blank" rel="noopener">Register Now</a>
+        <a class="btn gold block" href="#register">Register Now</a>
       </aside>
-    </div>`;
+    </div>
+    <div class="wrap reg" id="register"><div class="head"><h2>Register for this class</h2><p>Fill in your details and we will confirm on WhatsApp.</p></div>${classForm(c.id)}</div>`;
 }
 
 /* WhatsApp chat pop-up: appears once per visit after a short delay */
@@ -115,4 +111,67 @@ function waPopup() {
   setTimeout(() => el.classList.add("typed"), 4300);  // "typing..." then message
   setTimeout(hide, 18000);                            // auto-hide
   el.querySelector(".x").addEventListener("click", hide);
+}
+
+/* ===== FORMS: saved to Google Sheets via Apps Script (SITE.formsUrl + FORM in data.js) ===== */
+const fld = (label, name, o = {}) => `<label class="${o.full ? "full" : ""}">${label}${o.req ? " <em>*</em>" : ""}${o.html || `<input name="${name}" type="${o.type || "text"}" ${o.req ? "required" : ""} ${o.attr || ""}>`}</label>`;
+const GENDER = `<select name="gender"><option value="">Select (optional)</option><option>Female</option><option>Male</option><option>Other</option><option>Prefer not to say</option></select>`;
+const HP = `<input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">`;
+const personal = () =>
+  fld("Name", "name", { req: 1 }) + fld("Gender", "gender", { html: GENDER }) + fld("Occupation", "occupation") +
+  fld("Where are you from?", "place", { req: 1 }) +
+  fld("WhatsApp Number", "whatsapp", { req: 1, type: "tel", attr: 'pattern="[0-9+ ]{10,15}" inputmode="tel" title="Enter a valid WhatsApp number"' }) +
+  fld("Email ID", "email", { req: 1, type: "email" });
+
+/* TYPE 1: class + special class registration */
+function classForm(selId) {
+  const opt = (c) => `<option value="${c.title} (${c.date})"${c.id === selId ? " selected" : ""}>${c.title} – ${c.date} ${c.type === "Paid" ? "(" + c.price + ")" : "(Free)"}</option>`;
+  const sel = `<select name="class" required><option value="">Select a class</option><optgroup label="Upcoming Classes">${CLASSES.map(opt).join("")}</optgroup><optgroup label="Special Classes">${SPECIAL.map(opt).join("")}</optgroup></select>`;
+  return `<form class="rform" onsubmit="submitForm(event,'class')">${personal()}${fld("Select the class", "class", { req: 1, html: sel, full: 1 })}${HP}
+    <button class="btn" type="submit">Submit Registration</button><p class="fmsg" role="status"></p></form>`;
+}
+
+/* TYPE 2: membership + payment link + UTR (pop-up opened by Join Now) */
+function membershipForm(i) {
+  const m = MEMBERSHIPS[i];
+  const sel = `<select name="membership" required onchange="setPlan(this)">${MEMBERSHIPS.map((x, j) => `<option value="${x.name} – ${x.price}" data-link="${x.link}" data-price="${x.price}"${j === i ? " selected" : ""}>${x.name} – ${x.price}</option>`).join("")}</select>`;
+  return `<form class="rform" onsubmit="submitForm(event,'membership')">${personal()}${fld("Select Membership", "membership", { req: 1, html: sel, full: 1 })}
+    <div class="pay"><p><b>Step 1.</b> Pay <b class="pamt">${m.price}</b> using this payment link:</p>
+    <a class="btn gold pl" href="${m.link}" target="_blank" rel="noopener">Open Payment Link</a>
+    <p class="small"><b>Step 2.</b> After paying, enter your UTR / transaction ID below.</p></div>
+    ${fld("UTR / Transaction ID", "utr", { req: 1, full: 1, attr: 'minlength="6"' })}${HP}
+    <button class="btn" type="submit">Submit Membership Details</button><p class="fmsg" role="status"></p></form>`;
+}
+function setPlan(s) { const o = s.selectedOptions[0], f = s.form; f.querySelector(".pl").href = o.dataset.link; f.querySelector(".pamt").textContent = o.dataset.price; }
+function openJoin(i) {
+  let d = $("#join");
+  if (!d) {
+    document.body.insertAdjacentHTML("beforeend", `<dialog id="join"><div class="dh"><h3>Membership Registration</h3><button aria-label="Close" onclick="this.closest('dialog').close()">×</button></div><div class="db"></div></dialog>`);
+    d = $("#join"); d.addEventListener("click", (e) => { if (e.target === d) d.close(); });
+  }
+  d.querySelector(".db").innerHTML = membershipForm(i);
+  d.showModal();
+}
+
+/* TYPE 3: contact us */
+function contactForm() {
+  return `<form class="rform one" onsubmit="submitForm(event,'contact')">${fld("Name", "name", { req: 1 })}${fld("Email ID", "email", { req: 1, type: "email" })}
+    ${fld("Message", "message", { req: 1, html: '<textarea name="message" rows="4" required></textarea>' })}${HP}
+    <button class="btn" type="submit">Send message</button><p class="fmsg" role="status"></p></form>`;
+}
+
+async function submitForm(ev, type) {
+  ev.preventDefault();
+  const f = ev.target, btn = f.querySelector("button[type=submit]"), msg = f.querySelector(".fmsg");
+  if (f.website.value) return;                       // spam trap
+  if (!SITE.formsUrl || SITE.formsUrl.includes("PASTE")) { msg.className = "fmsg err"; msg.textContent = "Form is not connected yet. Paste your Apps Script URL in data.js (SITE.formsUrl)."; return; }
+  const label = btn.textContent; btn.disabled = true; btn.textContent = "Sending...";
+  const body = new URLSearchParams(new FormData(f)); body.set("formType", type);
+  try {
+    await fetch(SITE.formsUrl, { method: "POST", mode: "no-cors", body });
+    f.outerHTML = `<div class="thanks"><h3>${FORM.thanksTitle}</h3><p>${FORM.thanks[type]}</p></div>`;
+  } catch (e) {
+    msg.className = "fmsg err"; msg.textContent = "Could not send. Please check your internet and try again.";
+    btn.disabled = false; btn.textContent = label;
+  }
 }
