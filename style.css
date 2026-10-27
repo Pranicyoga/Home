@@ -134,11 +134,29 @@ select{width:100%;padding:13px 16px;border:1px solid #cdd3cd;border-radius:10px;
 .pay{background:var(--sand);border-radius:12px;padding:16px;text-align:center}.pay p{margin:4px 0}.hint{font-size:.85rem;color:#6d756f}
 .hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
 
+/* CONTACT CARD */
+#contact-box{display:grid;grid-template-columns:.85fr 1.15fr;gap:0;max-width:1000px;margin:auto;border-radius:22px;overflow:hidden;box-shadow:0 14px 40px rgba(31,42,34,.14);align-items:stretch}
+.info{background:linear-gradient(160deg,#1b2a21,#3f5d45);color:#dfe8e0;padding:44px 38px}
+.info h3{color:#fff;font-size:2.2rem;margin:0 0 6px}.info .lead{margin:0 0 10px;color:#c9d6cb}
+.info .row{margin-top:22px;font-size:1.05rem}.info .row span{display:block;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:2px}
+.info a{color:#fff}.info .wabtn{display:inline-block;margin-top:30px;color:#fff}
+.info .social{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.info .social a{margin:0;padding:6px 16px;border:1px solid rgba(255,255,255,.35);border-radius:30px;font-size:.9rem;font-weight:600;color:#fff}.info .social a:hover{background:var(--gold);border-color:var(--gold)}
+.cform{background:#fff;border-radius:0;padding:44px 40px;display:grid;grid-template-columns:1fr 1fr;gap:18px;align-content:start}
+.cform h3{grid-column:1/-1;margin:0 0 4px;font-size:1.9rem}
+.cform label{display:block;font-weight:700;font-size:.9rem;color:var(--dark)}.cform label em{color:#b3261e;font-style:normal}
+.cform input,.cform textarea{margin-top:6px;font-weight:400;background:#faf8f3}
+.cform .full,.cform .btn,.cform .fmsg{grid-column:1/-1}.cform .btn{justify-self:start;padding:13px 40px}
+#contact-box .thanks{border-radius:0;max-width:none;display:grid;align-content:center}
+@media(max-width:860px){.info,.cform{padding:30px 22px}.cform{grid-template-columns:1fr}.cform .btn{justify-self:stretch}}
+
 /* FORMS */
 .rform{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;max-width:860px;margin:auto;background:var(--sand);padding:30px;border-radius:16px}
 .rform label{display:block;font-weight:700;font-size:.9rem;color:var(--dark)}.rform label em{color:#b3261e;font-style:normal}
 .rform input,.rform select,.rform textarea{margin-top:6px;font-weight:400}
 .rform .full,.rform .btn,.fmsg,.pay{grid-column:1/-1}
+.rform [hidden]{display:none!important}
+.rform .fs{grid-column:1/-1;font:700 1.4rem var(--head);color:var(--green);margin:6px 0 -2px;padding-bottom:6px;border-bottom:1px solid #dcd5c4}
 .rform.one{grid-template-columns:1fr;max-width:none;padding:26px}
 select{width:100%;padding:13px 16px;border:1px solid #cdd3cd;border-radius:10px;font:inherit;background:#fff}
 .fmsg{font-weight:700;margin:0}.fmsg.err{color:#b3261e}
