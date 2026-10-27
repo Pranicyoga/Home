@@ -47,7 +47,7 @@ const GAIN = {
 const WHY = {
   title: "Why Choose Pranic Yoga?",
   text: "We blend the wisdom of traditional yoga with a simple, guided approach that helps you stay consistent, one breath at a time.",
-  image: "images/why.png",
+  image: "images/why.jpg",
   button: "Join Free Classes",
   items: [
     { icon: "lotus",  title: "Beginner friendly, always", text: "No difficult poses or previous experience. Every practice starts from your breath." },
