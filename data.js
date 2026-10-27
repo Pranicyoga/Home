@@ -11,7 +11,7 @@ const SITE = {
   email: "hello@pranicyoga.in",
   /* FORMS: paste your Google Apps Script Web App URL below (steps in apps-script.gs) */
   formsUrl: "https://script.google.com/macros/s/AKfycbylL_46SDlib409fsWxv5k0LpIXr2UKG-cdas-ocqjLL84Ts01o2fHGQ2bw6kSnCKty/exec",
-  whatsapp: "https://wa.me/917032632374?text=Namaskaram!+May+I+know+more+about+Pranic+Yoga+classes&utm_source=chatgpt.com",
+  whatsapp: "https://wa.me/917032632374?text=Namaskaram!+May+I+know+more+about+Pranic+Yoga+classes",
   waGreeting: "Namaste! Want to join a free yoga class? Tap here and chat with us on WhatsApp.", /* chat pop-up text */
   address: "Online Classes, India",
   instagram: "#", youtube: "#", facebook: "#",
@@ -24,6 +24,61 @@ const SITE = {
     buttonText: "See Upcoming Classes",
     buttonLink: "#classes"
   }
+};
+
+/* ---------- NEW: WHAT YOU'LL GAIN (3 cards, above classes) ----------
+   item image IMAGE: 900 x 620 px (illustration or photo). A colour gradient shows if missing */
+const GAIN = {
+  title: "What You’ll Gain",
+  text: "Build a simple daily practice that supports your wellbeing. Start with live classes. No experience needed.",
+  items: [
+    { title: "Breathe Better, Feel Calmer", image: "images/gain-1.jpg",
+      text: "Learn simple pranayama and breath awareness to ease stress and settle your mind." },
+    { title: "Sleep & Relax Deeply", image: "images/gain-2.jpg",
+      text: "Guided Yoga Nidra and relaxation practices help you unwind and rest better." },
+    { title: "Focus & Inner Balance", image: "images/gain-3.jpg",
+      text: "Mantra meditation and mindful practice build focus, clarity and steadiness in daily life." }
+  ]
+};
+
+/* ---------- NEW: WHY CHOOSE US ----------
+   image IMAGE: 800 x 700 px (transparent PNG/WebP illustration works best)
+   icon options: "target", "clock", "users", "lotus"                          */
+const WHY = {
+  title: "Why Choose Pranic Yoga?",
+  text: "We blend the wisdom of traditional yoga with a simple, guided approach that helps you stay consistent, one breath at a time.",
+  image: "images/why.png",
+  button: "Join Free Classes",
+  items: [
+    { icon: "lotus",  title: "Beginner friendly, always", text: "No difficult poses or previous experience. Every practice starts from your breath." },
+    { icon: "target", title: "Start free", text: "Try our live classes before you commit to anything. No pressure." },
+    { icon: "clock",  title: "Online, from anywhere", text: "Join live from your home on Zoom or Instagram Live. All you need is a quiet corner." },
+    { icon: "users",  title: "Guided by an experienced teacher", text: "Learn from a teacher with six years of practice across several yoga traditions." }
+  ]
+};
+
+/* ---------- NEW: TESTIMONIALS ----------
+   Use REAL feedback only, with the student's permission.
+   avatar IMAGE: 240 x 240 px (square, face centred). Entries with empty text are hidden. */
+const TESTIMONIALS = {
+  title: "Testimonials",
+  subtitle: "Hear from our students",
+  note: "Individual results vary. Yoga supports overall wellness but does not replace medical care. Please consult your doctor before starting any new practice.",
+  items: [
+    { name: "Student Name", place: "City", tag: "Joined 2026", image: "images/t-1.jpg",
+      text: "Paste your student's real feedback here (ask their permission first)." },
+    { name: "Student Name", place: "City", tag: "Joined 2026", image: "images/t-2.jpg",
+      text: "Paste your student's real feedback here (ask their permission first)." },
+    { name: "Student Name", place: "City", tag: "Joined 2026", image: "images/t-3.jpg",
+      text: "Paste your student's real feedback here (ask their permission first)." }
+  ]
+};
+
+/* ---------- NEW: BIG CALL-TO-ACTION BAND (before FAQ) ---------- */
+const CTA = {
+  title: "Your first step is just one breath away",
+  text: "Reserve your seat in the next live class and start feeling the difference.",
+  button: "Reserve My Seat", link: "#classes"
 };
 
 /* ---------- FORMS (saved to your Google Sheet) ----------
@@ -39,6 +94,7 @@ const FORM = {
 
 /* ---------- UPCOMING CLASSES ----------
    type: "Free" or "Paid"  |  price: shown only when type is "Paid"
+   paymentLink: payment link shown to visitors for Paid classes
    thumb  IMAGE: 800 x 600 px (4:3)      banner IMAGE: 1600 x 600 px          */
 const CLASSES = [
 {
