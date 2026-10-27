@@ -1,6 +1,6 @@
 /* ===== THEME: change colours/fonts here ===== */
 :root{--green:#3f5d45;--dark:#1b2a21;--sand:#f6f1e7;--gold:#c58b2a;--text:#3a413c;--white:#fff;
---head:'Cormorant Garamond',Georgia,serif;--body:'Nunito',system-ui,sans-serif}
+--head:'Outfit',system-ui,sans-serif;--body:'Outfit',system-ui,sans-serif}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth;scroll-padding-top:76px}
 body{font-family:var(--body);color:var(--text);line-height:1.7;background:#fff;overflow-x:hidden}
@@ -27,7 +27,7 @@ nav{display:flex;gap:26px;align-items:center;font-weight:600}nav a:hover{color:v
 .burger{display:none;background:none;border:0;font-size:1.9rem;cursor:pointer}
 
 /* HERO (image optional: 640x780) */
-#hero{position:relative;overflow:hidden;color:#fff;padding:70px 0 90px;
+#hero{position:relative;overflow:hidden;color:#fff;padding:70px 0 130px;
 background:radial-gradient(circle at 85% 20%,rgba(197,139,42,.35),transparent 45%),radial-gradient(circle at 10% 90%,rgba(120,170,130,.25),transparent 40%),linear-gradient(135deg,#1b2a21,#3f5d45)}
 .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
 #hero h1{color:#fff}
@@ -134,6 +134,40 @@ select{width:100%;padding:13px 16px;border:1px solid #cdd3cd;border-radius:10px;
 .pay{background:var(--sand);border-radius:12px;padding:16px;text-align:center}.pay p{margin:4px 0}.hint{font-size:.85rem;color:#6d756f}
 .hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
 
+/* HOME: NEXT CLASS STRIP, GAIN, WHY, TESTIMONIALS, CTA */
+h1,h2{letter-spacing:-.01em}
+.next{max-width:1000px;margin:-62px auto 0;position:relative;z-index:3;background:#fff;border-radius:20px;border-left:6px solid var(--gold);box-shadow:0 16px 44px rgba(31,42,34,.22);display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:20px 28px}
+.next[hidden]{display:none}
+.nx-label{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.nx-main{flex:1;min-width:230px}.nx-main h3{margin:2px 0 4px;font-size:1.5rem}.nx-main p{margin:0;color:#6d756f;font-size:.95rem}
+.pill{display:inline-block;padding:5px 16px;border-radius:20px;color:#fff;font-weight:700;font-size:.9rem;margin-right:14px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:30px}
+.gcard{background:#fff;border-radius:28px;padding:10px 10px 30px;text-align:center;box-shadow:0 8px 30px rgba(31,42,34,.1)}
+.gimg{aspect-ratio:900/620;border-radius:22px 22px 110px 22px;overflow:hidden;background:linear-gradient(135deg,#a9cdb6,#3f8f6b)}
+.gcard:nth-child(2) .gimg{background:linear-gradient(135deg,#ecd9a8,#c58b2a)}
+.gcard:nth-child(3) .gimg{background:linear-gradient(135deg,#f7b79c,#e9805f)}
+.gimg img{width:100%;height:100%;object-fit:cover}
+.gcard h3{font:600 1.15rem var(--head);text-transform:uppercase;color:var(--green);margin:26px 16px 10px}.gcard p{padding:0 22px;margin:0}
+.why{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.why-l{text-align:center}.why-l p{margin:14px auto 24px;max-width:480px}
+.why-img{aspect-ratio:8/7;max-width:480px;margin:0 auto 30px;border-radius:30px;background:linear-gradient(160deg,#f6e3c1,#e2c38a);overflow:hidden}
+.why-img img{width:100%;height:100%;object-fit:contain}
+.why-r{display:grid;gap:18px}
+.wcard{background:#fff;border-radius:20px;padding:22px 26px;box-shadow:0 4px 18px rgba(31,42,34,.08)}
+.wcard svg{width:30px;height:30px;stroke:var(--green);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wcard h3{font:600 1.25rem var(--head);margin:10px 0 6px}.wcard p{margin:0}
+.btn.big{padding:16px 42px;font-size:1.05rem;box-shadow:0 8px 22px rgba(197,139,42,.45);animation:glow 2.4s infinite}
+@keyframes glow{0%,100%{box-shadow:0 8px 22px rgba(197,139,42,.45)}50%{box-shadow:0 8px 34px rgba(197,139,42,.85)}}
+.note{font-size:.85rem;font-style:italic;color:#7b837d;max-width:760px;margin:12px auto 0}.sub2{font:600 1.3rem var(--head);color:var(--green);margin-top:10px}
+.tcard{background:#fff;border-radius:28px;padding:30px 24px 0;text-align:center;box-shadow:0 8px 30px rgba(31,42,34,.1);margin-bottom:34px;display:flex;flex-direction:column}
+.av{width:110px;height:110px;border-radius:50%;margin:0 auto 18px;overflow:hidden;background:linear-gradient(135deg,#a9bfa4,#d9c28f)}.av img{width:100%;height:100%;object-fit:cover}
+.tcard h3{font:600 1.15rem var(--head);text-transform:uppercase;margin:0}.tsub{font-size:.85rem;color:var(--gold);font-weight:700;margin:4px 0 14px}
+.tcard p{margin:0}.q{width:64px;height:64px;border-radius:50%;background:#f4f1ea;color:var(--gold);font:700 3.4rem/1.25 Georgia,serif;margin:22px auto -32px}
+.cta{background:linear-gradient(135deg,#c58b2a,#9c6a1a);color:#fff;text-align:center}.cta h2{color:#fff}.cta p{max-width:560px;margin:14px auto 28px;font-size:1.1rem}
+.cta .btn{background:var(--dark)}.cta .btn:hover{background:#fff;color:var(--dark)}.cta .btn.ghost{background:transparent}.cta .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+@media(max-width:860px){.why{grid-template-columns:1fr}.next{margin-top:-52px;padding:18px}.nx-act{width:100%}.nx-act .btn{display:block;text-align:center}}
+@media(prefers-reduced-motion:reduce){.btn.big{animation:none}}
+
 /* CONTACT CARD */
 #contact-box{display:grid;grid-template-columns:.85fr 1.15fr;gap:0;max-width:1000px;margin:auto;border-radius:22px;overflow:hidden;box-shadow:0 14px 40px rgba(31,42,34,.14);align-items:stretch}
 .info{background:linear-gradient(160deg,#1b2a21,#3f5d45);color:#dfe8e0;padding:44px 38px}
@@ -175,7 +209,7 @@ dialog .rform{max-width:none;border-radius:0}.reg{padding-bottom:84px}
  nav{display:none;position:absolute;top:70px;left:0;right:0;background:#fff;flex-direction:column;padding:20px;gap:16px;box-shadow:0 8px 14px rgba(0,0,0,.1)}
  .nav-open nav{display:flex}
  .hero-grid,.inst,#contact-box,.detail{grid-template-columns:1fr}
- #hero{padding:44px 0 64px}.hero-art{margin:10px auto 0;max-width:300px}
+ #hero{padding:44px 0 100px}.hero-art{margin:10px auto 0;max-width:300px}
  .inst{gap:44px}.portrait-wrap{max-width:290px}.portrait-wrap::before{inset:14px -12px -14px 12px}
  .plan.featured{transform:none}.section{padding:56px 0}
  .side{position:static;margin-top:0}.detail{gap:28px}
