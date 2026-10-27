@@ -163,8 +163,8 @@ h1,h2{letter-spacing:-.01em}
 .av{width:110px;height:110px;border-radius:50%;margin:0 auto 18px;overflow:hidden;background:linear-gradient(135deg,#a9bfa4,#d9c28f)}.av img{width:100%;height:100%;object-fit:cover}
 .tcard h3{font:600 1.15rem var(--head);text-transform:uppercase;margin:0}.tsub{font-size:.85rem;color:var(--gold);font-weight:700;margin:4px 0 14px}
 .tcard p{margin:0}.q{width:64px;height:64px;border-radius:50%;background:#f4f1ea;color:var(--gold);font:700 3.4rem/1.25 Georgia,serif;margin:22px auto -32px}
-.cta{background:linear-gradient(135deg,#c58b2a,#9c6a1a);color:#fff;text-align:center}.cta h2{color:#fff}.cta p{max-width:560px;margin:14px auto 28px;font-size:1.1rem}
-.cta .btn{background:var(--dark)}.cta .btn:hover{background:#fff;color:var(--dark)}.cta .btn.ghost{background:transparent}.cta .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-band{background:linear-gradient(135deg,#c58b2a,#9c6a1a);color:#fff;text-align:center}.cta-band h2{color:#fff}.cta-band p{max-width:560px;margin:14px auto 28px;font-size:1.1rem}
+.cta-band .btn{background:var(--dark)}.cta-band .btn:hover{background:#fff;color:var(--dark)}.cta-band .btn.ghost{background:transparent}.cta-band .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 @media(max-width:860px){.why{grid-template-columns:1fr}.next{margin-top:-52px;padding:18px}.nx-act{width:100%}.nx-act .btn{display:block;text-align:center}}
 @media(prefers-reduced-motion:reduce){.btn.big{animation:none}}
 
