@@ -9,7 +9,7 @@ function renderChrome(home) {
   const p = home ? "" : "index.html";
   $("#site-header").innerHTML = `
     <div class="wrap bar">
-      <a class="logo" href="index.html">${SITE.name}</a>
+      <a class="logo" href="index.html" aria-label="${SITE.name} home"><img src="images/logo-horizontal.svg" alt="${SITE.name} – ${SITE.tagline}" onerror="this.replaceWith(document.createTextNode('${SITE.name}'))"></a>
       <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
       <nav>
         <a href="${p}#classes">Classes</a><a href="${p}#special">Special</a>
@@ -17,7 +17,7 @@ function renderChrome(home) {
         <a href="${p}#contact">Contact</a><a class="btn sm gold" href="${p}#classes">Join Free</a>
       </nav>
     </div>`;
-  $("#site-footer").innerHTML = `<div class="wrap"><p class="logo">${SITE.name}</p><p>© ${new Date().getFullYear()} ${SITE.name}. Free yoga for all.</p></div>`;
+  $("#site-footer").innerHTML = `<div class="wrap"><a href="index.html" aria-label="${SITE.name} home"><img class="flogo" src="images/logo-horizontal-white.svg" alt="${SITE.name}" onerror="this.replaceWith(document.createTextNode('${SITE.name}'))"></a><p>© ${new Date().getFullYear()} ${SITE.name}. Free yoga for all.</p></div>`;
   document.querySelectorAll("nav a").forEach(a => a.addEventListener("click", () => document.body.classList.remove("nav-open")));
   waPopup();
   document.body.insertAdjacentHTML("beforeend", `<a class="wa" href="${SITE.whatsapp}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">${WA}</a>`);
