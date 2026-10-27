@@ -65,12 +65,12 @@ const TESTIMONIALS = {
   subtitle: "Hear from our students",
   note: "Individual results vary. Yoga supports overall wellness but does not replace medical care. Please consult your doctor before starting any new practice.",
   items: [
-    { name: "Student Name", place: "City", tag: "Joined 2026", image: "images/t-1.jpg",
-      text: "Paste your student's real feedback here (ask their permission first)." },
-    { name: "Student Name", place: "City", tag: "Joined 2026", image: "images/t-2.jpg",
-      text: "Paste your student's real feedback here (ask their permission first)." },
-    { name: "Student Name", place: "City", tag: "Joined 2026", image: "images/t-3.jpg",
-      text: "Paste your student's real feedback here (ask their permission first)." }
+    { name: "Arun Juneja", place: "Bangalore", tag: "35 Pranicdays", image: "images/t-1.jpg",
+      text: "I never realised how unconsciously I was breathing until I started practising breath awareness. Now, I notice my breathing more often and make an effort to breathe consciously." },
+    { name: "Tanuja Sharma", place: "Gujarat", tag: "62 Pranicdays", image: "images/t-2.jpg",
+      text: "This practice has taught me that breathing is not just an automatic process; it is something I can become aware of. I’m gradually developing a deeper connection with my breath." },
+    { name: "Vikash Kumar", place: "Indore", tag: "58 Pranicdays", image: "images/t-3.jpg",
+      text: "The biggest change for me is that I’ve started paying attention to something I used to take for granted; My breath. I’m becoming more conscious of my breathing throughout the day" }
   ]
 };
 
