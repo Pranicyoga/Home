@@ -86,8 +86,8 @@ const CTA = {
 const FORM = {
   thanksTitle: "Thank you!",
   thanks: {
-    class: "Your registration is received. We will confirm your seat on WhatsApp shortly.",
-    membership: "We received your payment details. We will verify your UTR and welcome you on WhatsApp soon.",
+    class: "Your registration is received. We will confirm your seat on WhatsApp shortly.<br><br>Join our community for class updates and reminders:<br><br><a class='btn gold' href='https://chat.whatsapp.com/C6x8iwEx7EX0MjoLxH7Ge7' target='_blank' rel='noopener'>Join our WhatsApp Community</a>",
+    membership: "We received your payment details. We will verify your UTR and welcome you on WhatsApp soon.<br><br>Join our community while you wait:<br><br><a class='btn gold' href='https://chat.whatsapp.com/C6x8iwEx7EX0MjoLxH7Ge7' target='_blank' rel='noopener'>Join our WhatsApp Community</a>",
     contact: "Your message has been sent. We will reply as soon as possible."
   }
 };
