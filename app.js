@@ -218,8 +218,9 @@ function renderSections() {
   const n = CLASSES[0];
   if (n) {
     const el = $("#next-strip"); el.hidden = false;
-    el.innerHTML = `<div class="nx-main"><span class="nx-label">Next live class</span><h3>${n.title}</h3><p>${n.date} · ${n.time} · ${n.mode}</p></div>
-      <div class="nx-act"><span class="pill ${n.type === "Paid" ? "paid" : "free"}">${n.type === "Paid" ? money(n.price) : "Free"}</span><button class="btn gold" onclick="openClass('${n.id}')">Reserve my seat</button></div>`;
+    el.innerHTML = `<div class="nx-main"><div class="nx-top"><span class="nx-label">Next live class</span><span class="pill ${n.type === "Paid" ? "paid" : "free"}">${n.type === "Paid" ? money(n.price) : "Free"}</span></div>
+      <h3>${n.title}</h3><p>${n.date} · ${n.time} · ${n.mode}</p></div>
+      <div class="nx-act"><button class="btn gold" onclick="openClass('${n.id}')">Reserve my seat</button></div>`;
   }
   $("#gain-box").innerHTML = `<div class="head"><h2>${GAIN.title}</h2><p>${GAIN.text}</p></div>
     <div class="grid3">${GAIN.items.map(g => `<div class="gcard"><div class="gimg">${img(g.image)}</div><h3>${g.title}</h3><p>${g.text}</p></div>`).join("")}</div>`;
