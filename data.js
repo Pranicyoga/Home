@@ -126,13 +126,13 @@ const SPECIAL = [
 const MEMBERSHIPS = [
   { name: "41 Days Plan", price: "₹999", featured: false,
     features: ["Daily live sessions", "Beginner foundation", "Community group access"],
-    link: "https://rzp.io/l/your-actual-payment-link" /* paste your payment / join link here */ },
+    link: "https://rzp.io/rzp/8CyallW8" /* paste your payment / join link here */ },
   { name: "82 Days Plan", price: "₹1,799", featured: true,
     features: ["Daily live sessions", "Recordings for 6 months", "Monthly 1:1 check-in", "Community group access"],
-    link: "#" },
+    link: "https://rzp.io/rzp/Ndd15N1R" },
   { name: "108 Days Plan", price: "₹2,499", featured: false,
     features: ["Daily live sessions", "Lifetime recordings", "Weekly 1:1 guidance", "Diet and lifestyle guide", "Completion certificate"],
-    link: "#" }
+    link: "https://rzp.io/rzp/z8sDdVDQ" }
 ];
 
 /* ---------- INSTRUCTOR ----------  IMAGE: 700 x 900 px (portrait) */
