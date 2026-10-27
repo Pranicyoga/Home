@@ -6,7 +6,7 @@
 <title>Pranic Yoga | Free Yoga Classes</title>
 <meta name="description" content="Free yoga classes, special programs and memberships at Pranic Yoga.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,19 +18,31 @@
 <section id="hero"></section> <!-- built in app.js from data.js > SITE.hero -->
 
 <!-- 3. UPCOMING CLASSES (data.js > CLASSES) -->
-<section id="classes" class="section">
+<!-- 2b. NEXT CLASS STRIP (auto from the first class in data.js > CLASSES) -->
+<div class="wrap"><div id="next-strip" class="next" hidden></div></div>
+
+<!-- 2c. WHAT YOU'LL GAIN (data.js > GAIN) -->
+<section id="gain" class="section"><div class="wrap" id="gain-box"></div></section>
+
+<!-- 2d. WHY CHOOSE US (data.js > WHY) -->
+<section id="why" class="section alt"><div class="wrap" id="why-box"></div></section>
+
+<!-- 2e. TESTIMONIALS (data.js > TESTIMONIALS) -->
+<section id="stories" class="section"><div class="wrap" id="stories-box"></div></section>
+
+<section id="classes" class="section alt">
   <div class="wrap"><div class="head"><h2>Upcoming Classes</h2><p>Join our free live sessions. Tap a class to read the details and register.</p></div>
   <div class="grid" id="class-grid"></div></div>
 </section>
 
 <!-- 4. SPECIAL CLASSES (data.js > SPECIAL) -->
-<section id="special" class="section alt">
+<section id="special" class="section">
   <div class="wrap"><div class="head"><h2>Special Classes</h2><p>Focused programs for specific needs and age groups. Tap to see details.</p></div>
   <div class="grid" id="special-grid"></div></div>
 </section>
 
 <!-- 5. MEMBERSHIP (data.js > MEMBERSHIPS) -->
-<section id="membership" class="section">
+<section id="membership" class="section alt">
   <div class="wrap"><div class="head"><h2>Membership Plans</h2><p>Commit to a daily practice with guided support. Pick the plan that fits you.</p></div>
   <div class="grid" id="plan-grid"></div></div>
 </section>
@@ -40,6 +52,9 @@
   <div class="wrap"><div id="instructor-box" class="inst"></div></div>
 </section>
 
+<!-- 6b. BIG CALL-TO-ACTION BAND (data.js > CTA) -->
+<section id="cta" class="section cta"><div class="wrap" id="cta-box"></div></section>
+
 <!-- 7. FAQ (data.js > FAQ) -->
 <section id="faq" class="section">
   <div class="wrap narrow"><div class="head"><h2>Frequently Asked Questions</h2></div>
@@ -47,7 +62,7 @@
 </section>
 
 <!-- 8. CONTACT US (data.js > SITE) -->
-<section id="contact" class="section">
+<section id="contact" class="section alt">
   <div class="wrap"><div class="head"><h2>Contact Us</h2><p>Questions about a class or plan? We reply quickly.</p></div>
   <div class="two" id="contact-box"></div></div>
 </section>
