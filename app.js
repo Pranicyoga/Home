@@ -60,11 +60,11 @@ function renderHome() {
   $("#faq-list").innerHTML = FAQ.map(f => `<details><summary>${f.q}</summary><p>${f.a}</p></details>`).join("");
 
   $("#contact-box").innerHTML = `
-    <div class="info"><h3>Get in touch</h3>
-      <p><b>Phone</b><br><a href="tel:${SITE.phone.replace(/\s/g, "")}">${SITE.phone}</a></p>
-      <p><b>Email</b><br><a href="mailto:${SITE.email}">${SITE.email}</a></p>
-      <p><b>Location</b><br>${SITE.address}</p>
-      <p><a class="btn" href="${SITE.whatsapp}" target="_blank" rel="noopener">Chat on WhatsApp</a></p>
+    <div class="info"><h3>Get in touch</h3><p class="lead">Questions about a class or plan? Write to us or message on WhatsApp.</p>
+      <div class="row"><span>Phone</span><a href="tel:${SITE.phone.replace(/\s/g, "")}">${SITE.phone}</a></div>
+      <div class="row"><span>Email</span><a href="mailto:${SITE.email}">${SITE.email}</a></div>
+      <div class="row"><span>Location</span>${SITE.address}</div>
+      <a class="btn gold wabtn" href="${SITE.whatsapp}" target="_blank" rel="noopener">Chat on WhatsApp</a>
       <p class="social"><a href="${SITE.instagram}">Instagram</a><a href="${SITE.youtube}">YouTube</a><a href="${SITE.facebook}">Facebook</a></p></div>
     ${contactForm()}`;
 }
@@ -91,10 +91,9 @@ function renderClass() {
         ${badge(c)}
         <dl><dt>Date</dt><dd>${c.date}</dd><dt>Time</dt><dd>${c.time}</dd><dt>Mode</dt><dd>${c.mode}</dd>
         <dt>Fee</dt><dd>${c.type === "Paid" ? c.price : "Free"}</dd></dl>
-        <a class="btn gold block" href="#register">Register Now</a>
+        <button class="btn gold block" onclick="openClass('${c.id}')">Register Now</button>
       </aside>
-    </div>
-    <div class="wrap reg" id="register"><div class="head"><h2>Register for this class</h2><p>Fill in your details and we will confirm on WhatsApp.</p></div>${classForm(c.id)}</div>`;
+    </div>`;
 }
 
 /* WhatsApp chat pop-up: appears once per visit after a short delay */
@@ -123,12 +122,36 @@ const personal = () =>
   fld("WhatsApp Number", "whatsapp", { req: 1, type: "tel", attr: 'pattern="[0-9+ ]{10,15}" inputmode="tel" title="Enter a valid WhatsApp number"' }) +
   fld("Email ID", "email", { req: 1, type: "email" });
 
-/* TYPE 1: class + special class registration */
+/* TYPE 1: class registration pop-up. Free classes: details only. Paid classes: payment link + UTR. */
 function classForm(selId) {
-  const opt = (c) => `<option value="${c.title} (${c.date})"${c.id === selId ? " selected" : ""}>${c.title} – ${c.date} ${c.type === "Paid" ? "(" + c.price + ")" : "(Free)"}</option>`;
-  const sel = `<select name="class" required><option value="">Select a class</option><optgroup label="Upcoming Classes">${CLASSES.map(opt).join("")}</optgroup><optgroup label="Special Classes">${SPECIAL.map(opt).join("")}</optgroup></select>`;
-  return `<form class="rform" onsubmit="submitForm(event,'class')">${personal()}${fld("Select the class", "class", { req: 1, html: sel, full: 1 })}${HP}
-    <button class="btn" type="submit">Submit Registration</button><p class="fmsg" role="status"></p></form>`;
+  const link = (c) => c.paymentLink || (c.registerLink && c.registerLink !== "#" ? c.registerLink : "");
+  const opt = (c) => `<option value="${c.title} (${c.date})" data-type="${c.type}" data-price="${c.price}" data-link="${link(c)}"${c.id === selId ? " selected" : ""}>${c.title} – ${c.date} ${c.type === "Paid" ? "(" + c.price + ")" : "(Free)"}</option>`;
+  const sel = `<select name="class" required onchange="syncClass(this)"><option value="">Select a class</option><optgroup label="Upcoming Classes">${CLASSES.map(opt).join("")}</optgroup><optgroup label="Special Classes">${SPECIAL.map(opt).join("")}</optgroup></select>`;
+  return `<form class="rform" onsubmit="submitForm(event,'class')">
+    <h4 class="fs">Your details</h4>${personal()}
+    <h4 class="fs">Your class</h4>${fld("Select the class", "class", { req: 1, html: sel, full: 1 })}
+    <div class="pay" hidden><p><b>Step 1.</b> Pay <b class="pamt"></b> for this class:</p>
+      <a class="btn gold pl" href="#" target="_blank" rel="noopener">Open Payment Link</a>
+      <p class="nolink" hidden>Payment link is not available yet. Please message us on WhatsApp.</p>
+      <p class="small"><b>Step 2.</b> After paying, enter your UTR / transaction ID below.</p></div>
+    <label class="full utr" hidden>UTR / Transaction ID <em>*</em><input name="utr" minlength="6" disabled></label>
+    ${HP}<button class="btn" type="submit">Submit Registration</button><p class="fmsg" role="status"></p></form>`;
+}
+function syncClass(s) {
+  const o = s.selectedOptions[0], f = s.form, paid = !!o && o.dataset.type === "Paid";
+  f.querySelector(".pay").hidden = !paid;
+  const u = f.querySelector(".utr"); u.hidden = !paid; u.querySelector("input").disabled = !paid;
+  if (paid) {
+    f.querySelector(".pamt").textContent = o.dataset.price;
+    const a = f.querySelector(".pl"), has = !!o.dataset.link;
+    a.hidden = !has; if (has) a.href = o.dataset.link;
+    f.querySelector(".nolink").hidden = has;
+  }
+  f.querySelector("button[type=submit]").textContent = paid ? "Submit Registration & Payment" : "Submit Registration";
+}
+function openClass(id) {
+  openModal("Class Registration", classForm(id));
+  syncClass($("#join select[name=class]"));
 }
 
 /* TYPE 2: membership + payment link + UTR (pop-up opened by Join Now) */
@@ -143,33 +166,39 @@ function membershipForm(i) {
     <button class="btn" type="submit">Submit Membership Details</button><p class="fmsg" role="status"></p></form>`;
 }
 function setPlan(s) { const o = s.selectedOptions[0], f = s.form; f.querySelector(".pl").href = o.dataset.link; f.querySelector(".pamt").textContent = o.dataset.price; }
-function openJoin(i) {
+function openModal(title, html) {
   let d = $("#join");
   if (!d) {
-    document.body.insertAdjacentHTML("beforeend", `<dialog id="join"><div class="dh"><h3>Membership Registration</h3><button aria-label="Close" onclick="this.closest('dialog').close()">×</button></div><div class="db"></div></dialog>`);
+    document.body.insertAdjacentHTML("beforeend", `<dialog id="join"><div class="dh"><h3></h3><button aria-label="Close" onclick="this.closest('dialog').close()">×</button></div><div class="db"></div></dialog>`);
     d = $("#join"); d.addEventListener("click", (e) => { if (e.target === d) d.close(); });
   }
-  d.querySelector(".db").innerHTML = membershipForm(i);
+  d.querySelector("h3").textContent = title;
+  d.querySelector(".db").innerHTML = html;
   d.showModal();
 }
+function openJoin(i) { openModal("Membership Registration", membershipForm(i)); }
 
 /* TYPE 3: contact us */
 function contactForm() {
-  return `<form class="rform one" onsubmit="submitForm(event,'contact')">${fld("Name", "name", { req: 1 })}${fld("Email ID", "email", { req: 1, type: "email" })}
-    ${fld("Message", "message", { req: 1, html: '<textarea name="message" rows="4" required></textarea>' })}${HP}
+  return `<form class="cform" onsubmit="submitForm(event,'contact')"><h3>Send us a message</h3>
+    ${fld("Name", "name", { req: 1 })}${fld("Email ID", "email", { req: 1, type: "email" })}
+    ${fld("Message", "message", { req: 1, full: 1, html: '<textarea name="message" rows="5" required></textarea>' })}${HP}
     <button class="btn" type="submit">Send message</button><p class="fmsg" role="status"></p></form>`;
 }
 
 async function submitForm(ev, type) {
   ev.preventDefault();
   const f = ev.target, btn = f.querySelector("button[type=submit]"), msg = f.querySelector(".fmsg");
-  if (f.website.value) return;                       // spam trap
+  if (f.elements.website.value) return;                       // spam trap
   if (!SITE.formsUrl || SITE.formsUrl.includes("PASTE")) { msg.className = "fmsg err"; msg.textContent = "Form is not connected yet. Paste your Apps Script URL in data.js (SITE.formsUrl)."; return; }
   const label = btn.textContent; btn.disabled = true; btn.textContent = "Sending...";
-  const body = new URLSearchParams(new FormData(f)); body.set("formType", type);
+  const body = new URLSearchParams(new FormData(f));
+  const o = f.elements.class && f.elements.class.selectedOptions && f.elements.class.selectedOptions[0];
+  if (type === "class" && o && o.dataset.type === "Paid") { type = "classpaid"; body.set("fee", o.dataset.price); }
+  body.set("formType", type);
   try {
     await fetch(SITE.formsUrl, { method: "POST", mode: "no-cors", body });
-    f.outerHTML = `<div class="thanks"><h3>${FORM.thanksTitle}</h3><p>${FORM.thanks[type]}</p></div>`;
+    f.outerHTML = `<div class="thanks"><h3>${FORM.thanksTitle}</h3><p>${FORM.thanks[type] || FORM.thanks.membership || "Thank you. We will confirm on WhatsApp shortly."}</p></div>`;
   } catch (e) {
     msg.className = "fmsg err"; msg.textContent = "Could not send. Please check your internet and try again.";
     btn.disabled = false; btn.textContent = label;
