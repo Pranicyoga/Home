@@ -103,7 +103,7 @@ const CLASSES = [
     date: "02 Nov 2026",
     time: "6:00 AM – 7:00 AM IST",
     mode: "Online (Zoom)",
-    type: "Paid",
+    type: "Free",
     price: "799",
     paymentLink: "https://rzp.io/rzp/Yv1NTolq",
     thumb: "images/class-1-1.jpg",
