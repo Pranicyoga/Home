@@ -1,7 +1,8 @@
 /* Renders content from data.js. Rarely needs editing. */
 const $ = (s) => document.querySelector(s);
 const img = (src) => `<img src="${src}" alt="" loading="lazy" onerror="this.remove()">`;
-const badge = (c) => c.type === "Paid" ? `<span class="badge paid">${c.price}</span>` : `<span class="badge free">Free</span>`;
+const money = (p) => /^\d/.test(String(p)) ? "₹" + p : p;
+const badge = (c) => c.type === "Paid" ? `<span class="badge paid">${money(c.price)}</span>` : `<span class="badge free">Free</span>`;
 const WA = `<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path fill="#fff" d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/><path fill="#25d366" d="M8.4 7.4c-.3.3-.6.9-.5 1.6.3 2.6 3.500 6.200 7.200 6.600.7.1 1.300-.3 1.600-.7l.200-.9-2.200-1-.9.900c-1-.4-2.500-1.900-2.900-2.900l.9-.9-1-2.200z"/></svg>`;
 
 function renderChrome(home) {
@@ -13,7 +14,7 @@ function renderChrome(home) {
       <nav>
         <a href="${p}#classes">Classes</a><a href="${p}#special">Special</a>
         <a href="${p}#membership">Membership</a><a href="${p}#instructor">Instructor</a><a href="${p}#faq">FAQ</a>
-        <a class="btn sm" href="${p}#contact">Contact</a>
+        <a href="${p}#contact">Contact</a><a class="btn sm gold" href="${p}#classes">Join Free</a>
       </nav>
     </div>`;
   $("#site-footer").innerHTML = `<div class="wrap"><p class="logo">${SITE.name}</p><p>© ${new Date().getFullYear()} ${SITE.name}. Free yoga for all.</p></div>`;
@@ -38,6 +39,7 @@ function renderHome() {
       <ul class="points">${h.points.map(x => `<li>${x}</li>`).join("")}</ul></div>
     <div class="hero-art"><div class="arch">${img(h.image)}</div><div class="ring"></div></div></div>`;
 
+  renderSections();
   $("#class-grid").innerHTML = CLASSES.map(c => card(c, "class")).join("");
   $("#special-grid").innerHTML = SPECIAL.map(c => card(c, "special")).join("");
 
@@ -90,7 +92,7 @@ function renderClass() {
       <aside class="side">
         ${badge(c)}
         <dl><dt>Date</dt><dd>${c.date}</dd><dt>Time</dt><dd>${c.time}</dd><dt>Mode</dt><dd>${c.mode}</dd>
-        <dt>Fee</dt><dd>${c.type === "Paid" ? c.price : "Free"}</dd></dl>
+        <dt>Fee</dt><dd>${c.type === "Paid" ? money(c.price) : "Free"}</dd></dl>
         <button class="btn gold block" onclick="openClass('${c.id}')">Register Now</button>
       </aside>
     </div>`;
@@ -125,7 +127,7 @@ const personal = () =>
 /* TYPE 1: class registration pop-up. Free classes: details only. Paid classes: payment link + UTR. */
 function classForm(selId) {
   const link = (c) => c.paymentLink || (c.registerLink && c.registerLink !== "#" ? c.registerLink : "");
-  const opt = (c) => `<option value="${c.title} (${c.date})" data-type="${c.type}" data-price="${c.price}" data-link="${link(c)}"${c.id === selId ? " selected" : ""}>${c.title} – ${c.date} ${c.type === "Paid" ? "(" + c.price + ")" : "(Free)"}</option>`;
+  const opt = (c) => `<option value="${c.title} (${c.date})" data-type="${c.type}" data-price="${money(c.price)}" data-link="${link(c)}"${c.id === selId ? " selected" : ""}>${c.title} – ${c.date} ${c.type === "Paid" ? "(" + money(c.price) + ")" : "(Free)"}</option>`;
   const sel = `<select name="class" required onchange="syncClass(this)"><option value="">Select a class</option><optgroup label="Upcoming Classes">${CLASSES.map(opt).join("")}</optgroup><optgroup label="Special Classes">${SPECIAL.map(opt).join("")}</optgroup></select>`;
   return `<form class="rform" onsubmit="submitForm(event,'class')">
     <h4 class="fs">Your details</h4>${personal()}
@@ -203,4 +205,30 @@ async function submitForm(ev, type) {
     msg.className = "fmsg err"; msg.textContent = "Could not send. Please check your internet and try again.";
     btn.disabled = false; btn.textContent = label;
   }
+}
+
+/* ===== HOME SECTIONS: next-class strip, gain, why, testimonials, CTA (data.js) ===== */
+const ICONS = {
+  target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-4 3-6 6.5-6s6.5 2 6.5 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c3 0 4.5 1.8 4.5 5"/>',
+  lotus: '<path d="M12 4c2 3 2 7 0 10-2-3-2-7 0-10zM12 14c-3-1-6-4-6-8 3 0 6 3 6 8zM12 14c3-1 6-4 6-8-3 0-6 3-6 8zM4 19h16"/>'
+};
+function renderSections() {
+  const n = CLASSES[0];
+  if (n) {
+    const el = $("#next-strip"); el.hidden = false;
+    el.innerHTML = `<div class="nx-main"><span class="nx-label">Next live class</span><h3>${n.title}</h3><p>${n.date} · ${n.time} · ${n.mode}</p></div>
+      <div class="nx-act"><span class="pill ${n.type === "Paid" ? "paid" : "free"}">${n.type === "Paid" ? money(n.price) : "Free"}</span><button class="btn gold" onclick="openClass('${n.id}')">Reserve my seat</button></div>`;
+  }
+  $("#gain-box").innerHTML = `<div class="head"><h2>${GAIN.title}</h2><p>${GAIN.text}</p></div>
+    <div class="grid3">${GAIN.items.map(g => `<div class="gcard"><div class="gimg">${img(g.image)}</div><h3>${g.title}</h3><p>${g.text}</p></div>`).join("")}</div>`;
+  $("#why-box").innerHTML = `<div class="why"><div class="why-l"><h2>${WHY.title}</h2><p>${WHY.text}</p>
+    <div class="why-img">${img(WHY.image)}</div><a class="btn gold big" href="#classes">${WHY.button}</a></div>
+    <div class="why-r">${WHY.items.map(w => `<div class="wcard"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[w.icon] || ICONS.lotus}</svg><h3>${w.title}</h3><p>${w.text}</p></div>`).join("")}</div></div>`;
+  const t = TESTIMONIALS.items.filter(x => x.text && x.text.trim());
+  $("#stories").hidden = !t.length;
+  $("#stories-box").innerHTML = `<div class="head"><h2>${TESTIMONIALS.title}</h2><p class="sub2">${TESTIMONIALS.subtitle}</p><p class="note">${TESTIMONIALS.note}</p></div>
+    <div class="grid3">${t.map(x => `<div class="tcard"><div class="av">${img(x.image)}</div><h3>${x.name}, ${x.place}</h3><p class="tsub">${x.tag}</p><p>${x.text}</p><div class="q" aria-hidden="true">“</div></div>`).join("")}</div>`;
+  $("#cta-box").innerHTML = `<h2>${CTA.title}</h2><p>${CTA.text}</p><div class="btns"><a class="btn big" href="${CTA.link}">${CTA.button}</a><a class="btn ghost" href="${SITE.whatsapp}" target="_blank" rel="noopener">Chat on WhatsApp</a></div>`;
 }
