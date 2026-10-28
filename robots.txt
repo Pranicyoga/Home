@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pranicyoga.github.io/Home/sitemap.xml
