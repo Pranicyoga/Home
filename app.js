@@ -55,7 +55,7 @@ function renderHome() {
       <button class="btn" onclick="openJoin(${i})">Join Now</button>
     </div>`).join("");
 
-  renderInstructors(0);
+  renderInstructors();
 
   $("#faq-list").innerHTML = FAQ.map(f => `<details><summary>${f.q}</summary><p>${f.a}</p></details>`).join("");
 
@@ -322,20 +322,47 @@ function instructorFor(c) {
 function instructorBox(c) {
   const t = instructorFor(c);
   return `<div class="by"><div class="avatar">${img(t.image, t.name + " – yoga instructor")}</div>
-    <div><span>Your instructor</span><b>${t.name}</b>${t.role ? `<em class="irole">${t.role}</em>` : ""}${t.tagline ? `<p>${t.tagline}</p>` : ""}
-    ${t.about ? `<p class="iabout">${t.about}</p>` : ""}${t.languages.length ? `<p class="ilang">Teaches in: ${t.languages.join(", ")}</p>` : ""}
-    ${t.profile ? `<a class="link" href="index.html#instructor">More about ${t.name} →</a>` : ""}</div></div>`;
+    <div><span>Your instructor</span><b>${t.name}</b>${t.tagline ? `<p>${t.tagline}</p>` : ""}</div></div>`;
 }
-function renderInstructors(sel) {
-  const multi = INSTRUCTORS.length > 1, i = INSTRUCTORS[sel] || INSTRUCTORS[0];
-  const tabs = multi ? `<div class="itabs" role="tablist">${INSTRUCTORS.map((x, k) => `<button type="button" role="tab" aria-selected="${k === sel}" class="${k === sel ? "on" : ""}" onclick="renderInstructors(${k})"><span class="tav">${img(x.image, "")}</span>${x.name}</button>`).join("")}</div>` : "";
-  $("#instructor-box").innerHTML = `<div class="head"><h2>${multi ? "Meet Your Instructors" : "Meet Your Instructor"}</h2></div>${tabs}
+function renderInstructors() {
+  const n = INSTRUCTORS.length, multi = n > 1;
+  const slide = (i, k) => `<div class="islide" role="group" aria-roledescription="slide" aria-label="${k + 1} of ${n}" aria-hidden="${k !== 0}">
     <div class="inst"><div class="portrait-wrap"><div class="portrait">${img(i.image, i.name + " – certified yoga and pranayama instructor")}</div></div>
     <div class="inst-text"><p class="role">${i.role}</p><h3 class="iname">${i.name}</h3>
       ${(i.bio || []).map(b => `<p>${b}</p>`).join("")}
       ${i.stats && i.stats.length ? `<div class="stats">${i.stats.map(s => `<div><b>${s.n}</b><span>${s.l}</span></div>`).join("")}</div>` : ""}
       ${i.languages && i.languages.length ? `<p class="ilang2">Teaches in: <b>${i.languages.join(", ")}</b></p>` : ""}
-      <ul class="chips">${(i.credentials || []).map(c => `<li>${c}</li>`).join("")}</ul></div></div>`;
+      <ul class="chips">${(i.credentials || []).map(c => `<li>${c}</li>`).join("")}</ul></div></div></div>`;
+  const nav = multi ? `<div class="inav"><button type="button" class="arrow iprev" aria-label="Previous instructor">‹</button>
+    <div class="idots">${INSTRUCTORS.map((x, k) => `<button type="button" class="${k ? "" : "on"}" aria-label="Show ${x.name}" title="${x.name}"></button>`).join("")}</div>
+    <button type="button" class="arrow inext" aria-label="Next instructor">›</button></div>` : "";
+  $("#instructor-box").innerHTML = `<div class="head"><h2>${multi ? "Meet Your Instructors" : "Meet Your Instructor"}</h2></div>
+    <div class="icar"${multi ? ' aria-roledescription="carousel" aria-label="Instructors"' : ""}><div class="iview"><div class="itrack">${INSTRUCTORS.map(slide).join("")}</div></div>${nav}</div>`;
+  if (multi) initInstructorSlider();
+}
+let iTimer = null;
+function initInstructorSlider() {
+  const box = $("#instructor-box"), track = box.querySelector(".itrack"), slides = [...box.querySelectorAll(".islide")], dots = [...box.querySelectorAll(".idots button")];
+  const n = slides.length, still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let cur = 0;
+  const go = (k) => {
+    cur = (k + n) % n; track.style.transform = `translateX(-${cur * 100}%)`;
+    slides.forEach((s, x) => s.setAttribute("aria-hidden", x !== cur));
+    dots.forEach((d, x) => d.classList.toggle("on", x === cur));
+  };
+  const stop = () => { clearInterval(iTimer); iTimer = null; };
+  const start = () => { stop(); if (!still) iTimer = setInterval(() => go(cur + 1), 6500); };   // change 6500 to slow down / speed up (milliseconds)
+  box.querySelector(".iprev").addEventListener("click", () => { go(cur - 1); start(); });
+  box.querySelector(".inext").addEventListener("click", () => { go(cur + 1); start(); });
+  dots.forEach((d, x) => d.addEventListener("click", () => { go(x); start(); }));
+  const car = box.querySelector(".icar");
+  car.addEventListener("mouseenter", stop); car.addEventListener("mouseleave", start);
+  car.addEventListener("focusin", stop); car.addEventListener("focusout", start);
+  let x0 = null;
+  car.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; stop(); }, { passive: true });
+  car.addEventListener("touchend", (e) => { if (x0 !== null) { const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 45) go(cur + (dx < 0 ? 1 : -1)); } x0 = null; start(); });
+  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+  start();
 }
 const LANGS = { english: "en", telugu: "te", hindi: "hi", tamil: "ta", kannada: "kn", malayalam: "ml", marathi: "mr", bengali: "bn", gujarati: "gu", odia: "or", punjabi: "pa" };
 function langCodes(s) {
