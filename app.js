@@ -1,7 +1,8 @@
 /* Renders content from data.js. Rarely needs editing. */
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s || "").replace(/"/g, "&quot;");
-const img = (src, alt = "", eager = false) => `<img src="${src}" alt="${esc(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" onerror="this.remove()">`;
+const img = (src, alt = "", eager = false) => !src ? "" : `<img src="${src}" alt="${esc(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" onerror="this.remove()">`;
+const lang = (c) => c.language ? `<span class="lang">${c.language}</span>` : "";
 const lvl = (c) => c.level ? `<span class="lvl">${c.level}</span>` : "";
 const money = (p) => /^\d/.test(String(p)) ? "₹" + p : p;
 const badge = (c) => c.type === "Paid" ? `<span class="badge paid">${money(c.price)}</span>` : `<span class="badge free">Free</span>`;
@@ -27,7 +28,7 @@ function renderChrome(home) {
 
 function card(c, kind) {
   return `<a class="card" href="class.html?t=${kind}&id=${c.id}">
-    <div class="thumb">${img(c.thumb, `${c.title.trim()} – ${c.level || "online"} yoga class`)}${badge(c)}${lvl(c)}</div>
+    <div class="thumb">${img(c.thumb, `${c.title.trim()} – ${c.level || "online"} yoga class`)}${badge(c)}${lvl(c)}${lang(c)}</div>
     <div class="body"><p class="when">${c.date} &nbsp;|&nbsp; ${c.mode}</p><h3>${c.title}</h3><p>${c.short}</p>
     <div class="foot"><span>${c.time}</span><span class="link">View details</span></div></div></a>`;
 }
@@ -54,13 +55,7 @@ function renderHome() {
       <button class="btn" onclick="openJoin(${i})">Join Now</button>
     </div>`).join("");
 
-  const i = INSTRUCTOR;
-  $("#instructor-box").innerHTML = `
-    <div class="portrait-wrap"><div class="portrait">${img(i.image, i.name + " – certified yoga and pranayama instructor")}</div></div>
-    <div class="inst-text"><p class="role">${i.role}</p><h2>${i.name}</h2>
-      ${i.bio.map(b => `<p>${b}</p>`).join("")}
-      <div class="stats">${i.stats.map(s => `<div><b>${s.n}</b><span>${s.l}</span></div>`).join("")}</div>
-      <ul class="chips">${i.credentials.map(c => `<li>${c}</li>`).join("")}</ul></div>`;
+  renderInstructors(0);
 
   $("#faq-list").innerHTML = FAQ.map(f => `<details><summary>${f.q}</summary><p>${f.a}</p></details>`).join("");
 
@@ -86,15 +81,14 @@ function renderClass() {
     <div class="wrap detail">
       <div class="main">
         <a class="link" href="index.html${back[0]}">← ${back[1]}</a>
-        <h1>${c.title}</h1><p class="lead">${c.about}</p>
+        <h1>${c.title}</h1><div class="cr"><span>Level: ${c.level || "All Levels"}</span><span>Language: ${c.language || "English"}</span><span>${c.mode}</span></div><p class="lead">${c.about}</p>
         <h3>What you will gain</h3><ul class="ticks">${c.benefits.map(b => `<li>${b}</li>`).join("")}</ul>
         <h3>What to bring</h3><p>${c.bring}</p>
-        <div class="by"><div class="avatar">${img(c.instructorImage || INSTRUCTOR.image, (c.instructor || INSTRUCTOR.name) + " – yoga instructor")}</div>
-          <div><span>Your instructor</span><b>${c.instructor || INSTRUCTOR.name}</b><p>${c.tagline || INSTRUCTOR.tagline}</p></div></div>
+        ${instructorBox(c)}
       </div>
       <aside class="side">
         ${badge(c)}
-        <dl><dt>Date</dt><dd>${c.date}</dd><dt>Time</dt><dd>${c.time}</dd><dt>Mode</dt><dd>${c.mode}</dd><dt>Level</dt><dd>${c.level || "All Levels"}</dd>
+        <dl><dt>Date</dt><dd>${c.date}</dd><dt>Time</dt><dd>${c.time}</dd><dt>Mode</dt><dd>${c.mode}</dd><dt>Level</dt><dd>${c.level || "All Levels"}</dd><dt>Language</dt><dd>${c.language || "English"}</dd>
         <dt>Fee</dt><dd>${c.type === "Paid" ? money(c.price) : "Free"}</dd></dl>
         <button class="btn gold block" onclick="openClass('${c.id}')">Register Now</button>
       </aside>
@@ -143,7 +137,7 @@ function syncMedical(s) {
 /* TYPE 1: class registration pop-up. Free classes: details only. Paid classes: payment link + UTR. */
 function classForm(selId) {
   const link = (c) => c.paymentLink || (c.registerLink && c.registerLink !== "#" ? c.registerLink : "");
-  const opt = (c) => `<option value="${c.title} (${c.date})" data-type="${c.type}" data-price="${money(c.price)}" data-link="${link(c)}"${c.id === selId ? " selected" : ""}>${c.title} – ${c.date} ${c.type === "Paid" ? "(" + money(c.price) + ")" : "(Free)"}</option>`;
+  const opt = (c) => `<option value="${c.title} (${c.date})" data-type="${c.type}" data-price="${money(c.price)}" data-link="${link(c)}"${c.id === selId ? " selected" : ""}>${c.title} – ${c.date} (${c.type === "Paid" ? money(c.price) : "Free"}${c.language ? " · " + c.language : ""})</option>`;
   const sel = `<select name="class" required onchange="syncClass(this)"><option value="">Select a class</option><optgroup label="Upcoming Classes">${CLASSES.map(opt).join("")}</optgroup><optgroup label="Special Classes">${SPECIAL.map(opt).join("")}</optgroup></select>`;
   return `<form class="rform" onsubmit="submitForm(event,'class')">
     <h4 class="fs">Your details</h4>${personal()}
@@ -237,7 +231,7 @@ function renderSections() {
   if (n) {
     const el = $("#next-strip"); el.hidden = false;
     el.innerHTML = `<div class="nx-main"><div class="nx-top"><span class="nx-label">Next live class</span><span class="pill ${n.type === "Paid" ? "paid" : "free"}">${n.type === "Paid" ? money(n.price) : "Free"}</span></div>
-      <h3>${n.title}</h3><p>${n.date} · ${n.time} · ${n.mode}${n.level ? " · " + n.level : ""}</p></div>
+      <h3>${n.title}</h3><p>${n.date} · ${n.time} · ${n.mode}${n.level ? " · " + n.level : ""}${n.language ? " · " + n.language : ""}</p></div>
       <div class="nx-act"><button class="btn gold" onclick="openClass('${n.id}')">Reserve my seat</button></div>`;
   }
   $("#gain-box").innerHTML = `<div class="head"><h2>${GAIN.title}</h2><p>${GAIN.text}</p></div>
@@ -286,14 +280,14 @@ function isoStart(c) {            // "02 Nov 2026" + "6:00 AM – 7:00 AM IST" -
 }
 function courseLD(c, kind) {
   const num = /\d/.test(c.price) ? String(c.price).replace(/[^\d.]/g, "") : "0";
-  const inst = { "@type": "CourseInstance", courseMode: "online", instructor: { "@type": "Person", name: c.instructor || INSTRUCTOR.name } };
+  const inst = { "@type": "CourseInstance", courseMode: "online", instructor: { "@type": "Person", name: instructorFor(c).name } };
   const start = isoStart(c), ev = /every\s+(\w+)/i.exec(c.date || "");
   if (start) inst.startDate = start;
   else if (ev && DAYS[ev[1].toLowerCase()]) inst.courseSchedule = { "@type": "Schedule", repeatFrequency: "P1W", byDay: "https://schema.org/" + DAYS[ev[1].toLowerCase()] };
   else if (ev) inst.courseSchedule = { "@type": "Schedule", repeatFrequency: "P1D" };
   return {
     "@context": "https://schema.org", "@type": "Course", name: c.title.trim(), description: c.about, url: classUrl(c, kind),
-    educationalLevel: c.level || "All Levels", inLanguage: "en", provider: { "@type": "Organization", name: SITE.name, sameAs: SITE.url },
+    educationalLevel: c.level || "All Levels", inLanguage: langCodes(c.language), provider: { "@type": "Organization", name: SITE.name, sameAs: SITE.url },
     offers: { "@type": "Offer", category: c.type, price: c.type === "Paid" ? num : "0", priceCurrency: "INR", availability: "https://schema.org/InStock", url: classUrl(c, kind) },
     hasCourseInstance: inst
   };
@@ -309,7 +303,42 @@ function classSEO(c, kind) {
     { "@type": "ListItem", position: 3, name: c.title.trim(), item: classUrl(c, kind) }] }, "ld-crumb");
 }
 function homeSEO() {
+  if (INSTRUCTORS.length > 1) injectLD({ "@context": "https://schema.org", "@graph": INSTRUCTORS.slice(1).map((x, k) => ({ "@type": "Person", "@id": SITE.url + "#instructor-" + (k + 2), name: x.name, jobTitle: x.role, description: x.tagline, worksFor: { "@id": SITE.url + "#org" } })) }, "ld-people");
   const items = [...CLASSES.map(c => [c, "class"]), ...SPECIAL.map(c => [c, "special"])];
   injectLD({ "@context": "https://schema.org", "@type": "ItemList", name: "Online yoga classes by " + SITE.name,
     itemListElement: items.map(([c, k], i) => ({ "@type": "ListItem", position: i + 1, url: classUrl(c, k), name: c.title.trim() })) }, "ld-list");
+}
+
+/* ===== INSTRUCTORS: several profiles, matched to classes by name ===== */
+const norm = (s) => String(s || "").trim().toLowerCase().replace(/\s+/g, " ");
+const shortBio = (p) => { const t = (p.bio && p.bio[0]) || ""; return t.length > 190 ? t.slice(0, 190).replace(/\s+\S*$/, "") + "…" : t; };
+function instructorFor(c) {
+  const nm = norm(c.instructor), p = nm ? INSTRUCTORS.find(x => norm(x.name) === nm) : INSTRUCTORS[0];
+  if (p) return { name: p.name, role: p.role || "", tagline: nm ? (p.tagline || c.tagline || "") : (c.tagline || p.tagline || ""), image: nm ? (p.image || c.instructorImage) : (c.instructorImage || p.image),
+    about: c.instructorBio || shortBio(p), languages: p.languages || [], profile: true };
+  return { name: c.instructor, role: c.instructorRole || "", tagline: c.tagline || "", image: c.instructorImage || "",
+    about: c.instructorBio || "", languages: [], profile: false };
+}
+function instructorBox(c) {
+  const t = instructorFor(c);
+  return `<div class="by"><div class="avatar">${img(t.image, t.name + " – yoga instructor")}</div>
+    <div><span>Your instructor</span><b>${t.name}</b>${t.role ? `<em class="irole">${t.role}</em>` : ""}${t.tagline ? `<p>${t.tagline}</p>` : ""}
+    ${t.about ? `<p class="iabout">${t.about}</p>` : ""}${t.languages.length ? `<p class="ilang">Teaches in: ${t.languages.join(", ")}</p>` : ""}
+    ${t.profile ? `<a class="link" href="index.html#instructor">More about ${t.name} →</a>` : ""}</div></div>`;
+}
+function renderInstructors(sel) {
+  const multi = INSTRUCTORS.length > 1, i = INSTRUCTORS[sel] || INSTRUCTORS[0];
+  const tabs = multi ? `<div class="itabs" role="tablist">${INSTRUCTORS.map((x, k) => `<button type="button" role="tab" aria-selected="${k === sel}" class="${k === sel ? "on" : ""}" onclick="renderInstructors(${k})"><span class="tav">${img(x.image, "")}</span>${x.name}</button>`).join("")}</div>` : "";
+  $("#instructor-box").innerHTML = `<div class="head"><h2>${multi ? "Meet Your Instructors" : "Meet Your Instructor"}</h2></div>${tabs}
+    <div class="inst"><div class="portrait-wrap"><div class="portrait">${img(i.image, i.name + " – certified yoga and pranayama instructor")}</div></div>
+    <div class="inst-text"><p class="role">${i.role}</p><h3 class="iname">${i.name}</h3>
+      ${(i.bio || []).map(b => `<p>${b}</p>`).join("")}
+      ${i.stats && i.stats.length ? `<div class="stats">${i.stats.map(s => `<div><b>${s.n}</b><span>${s.l}</span></div>`).join("")}</div>` : ""}
+      ${i.languages && i.languages.length ? `<p class="ilang2">Teaches in: <b>${i.languages.join(", ")}</b></p>` : ""}
+      <ul class="chips">${(i.credentials || []).map(c => `<li>${c}</li>`).join("")}</ul></div></div>`;
+}
+const LANGS = { english: "en", telugu: "te", hindi: "hi", tamil: "ta", kannada: "kn", malayalam: "ml", marathi: "mr", bengali: "bn", gujarati: "gu", odia: "or", punjabi: "pa" };
+function langCodes(s) {
+  const l = String(s || "English").split(/\s*(?:&|,|\/|\+|\band\b)\s*/i).filter(Boolean).map(x => LANGS[x.trim().toLowerCase()] || x.trim());
+  return l.length > 1 ? l : l[0];
 }
