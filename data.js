@@ -107,7 +107,7 @@ const CLASSES = [
     id: "morning-pranayama-basics",
     title: "Correct Your Breathing Pattern ",
     level: "Beginner",   // Beginner, Intermediate, Expert or All Levels
-    language: "English",   // language the class is taught in: English, Telugu, Hindi or "English & Telugu"
+    language: "Hindi & English",   // language the class is taught in: English, Telugu, Hindi or "English & Telugu"
     seoTitle: "Online Pranayama Class for Beginners",   // shown in Google results (keep under about 45 characters)
     seoDesc: "Join a live online pranayama class for beginners. Learn breathing exercises, breath awareness and a simple 41-day practice plan with Pranic Yoga.",   // Google description (about 150 characters)
     date: "02 Nov 2026",
@@ -143,7 +143,7 @@ const SPECIAL = [
     id: "yoga-nidra",
     title: "Deep Relaxation & Yoga Nidra",
     level: "All Levels",   // Beginner, Intermediate, Expert or All Levels
-    language: "English",   // language the class is taught in: English, Telugu, Hindi or "English & Telugu"
+    language: "Hindi & English",   // language the class is taught in: English, Telugu, Hindi or "English & Telugu"
     seoTitle: "Yoga Nidra Online Class for Deep Relaxation",   // shown in Google results (keep under about 45 characters)
     seoDesc: "Live yoga nidra online class for deep relaxation and better rest. Guided body awareness and gentle breathing, beginner friendly. Join Pranic Yoga on Zoom.",   // Google description (about 150 characters)
     date: "Every Saturday",
@@ -170,7 +170,7 @@ const SPECIAL = [
     id: "mantra-meditation",
     title: "Mantra Meditation",
     level: "Beginner",   // Beginner, Intermediate, Expert or All Levels
-    language: "English",   // language the class is taught in: English, Telugu, Hindi or "English & Telugu"
+    language: "Hindi & English",   // language the class is taught in: English, Telugu, Hindi or "English & Telugu"
     seoTitle: "Mantra Meditation Online for Beginners",   // shown in Google results (keep under about 45 characters)
     seoDesc: "Learn mantra meditation online with simple chanting, sound awareness and silent repetition. A beginner-friendly live class by Pranic Yoga.",   // Google description (about 150 characters)
     date: "Every Sunday",
@@ -223,7 +223,46 @@ const INSTRUCTORS = [
   credentials: ["200-hr Yoga Teacher Training", "2+ years teaching experience", "100+ students guided"]
 },
 
-/* ADD ANOTHER INSTRUCTOR: copy the block below, remove the // at the start of each line, fill it in
+{
+  name: "Gitanjali",
+  role: "Certified Yoga Instructor",
+  languages: ["English"],   // languages this instructor teaches in (optional)
+  tagline: "Helping you breathe better, move better and live calmer.", /* shown at the bottom of every class page */
+  image: "images/instructor.jpg",
+  bio: ["I have been practising yoga for the past six years, learning from different masters and exploring various paths, from Sivananda to Sadhguru, and from Kriya Yoga and Karma Yoga to Vedanta, Samkhya, Tantra, and Mantra.","Through my journey of learning and teaching, I realised that all these paths share a common goal: to help us become more aware of ourselves.","Today, we live surrounded by distractions, from the moment we wake up until we go to sleep. We often forget to connect with ourselves. I believe that our breath is one of the simplest ways to begin this journey. When we learn to understand and control our breath, we can develop better awareness of our minds.","This is why I started Pranic Yoga — to help people connect with their breath through breathing practices and other forms of yoga, bringing more awareness and balance into everyday life."],
+  stats: [{n:"100+",l:"Students guided"},{n:"2+",l:"Years teaching"},{n:"200hr",l:"Certified"}],
+  credentials: ["200-hr Yoga Teacher Training", "2+ years teaching experience", "100+ students guided"]
+},
+
+{
+  name: "Sandya",
+  role: "Certified Yoga Instructor",
+  languages: ["English"],   // languages this instructor teaches in (optional)
+  tagline: "Helping you breathe better, move better and live calmer.", /* shown at the bottom of every class page */
+  image: "images/instructor.jpg",
+  bio: ["I have been practising yoga for the past six years, learning from different masters and exploring various paths, from Sivananda to Sadhguru, and from Kriya Yoga and Karma Yoga to Vedanta, Samkhya, Tantra, and Mantra.","Through my journey of learning and teaching, I realised that all these paths share a common goal: to help us become more aware of ourselves.","Today, we live surrounded by distractions, from the moment we wake up until we go to sleep. We often forget to connect with ourselves. I believe that our breath is one of the simplest ways to begin this journey. When we learn to understand and control our breath, we can develop better awareness of our minds.","This is why I started Pranic Yoga — to help people connect with their breath through breathing practices and other forms of yoga, bringing more awareness and balance into everyday life."],
+  stats: [{n:"100+",l:"Students guided"},{n:"2+",l:"Years teaching"},{n:"200hr",l:"Certified"}],
+  credentials: ["200-hr Yoga Teacher Training", "2+ years teaching experience", "100+ students guided"]
+},
+
+{
+  name: "Sneha",
+  role: "Certified Yoga Instructor",
+  languages: ["English"],   // languages this instructor teaches in (optional)
+  tagline: "Helping you breathe better, move better and live calmer.", /* shown at the bottom of every class page */
+  image: "images/instructor.jpg",
+  bio: ["I have been practising yoga for the past six years, learning from different masters and exploring various paths, from Sivananda to Sadhguru, and from Kriya Yoga and Karma Yoga to Vedanta, Samkhya, Tantra, and Mantra.","Through my journey of learning and teaching, I realised that all these paths share a common goal: to help us become more aware of ourselves.","Today, we live surrounded by distractions, from the moment we wake up until we go to sleep. We often forget to connect with ourselves. I believe that our breath is one of the simplest ways to begin this journey. When we learn to understand and control our breath, we can develop better awareness of our minds.","This is why I started Pranic Yoga — to help people connect with their breath through breathing practices and other forms of yoga, bringing more awareness and balance into everyday life."],
+  stats: [{n:"100+",l:"Students guided"},{n:"2+",l:"Years teaching"},{n:"200hr",l:"Certified"}],
+  credentials: ["200-hr Yoga Teacher Training", "2+ years teaching experience", "100+ students guided"]
+},
+
+
+
+
+
+
+   
+   /* ADD ANOTHER INSTRUCTOR: copy the block below, remove the // at the start of each line, fill it in
    and put it after the comma above. To show this instructor on a class page, type the SAME name in that
    class's  instructor: "..."  line.
 
