@@ -110,7 +110,7 @@ const CLASSES = [
     language: "Hindi & English",   // language the class is taught in: English, Telugu, Hindi or "English & Telugu"
     seoTitle: "Online Pranayama Class for Beginners",   // shown in Google results (keep under about 45 characters)
     seoDesc: "Join a live online pranayama class for beginners. Learn breathing exercises, breath awareness and a simple 41-day practice plan with Pranic Yoga.",   // Google description (about 150 characters)
-    date: "02 Nov 2026",
+    date: "Will be announced",
     time: "6:00 AM – 7:00 AM IST",
     mode: "Online (Zoom)",
     type: "Free",
