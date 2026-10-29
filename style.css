@@ -225,14 +225,14 @@ dialog .rform{max-width:none;border-radius:0}.reg{padding-bottom:84px}
 .itrack{display:flex;gap:24px}
 .icar:not(.multi) .itrack{display:block}
 .islide{flex:0 0 100%;min-width:0;box-sizing:border-box}
-.icar.multi .islide{flex-basis:78%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:26px;padding:38px 36px;opacity:.38;transform:scale(.97);transition:opacity .6s,transform .6s}
+.icar.multi .islide{flex-basis:86%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:26px;padding:38px 36px;opacity:.38;transform:scale(.97);transition:opacity .6s,transform .6s}
 .icar.multi .islide.cur{opacity:1;transform:none}
 .icar.multi .inst{gap:44px}
 .inav{display:flex;justify-content:center;margin-top:30px}
 .idots{display:flex;gap:10px;align-items:center}
 .idots button{width:11px;height:11px;border-radius:10px;border:0;padding:0;background:rgba(255,255,255,.35);cursor:pointer;transition:width .3s,background .3s}
 .idots button.on{background:var(--gold);width:32px}
-@media(max-width:860px){.icar.multi .islide{flex-basis:80%;padding:26px 18px}.icar.multi .itrack{gap:12px}.icar.multi .inst{gap:36px}}
+@media(max-width:860px){.icar.multi .islide{flex-basis:88%;padding:26px 20px}.icar.multi .inst{gap:36px}}
 @media(prefers-reduced-motion:reduce){.icar.multi .islide{transition:none}}
 
 /* MOBILE */
