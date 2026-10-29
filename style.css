@@ -208,6 +208,18 @@ dialog .rform{max-width:none;border-radius:0}.reg{padding-bottom:84px}
 .rform .hint{font-size:.85rem;color:#6d756f;margin:0}
 .rform .med-d textarea{margin-top:6px;resize:vertical}
 
+.dark .head h2{color:#fff}.dark .head p{color:#c9d6cb}
+.itabs{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:-14px 0 44px}
+.itabs button{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:40px;padding:6px 20px 6px 6px;font:600 1rem var(--body);cursor:pointer;transition:background .2s}
+.itabs button:hover,.itabs button.on{background:var(--gold);border-color:var(--gold)}
+.tav{width:40px;height:40px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#a9bfa4,#d9c28f);flex:none}.tav img{width:100%;height:100%;object-fit:cover;object-position:top}
+.inst .iname{font:700 clamp(2rem,4vw,2.6rem) var(--head);color:#fff;margin:.2rem 0 1rem}
+.ilang2{margin:0 0 1rem}.ilang2 b{color:var(--gold)}
+.lang{position:absolute;right:12px;bottom:12px;background:rgba(27,42,33,.9);color:#fff;font-weight:700;font-size:.78rem;padding:4px 12px;border-radius:20px}
+.cr{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 1.2rem}.cr span{background:var(--sand);color:var(--dark);font-weight:600;font-size:.88rem;padding:5px 14px;border-radius:20px}
+.by .irole{display:block;font-style:normal;font-size:.85rem;font-weight:700;color:var(--green)}
+.by .iabout{font-size:.92rem;margin:6px 0 0}.by .ilang{font-size:.85rem;color:#6d756f;margin:4px 0 0}.by .link{display:inline-block;margin-top:8px;font-size:.92rem}
+
 /* MOBILE */
 @media(max-width:860px){
  .burger{display:block}
