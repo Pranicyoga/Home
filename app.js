@@ -1,379 +1,250 @@
-/* Renders content from data.js. Rarely needs editing. */
-const $ = (s) => document.querySelector(s);
-const esc = (s) => String(s || "").replace(/"/g, "&quot;");
-const img = (src, alt = "", eager = false) => !src ? "" : `<img src="${src}" alt="${esc(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" onerror="this.remove()">`;
-const lang = (c) => c.language ? `<span class="lang">${c.language}</span>` : "";
-const lvl = (c) => c.level ? `<span class="lvl">${c.level}</span>` : "";
-const money = (p) => /^\d/.test(String(p)) ? "₹" + p : p;
-const badge = (c) => c.type === "Paid" ? `<span class="badge paid">${money(c.price)}</span>` : `<span class="badge free">Free</span>`;
-const WA = `<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path fill="#fff" d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/><path fill="#25d366" d="M8.4 7.4c-.3.3-.6.9-.5 1.6.3 2.6 3.500 6.200 7.200 6.600.7.1 1.300-.3 1.600-.7l.200-.9-2.200-1-.9.900c-1-.4-2.500-1.900-2.900-2.900l.9-.9-1-2.200z"/></svg>`;
+/* ===== THEME: change colours/fonts here ===== */
+:root{--green:#3f5d45;--dark:#1b2a21;--sand:#f6f1e7;--gold:#c58b2a;--text:#3a413c;--white:#fff;
+--head:'Outfit',system-ui,sans-serif;--body:'Outfit',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{font-family:var(--body);color:var(--text);line-height:1.7;background:#fff;overflow-x:hidden}
+h1,h2,h3,.logo,.price{font-family:var(--head);color:var(--dark);line-height:1.15}
+h1{font-size:clamp(2.4rem,6vw,4rem)}h2{font-size:clamp(2rem,4vw,2.8rem)}h3{font-size:1.5rem;margin:.5rem 0 .3rem}
+a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1160px;margin:auto;padding:0 20px}.narrow{max-width:800px}
+.section{padding:84px 0}.alt{background:var(--sand)}.dark{background:var(--dark);color:#d5ddd6}
+.head{text-align:center;max-width:600px;margin:0 auto 44px}
+.head h2::after{content:"";display:block;width:56px;height:3px;background:var(--gold);margin:14px auto 0;border-radius:3px}
+.head p{margin-top:12px}
+.btn{display:inline-block;background:var(--green);color:#fff;padding:13px 30px;border-radius:40px;border:0;cursor:pointer;font:inherit;font-weight:700;transition:background .2s,transform .2s}
+.btn:hover{background:var(--gold);transform:translateY(-2px)}.btn.sm{padding:8px 22px}.btn.block{display:block;text-align:center}
+.btn.gold{background:var(--gold)}.btn.gold:hover{background:#a8741f}
+.btn.ghost{background:transparent;border:2px solid rgba(255,255,255,.6)}.btn.ghost:hover{background:#fff;color:var(--dark)}
+.link{color:var(--green);font-weight:700}
 
-function renderChrome(home) {
-  const p = home ? "" : "index.html";
-  $("#site-header").innerHTML = `
-    <div class="wrap bar">
-      <a class="logo" href="index.html" aria-label="${SITE.name} home"><img src="images/logo-horizontal.svg" alt="${SITE.name} – ${SITE.tagline}" onerror="this.replaceWith(document.createTextNode('${SITE.name}'))"></a>
-      <button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
-      <nav>
-        <a href="${p}#classes">Classes</a><a href="${p}#special">Special</a>
-        <a href="${p}#membership">Membership</a><a href="${p}#instructor">Instructor</a><a href="${p}#faq">FAQ</a>
-        <a href="${p}#contact">Contact</a><a class="btn sm gold" href="${p}#classes">Join Free</a>
-      </nav>
-    </div>`;
-  $("#site-footer").innerHTML = `<div class="wrap"><a href="index.html" aria-label="${SITE.name} home"><img class="flogo" src="images/logo-horizontal-white.svg" alt="${SITE.name}" onerror="this.replaceWith(document.createTextNode('${SITE.name}'))"></a><p>© ${new Date().getFullYear()} ${SITE.name}. Online yoga, pranayama &amp; meditation classes for beginners.</p></div>`;
-  document.querySelectorAll("nav a").forEach(a => a.addEventListener("click", () => document.body.classList.remove("nav-open")));
-  waPopup();
-  document.body.insertAdjacentHTML("beforeend", `<a class="wa" href="${SITE.whatsapp}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">${WA}</a>`);
-}
+/* HEADER */
+#site-header{position:sticky;top:0;z-index:30;background:#fff;box-shadow:0 1px 10px rgba(0,0,0,.08)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:84px}
+.logo{display:block;line-height:0}.logo img{height:68px;width:auto;display:block}
+nav{display:flex;gap:26px;align-items:center;font-weight:600}nav a:hover{color:var(--gold)}
+.burger{display:none;background:none;border:0;font-size:1.9rem;cursor:pointer}
 
-function card(c, kind) {
-  return `<a class="card" href="class.html?t=${kind}&id=${c.id}">
-    <div class="thumb">${img(c.thumb, `${c.title.trim()} – ${c.level || "online"} yoga class`)}${badge(c)}${lvl(c)}${lang(c)}</div>
-    <div class="body"><p class="when">${c.date} &nbsp;|&nbsp; ${c.mode}</p><h3>${c.title}</h3><p>${c.short}</p>
-    <div class="foot"><span>${c.time}</span><span class="link">View details</span></div></div></a>`;
-}
+/* HERO (image optional: 640x780) */
+#hero{position:relative;overflow:hidden;color:#fff;padding:70px 0 130px;
+background:radial-gradient(circle at 85% 20%,rgba(197,139,42,.35),transparent 45%),radial-gradient(circle at 10% 90%,rgba(120,170,130,.25),transparent 40%),linear-gradient(135deg,#1b2a21,#3f5d45)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+#hero h1{color:#fff}
+.hero-text>p{font-size:1.2rem;margin:1.2rem 0 2rem;max-width:520px;color:#e4ebe5}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.points{list-style:none;padding:0;display:flex;gap:10px 22px;flex-wrap:wrap;margin-top:2.2rem;font-weight:600;color:#e4ebe5}
+.points li::before{content:"✓ ";color:var(--gold)}
+.hero-art{position:relative;max-width:420px;margin-left:auto;width:100%}
+.arch{aspect-ratio:640/780;border-radius:999px 999px 24px 24px;overflow:hidden;border:6px solid rgba(255,255,255,.25);background:linear-gradient(160deg,#d9c28f,#7fa086);position:relative;z-index:1}
+.arch img{width:100%;height:100%;object-fit:cover}
+.ring{position:absolute;inset:-18px -18px auto auto;width:70%;aspect-ratio:1;border:2px dashed var(--gold);border-radius:50%;opacity:.7}
 
-function renderHome() {
-  renderChrome(true);
-  const h = SITE.hero;
-  $("#hero").innerHTML = `<div class="wrap hero-grid">
-    <div class="hero-text"><h1>${h.title}</h1><p>${h.text}</p>
-      <div class="cta"><a class="btn gold" href="${h.buttonLink}">${h.buttonText}</a><a class="btn ghost" href="#membership">View Memberships</a></div>
-      <ul class="points">${h.points.map(x => `<li>${x}</li>`).join("")}</ul></div>
-    <div class="hero-art"><div class="arch">${img(h.image, "Yoga teacher meditating in lotus pose – free online yoga classes for beginners", true)}</div><div class="ring"></div></div></div>`;
+/* CARDS */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:28px}
+#plan-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(31,42,34,.1);transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(31,42,34,.16)}
+.thumb{position:relative;aspect-ratio:4/3;background:linear-gradient(135deg,#a9bfa4,#d9c28f);overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.body{padding:18px 22px 20px;display:flex;flex-direction:column;flex:1}
+.when{font-size:.85rem;font-weight:700;color:var(--gold)}.body h3{margin:.2rem 0 .4rem}.body p:not(.when){font-size:.97rem}
+.foot{display:flex;justify-content:space-between;gap:10px;margin-top:auto;padding-top:14px;border-top:1px solid #eee;font-size:.88rem;color:#6d756f}
+.badge{position:absolute;top:12px;left:12px;padding:5px 16px;border-radius:20px;font-weight:700;font-size:.85rem;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.side .badge{position:static;display:inline-block;margin-bottom:6px}
+.free{background:var(--green)}.paid{background:var(--gold)}
 
-  renderSections();
-  homeSEO();
-  $("#class-grid").innerHTML = CLASSES.map(c => card(c, "class")).join("");
-  $("#special-grid").innerHTML = SPECIAL.map(c => card(c, "special")).join("");
+/* MEMBERSHIP */
+.plan{position:relative;background:#fff;border-radius:16px;padding:36px 28px;text-align:center;border:2px solid transparent;box-shadow:0 6px 24px rgba(31,42,34,.1)}
+.plan.featured{border-color:var(--gold);transform:scale(1.04)}
+.tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gold);color:#fff;font-size:.8rem;font-weight:700;padding:3px 16px;border-radius:20px}
+.price{font-size:2.8rem;color:var(--green);margin:.3rem 0 1rem}
+.plan ul{list-style:none;padding:0;margin-bottom:1.6rem}.plan li{padding:9px 0;border-bottom:1px solid #eee}
+.ticks{list-style:none;padding:0}.ticks li{padding:4px 0 4px 28px;position:relative}.ticks li::before{content:"✓";position:absolute;left:0;color:var(--gold);font-weight:700}
 
-  $("#plan-grid").innerHTML = MEMBERSHIPS.map((m, i) => `
-    <div class="plan ${m.featured ? "featured" : ""}">
-      ${m.featured ? '<span class="tag">Most popular</span>' : ""}
-      <h3>${m.name}</h3><div class="price">${m.price}</div>
-      <ul>${m.features.map(f => `<li>${f}</li>`).join("")}</ul>
-      <button class="btn" onclick="openJoin(${i})">Join Now</button>
-    </div>`).join("");
+/* INSTRUCTOR */
+.inst{display:grid;grid-template-columns:.9fr 1.2fr;gap:64px;align-items:center;max-width:1000px;margin:auto}
+.portrait-wrap{position:relative;max-width:380px;width:100%;margin:auto}
+.portrait-wrap::before{content:"";position:absolute;inset:22px -22px -22px 22px;border:3px solid var(--gold);border-radius:20px}
+.portrait{position:relative;width:100%;max-width:360px;margin:0 auto;aspect-ratio:7/9;border-radius:20px;overflow:hidden;background:linear-gradient(160deg,#d9c28f,#7fa086)}
+.portrait img{width:100%;height:100%;object-fit:cover}
+.role{color:var(--gold);font-weight:700}.inst h2{color:#fff;margin:.2rem 0 1rem}.inst-text>p{margin-bottom:.8rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:1.8rem 0}
+.stats div{background:rgba(255,255,255,.07);border-radius:12px;padding:16px 8px;text-align:center}
+.stats b{display:block;font:700 2rem var(--head);color:var(--gold)}.stats span{font-size:.85rem}
+.chips{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.chips li{border:1px solid rgba(255,255,255,.3);border-radius:30px;padding:5px 16px;font-size:.9rem}
 
-  renderInstructors();
+/* Safety net: keeps the instructor photo a sensible size on any layout */
+.two{display:grid;grid-template-columns:1fr 1.3fr;gap:44px;align-items:center}
+.inst-text,.inst>div{min-width:0}
+@media(max-width:860px){.two{grid-template-columns:1fr}.portrait{max-width:280px}.inst-text{text-align:left}}
 
-  $("#faq-list").innerHTML = FAQ.map(f => `<details><summary>${f.q}</summary><p>${f.a}</p></details>`).join("");
+/* FAQ */
+details{border-bottom:1px solid #e3e6e3;padding:18px 4px}
+summary{cursor:pointer;font:600 1.5rem var(--head);color:var(--dark);list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--gold);font-size:1.8rem;line-height:1}
+details[open] summary::after{content:"–"}details p{margin-top:10px}
 
-  $("#contact-box").innerHTML = `
-    <div class="info"><h3>Get in touch</h3><p class="lead">Questions about a class or plan? Write to us or message on WhatsApp.</p>
-      <div class="row"><span>Phone</span><a href="tel:${SITE.phone.replace(/\s/g, "")}">${SITE.phone}</a></div>
-      <div class="row"><span>Email</span><a href="mailto:${SITE.email}">${SITE.email}</a></div>
-      <div class="row"><span>Location</span>${SITE.address}</div>
-      <a class="btn gold wabtn" href="${SITE.whatsapp}" target="_blank" rel="noopener">Chat on WhatsApp</a>
-      <p class="social"><a href="${SITE.instagram}">Instagram</a><a href="${SITE.youtube}">YouTube</a><a href="${SITE.facebook}">Facebook</a></p></div>
-    ${contactForm()}`;
-}
+/* CONTACT */
+#contact-box{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:start;max-width:1000px;margin:auto}
+.info p{margin:1rem 0}.info b{color:var(--dark)}.social a{margin-right:18px;color:var(--green);font-weight:700}
+form{display:grid;gap:14px;background:var(--sand);padding:28px;border-radius:16px}
+input,textarea{width:100%;padding:13px 16px;border:1px solid #cdd3cd;border-radius:10px;font:inherit;background:#fff}
 
-function renderClass() {
-  renderChrome(false);
-  const q = new URLSearchParams(location.search), kind = q.get("t") === "special" ? "special" : "class";
-  const c = (kind === "special" ? SPECIAL : CLASSES).find(x => x.id === q.get("id"));
-  if (!c) { $("#class-page").innerHTML = `<div class="wrap section"><h2>Class not found</h2><br><a class="btn" href="index.html#classes">Back to classes</a></div>`; return; }
-  classSEO(c, kind);
-  const back = kind === "special" ? ["#special", "All special classes"] : ["#classes", "All classes"];
-  $("#class-page").innerHTML = `
-    <div class="class-banner">${img(c.banner, c.title.trim() + " – online yoga class")}<div class="shade"></div></div>
-    <div class="wrap detail">
-      <div class="main">
-        <a class="link" href="index.html${back[0]}">← ${back[1]}</a>
-        <h1>${c.title}</h1><div class="cr"><span>Level: ${c.level || "All Levels"}</span><span>Language: ${c.language || "English"}</span><span>${c.mode}</span></div><p class="lead">${c.about}</p>
-        <h3>What you will gain</h3><ul class="ticks">${c.benefits.map(b => `<li>${b}</li>`).join("")}</ul>
-        <h3>What to bring</h3><p>${c.bring}</p>
-        ${instructorBox(c)}
-      </div>
-      <aside class="side">
-        ${badge(c)}
-        <dl><dt>Date</dt><dd>${c.date}</dd><dt>Time</dt><dd>${c.time}</dd><dt>Mode</dt><dd>${c.mode}</dd><dt>Level</dt><dd>${c.level || "All Levels"}</dd><dt>Language</dt><dd>${c.language || "English"}</dd>
-        <dt>Fee</dt><dd>${c.type === "Paid" ? money(c.price) : "Free"}</dd></dl>
-        <button class="btn gold block" onclick="openClass('${c.id}')">Register Now</button>
-      </aside>
-    </div>`;
-}
+/* CLASS PAGE (banner 1600x600) */
+.class-banner{position:relative;width:100%;height:clamp(200px,32vw,400px);background:linear-gradient(120deg,#3f5d45,#c58b2a);overflow:hidden}
+.class-banner img{width:100%;height:100%;object-fit:cover}
+.shade{position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.25))}
+.detail{display:grid;grid-template-columns:2fr 1fr;gap:48px;padding-top:44px;padding-bottom:84px}
+.detail h1{margin:.6rem 0 1rem}.lead{font-size:1.12rem;margin-bottom:1.4rem}.main h3{margin-top:1.6rem}
+.by{display:flex;align-items:center;gap:18px;margin-top:2.4rem;padding:20px 22px;background:var(--sand);border-left:4px solid var(--gold);border-radius:14px}
+.avatar{flex:none;width:72px;height:72px;border-radius:50%;overflow:hidden;background:linear-gradient(160deg,#d9c28f,#7fa086)}
+.avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.by span{font-size:.8rem;font-weight:700;color:var(--gold)}.by b{display:block;font:700 1.5rem var(--head);color:var(--dark);line-height:1.2}.by p{margin:2px 0 0;font-size:.95rem}
+.side{background:var(--sand);padding:28px;border-radius:16px;align-self:start;position:sticky;top:96px;margin-top:-90px;position:sticky;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.side dt{font-size:.8rem;font-weight:700;color:var(--gold);margin-top:12px}.side dd{margin:0 0 4px;color:var(--dark);font-weight:600}.side .btn{margin-top:20px}
 
-/* WhatsApp chat pop-up: appears once per visit after a short delay */
-function waPopup() {
-  try { if (sessionStorage.getItem("waSeen")) return; } catch (e) {}
-  const el = document.createElement("div");
-  el.className = "wa-pop";
-  el.innerHTML = `<button class="x" aria-label="Close">×</button>
-    <a href="${SITE.whatsapp}" target="_blank" rel="noopener"><b>${SITE.name}</b>
-    <span class="dots"><i></i><i></i><i></i></span><p>${SITE.waGreeting}</p></a>`;
-  document.body.appendChild(el);
-  const hide = () => { el.classList.remove("show"); try { sessionStorage.setItem("waSeen", "1"); } catch (e) {} };
-  setTimeout(() => el.classList.add("show"), 2500);   // pop up after 2.5 s
-  setTimeout(() => el.classList.add("typed"), 4300);  // "typing..." then message
-  setTimeout(hide, 18000);                            // auto-hide
-  el.querySelector(".x").addEventListener("click", hide);
-}
+footer{background:#111b15;color:#aeb9b0;text-align:center;padding:44px 0 36px}.flogo{height:84px;width:auto;display:block;margin:0 auto 18px}footer p{margin:0}
 
-/* ===== FORMS: saved to Google Sheets via Apps Script (SITE.formsUrl + FORM in data.js) ===== */
-const fld = (label, name, o = {}) => `<label class="${o.full ? "full" : ""}">${label}${o.req ? " <em>*</em>" : ""}${o.html || `<input name="${name}" type="${o.type || "text"}" ${o.req ? "required" : ""} ${o.attr || ""}>`}</label>`;
-const GENDER = `<select name="gender"><option value="">Select (optional)</option><option>Female</option><option>Male</option><option>Other</option><option>Prefer not to say</option></select>`;
-const HP = `<input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">`;
-const personal = () =>
-  fld("Name", "name", { req: 1 }) + fld("Gender", "gender", { html: GENDER }) + fld("Occupation", "occupation") +
-  fld("Where are you from?", "place", { req: 1 }) +
-  fld("WhatsApp Number", "whatsapp", { req: 1, type: "tel", attr: 'pattern="[0-9+ ]{10,15}" inputmode="tel" title="Enter a valid WhatsApp number"' }) +
-  fld("Email ID", "email", { req: 1, type: "email" });
+/* WHATSAPP FLOAT */
+.wa{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:40;transition:transform .2s}
+.wa:hover{transform:scale(1.1)}
 
-/* HEALTH & SAFETY QUESTIONS (class + membership forms) */
-const YN = (name) => `<select name="${name}" required onchange="syncMedical(this)"><option value="">Select</option><option>No</option><option>Yes</option></select>`;
-const medicalFields = () =>
-  `<h4 class="fs">Health &amp; safety</h4>` +
-  fld("Do you have any serious medical condition, injury or recent surgery?", "medical", { req: 1, full: 1, html: YN("medical") }) +
-  fld("Are you currently taking any medication?", "medication", { req: 1, full: 1, html: YN("medication") }) +
-  `<label class="full med-d" hidden>Please tell us briefly about the condition or medication <em>*</em><textarea name="medicalDetails" rows="3" disabled required placeholder="For example: knee surgery in 2025, blood pressure medicine"></textarea></label>` +
-  `<p class="full hint">Your health information is kept private and is used only to keep your practice safe. Yoga is not a substitute for medical advice.</p>`;
-function syncMedical(s) {
-  const f = s.form, yes = f.elements.medical.value === "Yes" || f.elements.medication.value === "Yes";
-  const l = f.querySelector(".med-d"); l.hidden = !yes; l.querySelector("textarea").disabled = !yes;
-}
+.wa::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25d366;animation:waPulse 2s infinite}
+@keyframes waPulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.7);opacity:0}}
+.wa-pop{position:fixed;right:18px;bottom:88px;width:min(270px,calc(100vw - 36px));background:#fff;border-radius:16px 16px 4px 16px;padding:14px 18px;box-shadow:0 8px 28px rgba(0,0,0,.25);z-index:41;opacity:0;transform:translateY(14px) scale(.7);transform-origin:bottom right;pointer-events:none;transition:opacity .35s,transform .35s cubic-bezier(.3,1.5,.5,1)}
+.wa-pop.show{opacity:1;transform:none;pointer-events:auto}
+.wa-pop b{display:block;color:#128c7e;font-size:.9rem}.wa-pop p{display:none;font-size:.93rem;line-height:1.45;margin-top:4px;color:var(--dark)}
+.wa-pop.typed p{display:block}.wa-pop.typed .dots{display:none}
+.wa-pop .x{position:absolute;top:2px;right:8px;border:0;background:none;font-size:1.3rem;cursor:pointer;color:#888}
+.dots{display:flex;gap:5px;padding:8px 0 4px}
+.dots i{width:8px;height:8px;border-radius:50%;background:#9aa;animation:dot 1s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
 
-/* TYPE 1: class registration pop-up. Free classes: details only. Paid classes: payment link + UTR. */
-function classForm(selId) {
-  const link = (c) => c.paymentLink || (c.registerLink && c.registerLink !== "#" ? c.registerLink : "");
-  const opt = (c) => `<option value="${c.title} (${c.date})" data-type="${c.type}" data-price="${money(c.price)}" data-link="${link(c)}"${c.id === selId ? " selected" : ""}>${c.title} – ${c.date} (${c.type === "Paid" ? money(c.price) : "Free"}${c.language ? " · " + c.language : ""})</option>`;
-  const sel = `<select name="class" required onchange="syncClass(this)"><option value="">Select a class</option><optgroup label="Upcoming Classes">${CLASSES.map(opt).join("")}</optgroup><optgroup label="Special Classes">${SPECIAL.map(opt).join("")}</optgroup></select>`;
-  return `<form class="rform" onsubmit="submitForm(event,'class')">
-    <h4 class="fs">Your details</h4>${personal()}
-    <h4 class="fs">Your class</h4>${fld("Select the class", "class", { req: 1, html: sel, full: 1 })}
-    ${medicalFields()}
-    <div class="pay" hidden><p><b>Step 1.</b> Pay <b class="pamt"></b> for this class:</p>
-      <a class="btn gold pl" href="#" target="_blank" rel="noopener">Open Payment Link</a>
-      <p class="nolink" hidden>Payment link is not available yet. Please message us on WhatsApp.</p>
-      <p class="small"><b>Step 2.</b> After paying, enter your UTR / transaction ID below.</p></div>
-    <label class="full utr" hidden>UTR / Transaction ID <em>*</em><input name="utr" minlength="6" disabled></label>
-    ${HP}<button class="btn" type="submit">Submit Registration</button><p class="fmsg" role="status"></p></form>`;
-}
-function syncClass(s) {
-  const o = s.selectedOptions[0], f = s.form, paid = !!o && o.dataset.type === "Paid";
-  f.querySelector(".pay").hidden = !paid;
-  const u = f.querySelector(".utr"); u.hidden = !paid; u.querySelector("input").disabled = !paid;
-  if (paid) {
-    f.querySelector(".pamt").textContent = o.dataset.price;
-    const a = f.querySelector(".pl"), has = !!o.dataset.link;
-    a.hidden = !has; if (has) a.href = o.dataset.link;
-    f.querySelector(".nolink").hidden = has;
-  }
-  f.querySelector("button[type=submit]").textContent = paid ? "Submit Registration & Payment" : "Submit Registration";
-}
-function openClass(id) {
-  openModal("Class Registration", classForm(id));
-  syncClass($("#join select[name=class]"));
-}
+/* FORM MODAL */
+.modal{position:fixed;inset:0;background:rgba(15,25,19,.65);display:none;align-items:center;justify-content:center;padding:16px;z-index:60}
+.modal.open{display:flex}body.lock{overflow:hidden}
+.modal .box{position:relative;background:#fff;border-radius:18px;width:100%;max-width:480px;max-height:92vh;overflow:auto;padding:30px 26px}
+.modal .x{position:absolute;top:10px;right:14px;border:0;background:none;font-size:1.8rem;cursor:pointer;color:#777}
+.modal h3{margin-top:0}.modal form{padding:0;background:none;margin-top:14px}.modal .meta{color:var(--gold);font-weight:700}
+select{width:100%;padding:13px 16px;border:1px solid #cdd3cd;border-radius:10px;font:inherit;background:#fff}
+.pay{background:var(--sand);border-radius:12px;padding:16px;text-align:center}.pay p{margin:4px 0}.hint{font-size:.85rem;color:#6d756f}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
 
-/* TYPE 2: membership + payment link + UTR (pop-up opened by Join Now) */
-function membershipForm(i) {
-  const m = MEMBERSHIPS[i];
-  const sel = `<select name="membership" required onchange="setPlan(this)">${MEMBERSHIPS.map((x, j) => `<option value="${x.name} – ${x.price}" data-link="${x.link}" data-price="${x.price}"${j === i ? " selected" : ""}>${x.name} – ${x.price}</option>`).join("")}</select>`;
-  return `<form class="rform" onsubmit="submitForm(event,'membership')"><h4 class="fs">Your details</h4>${personal()}<h4 class="fs">Your plan</h4>${fld("Select Membership", "membership", { req: 1, html: sel, full: 1 })}
-    ${medicalFields()}
-    <div class="pay"><p><b>Step 1.</b> Pay <b class="pamt">${m.price}</b> using this payment link:</p>
-    <a class="btn gold pl" href="${m.link}" target="_blank" rel="noopener">Open Payment Link</a>
-    <p class="small"><b>Step 2.</b> After paying, enter your UTR / transaction ID below.</p></div>
-    ${fld("UTR / Transaction ID", "utr", { req: 1, full: 1, attr: 'minlength="6"' })}${HP}
-    <button class="btn" type="submit">Submit Membership Details</button><p class="fmsg" role="status"></p></form>`;
-}
-function setPlan(s) { const o = s.selectedOptions[0], f = s.form; f.querySelector(".pl").href = o.dataset.link; f.querySelector(".pamt").textContent = o.dataset.price; }
-function openModal(title, html) {
-  let d = $("#join");
-  if (!d) {
-    document.body.insertAdjacentHTML("beforeend", `<dialog id="join"><div class="dh"><h3></h3><button aria-label="Close" onclick="this.closest('dialog').close()">×</button></div><div class="db"></div></dialog>`);
-    d = $("#join"); d.addEventListener("click", (e) => { if (e.target === d) d.close(); });
-  }
-  d.querySelector("h3").textContent = title;
-  d.querySelector(".db").innerHTML = html;
-  d.showModal();
-}
-function openJoin(i) { openModal("Membership Registration", membershipForm(i)); }
+/* HOME: NEXT CLASS STRIP, GAIN, WHY, TESTIMONIALS, CTA */
+h1,h2{letter-spacing:-.01em}
+.next{max-width:1000px;margin:-62px auto 0;position:relative;z-index:3;background:#fff;border-radius:20px;box-shadow:0 16px 44px rgba(31,42,34,.22);display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:20px 28px}
+.next[hidden]{display:none}
+.nx-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px}.nx-act .btn{white-space:nowrap}
+.nx-label{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.nx-main{flex:1;min-width:230px}.nx-main h3{margin:2px 0 4px;font-size:1.5rem}.nx-main p{margin:0;color:#6d756f;font-size:.95rem}
+.pill{display:inline-block;padding:5px 16px;border-radius:20px;color:#fff;font-weight:700;font-size:.85rem;margin:0}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:30px}
+.gcard{background:#fff;border-radius:28px;padding:10px 10px 30px;text-align:center;box-shadow:0 8px 30px rgba(31,42,34,.1)}
+.gimg{aspect-ratio:900/620;border-radius:22px 22px 110px 22px;overflow:hidden;background:linear-gradient(135deg,#a9cdb6,#3f8f6b)}
+.gcard:nth-child(2) .gimg{background:linear-gradient(135deg,#ecd9a8,#c58b2a)}
+.gcard:nth-child(3) .gimg{background:linear-gradient(135deg,#f7b79c,#e9805f)}
+.gimg img{width:100%;height:100%;object-fit:cover}
+.gcard h3{font:600 1.15rem var(--head);text-transform:uppercase;color:var(--green);margin:26px 16px 10px}.gcard p{padding:0 22px;margin:0}
+.why{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.why-l{text-align:center}.why-l p{margin:14px auto 24px;max-width:480px}
+.why-img{aspect-ratio:8/7;max-width:480px;margin:0 auto 30px;border-radius:30px;background:linear-gradient(160deg,#f6e3c1,#e2c38a);overflow:hidden}
+.why-img img{width:100%;height:100%;object-fit:contain}
+.why-r{display:grid;gap:18px}
+.wcard{background:#fff;border-radius:20px;padding:22px 26px;box-shadow:0 4px 18px rgba(31,42,34,.08)}
+.wcard svg{width:30px;height:30px;stroke:var(--green);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wcard h3{font:600 1.25rem var(--head);margin:10px 0 6px}.wcard p{margin:0}
+.btn.big{padding:16px 42px;font-size:1.05rem;box-shadow:0 8px 22px rgba(197,139,42,.45);animation:glow 2.4s infinite}
+@keyframes glow{0%,100%{box-shadow:0 8px 22px rgba(197,139,42,.45)}50%{box-shadow:0 8px 34px rgba(197,139,42,.85)}}
+.note{font-size:.85rem;font-style:italic;color:#7b837d;max-width:760px;margin:12px auto 0}.sub2{font:600 1.3rem var(--head);color:var(--green);margin-top:10px}
+.tcard{background:#fff;border-radius:28px;padding:30px 24px 0;text-align:center;box-shadow:0 8px 30px rgba(31,42,34,.1);margin-bottom:34px;display:flex;flex-direction:column}
+.av{width:110px;height:110px;border-radius:50%;margin:0 auto 18px;overflow:hidden;background:linear-gradient(135deg,#a9bfa4,#d9c28f)}.av img{width:100%;height:100%;object-fit:cover}
+.tcard h3{font:600 1.15rem var(--head);text-transform:uppercase;margin:0}.tsub{font-size:.85rem;color:var(--gold);font-weight:700;margin:4px 0 14px}
+.tcard p{margin:0}.q{width:64px;height:64px;border-radius:50%;background:#f4f1ea;color:var(--gold);font:700 3.4rem/1.25 Georgia,serif;margin:22px auto -32px}
+.cta-band{background:linear-gradient(135deg,#c58b2a,#9c6a1a);color:#fff;text-align:center}.cta-band h2{color:#fff}.cta-band p{max-width:560px;margin:14px auto 28px;font-size:1.1rem}
+.cta-band .btn{background:var(--dark)}.cta-band .btn:hover{background:#fff;color:var(--dark)}.cta-band .btn.ghost{background:transparent}.cta-band .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+@media(max-width:860px){.why{grid-template-columns:1fr}.next{margin-top:-52px;padding:22px 20px;gap:16px}.nx-main{min-width:0;flex:1 1 100%}.nx-main h3{font-size:1.3rem}.nx-act{width:100%}.nx-act .btn{display:block;text-align:center;width:100%}}
+@media(prefers-reduced-motion:reduce){.btn.big{animation:none}}
 
-/* TYPE 3: contact us */
-function contactForm() {
-  return `<form class="cform" onsubmit="submitForm(event,'contact')"><h3>Send us a message</h3>
-    ${fld("Name", "name", { req: 1 })}${fld("Email ID", "email", { req: 1, type: "email" })}
-    ${fld("Message", "message", { req: 1, full: 1, html: '<textarea name="message" rows="5" required></textarea>' })}${HP}
-    <button class="btn" type="submit">Send message</button><p class="fmsg" role="status"></p></form>`;
-}
+/* CONTACT CARD */
+#contact-box{display:grid;grid-template-columns:.85fr 1.15fr;gap:0;max-width:1000px;margin:auto;border-radius:22px;overflow:hidden;box-shadow:0 14px 40px rgba(31,42,34,.14);align-items:stretch}
+.info{background:linear-gradient(160deg,#1b2a21,#3f5d45);color:#dfe8e0;padding:44px 38px}
+.info h3{color:#fff;font-size:2.2rem;margin:0 0 6px}.info .lead{margin:0 0 10px;color:#c9d6cb}
+.info .row{margin-top:22px;font-size:1.05rem}.info .row span{display:block;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:2px}
+.info a{color:#fff}.info .wabtn{display:inline-block;margin-top:30px;color:#fff}
+.info .social{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.info .social a{margin:0;padding:6px 16px;border:1px solid rgba(255,255,255,.35);border-radius:30px;font-size:.9rem;font-weight:600;color:#fff}.info .social a:hover{background:var(--gold);border-color:var(--gold)}
+.cform{background:#fff;border-radius:0;padding:44px 40px;display:grid;grid-template-columns:1fr 1fr;gap:18px;align-content:start}
+.cform h3{grid-column:1/-1;margin:0 0 4px;font-size:1.9rem}
+.cform label{display:block;font-weight:700;font-size:.9rem;color:var(--dark)}.cform label em{color:#b3261e;font-style:normal}
+.cform input,.cform textarea{margin-top:6px;font-weight:400;background:#faf8f3}
+.cform .full,.cform .btn,.cform .fmsg{grid-column:1/-1}.cform .btn{justify-self:start;padding:13px 40px}
+#contact-box .thanks{border-radius:0;max-width:none;display:grid;align-content:center}
+@media(max-width:860px){.info,.cform{padding:30px 22px}.cform{grid-template-columns:1fr}.cform .btn{justify-self:stretch}}
 
-async function submitForm(ev, type) {
-  ev.preventDefault();
-  const f = ev.target, btn = f.querySelector("button[type=submit]"), msg = f.querySelector(".fmsg");
-  if (f.elements.website.value) return;                       // spam trap
-  if (!SITE.formsUrl || SITE.formsUrl.includes("PASTE")) { msg.className = "fmsg err"; msg.textContent = "Form is not connected yet. Paste your Apps Script URL in data.js (SITE.formsUrl)."; return; }
-  const label = btn.textContent; btn.disabled = true; btn.textContent = "Sending...";
-  const body = new URLSearchParams(new FormData(f));
-  const o = f.elements.class && f.elements.class.selectedOptions && f.elements.class.selectedOptions[0];
-  if (type === "class" && o && o.dataset.type === "Paid") { type = "classpaid"; body.set("fee", o.dataset.price); }
-  body.set("formType", type);
-  try {
-    await fetch(SITE.formsUrl, { method: "POST", mode: "no-cors", body });
-    f.outerHTML = `<div class="thanks"><h3>${FORM.thanksTitle}</h3><p>${FORM.thanks[type] || FORM.thanks.membership || "Thank you. We will confirm on WhatsApp shortly."}</p></div>`;
-  } catch (e) {
-    msg.className = "fmsg err"; msg.textContent = "Could not send. Please check your internet and try again.";
-    btn.disabled = false; btn.textContent = label;
-  }
-}
+/* FORMS */
+.rform{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;max-width:860px;margin:auto;background:var(--sand);padding:30px;border-radius:16px}
+.rform label{display:block;font-weight:700;font-size:.9rem;color:var(--dark)}.rform label em{color:#b3261e;font-style:normal}
+.rform input,.rform select,.rform textarea{margin-top:6px;font-weight:400}
+.rform .full,.rform .btn,.fmsg,.pay{grid-column:1/-1}
+.rform [hidden]{display:none!important}
+.rform .fs{grid-column:1/-1;font:700 1.4rem var(--head);color:var(--green);margin:6px 0 -2px;padding-bottom:6px;border-bottom:1px solid #dcd5c4}
+.rform.one{grid-template-columns:1fr;max-width:none;padding:26px}
+select{width:100%;padding:13px 16px;border:1px solid #cdd3cd;border-radius:10px;font:inherit;background:#fff}
+.fmsg{font-weight:700;margin:0}.fmsg.err{color:#b3261e}
+.thanks{text-align:center;padding:44px 22px;background:var(--sand);border-radius:16px;max-width:860px;margin:auto}.thanks h3{font-size:2.2rem;color:var(--green)}
+.rform .pay{background:#fff;border:2px dashed var(--gold);text-align:left}.pay .small{margin:12px 0 0;font-size:.92rem}
+dialog{border:0;border-radius:18px;padding:0;width:min(780px,calc(100vw - 24px));max-height:92vh;overflow:auto}
+dialog::backdrop{background:rgba(10,20,14,.7)}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:16px 26px;background:var(--dark);position:sticky;top:0;z-index:1}
+.dh h3{color:#fff;margin:0}.dh button{background:none;border:0;color:#fff;font-size:2rem;cursor:pointer;line-height:1}
+dialog .rform{max-width:none;border-radius:0}.reg{padding-bottom:84px}
+@media(max-width:700px){.rform{grid-template-columns:1fr;padding:22px 18px}}
 
-/* ===== HOME SECTIONS: next-class strip, gain, why, testimonials, CTA (data.js) ===== */
-const ICONS = {
-  target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/>',
-  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
-  users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-4 3-6 6.5-6s6.5 2 6.5 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c3 0 4.5 1.8 4.5 5"/>',
-  lotus: '<path d="M12 4c2 3 2 7 0 10-2-3-2-7 0-10zM12 14c-3-1-6-4-6-8 3 0 6 3 6 8zM12 14c3-1 6-4 6-8-3 0-6 3-6 8zM4 19h16"/>'
-};
-function renderSections() {
-  const n = CLASSES[0];
-  if (n) {
-    const el = $("#next-strip"); el.hidden = false;
-    el.innerHTML = `<div class="nx-main"><div class="nx-top"><span class="nx-label">Next live class</span><span class="pill ${n.type === "Paid" ? "paid" : "free"}">${n.type === "Paid" ? money(n.price) : "Free"}</span></div>
-      <h3>${n.title}</h3><p>${n.date} · ${n.time} · ${n.mode}${n.level ? " · " + n.level : ""}${n.language ? " · " + n.language : ""}</p></div>
-      <div class="nx-act"><button class="btn gold" onclick="openClass('${n.id}')">Reserve my seat</button></div>`;
-  }
-  $("#gain-box").innerHTML = `<div class="head"><h2>${GAIN.title}</h2><p>${GAIN.text}</p></div>
-    <div class="grid3">${GAIN.items.map(g => `<div class="gcard"><div class="gimg">${img(g.image, g.title)}</div><h3>${g.title}</h3><p>${g.text}</p></div>`).join("")}</div>`;
-  $("#why-box").innerHTML = `<div class="why"><div class="why-l"><h2>${WHY.title}</h2><p>${WHY.text}</p>
-    <div class="why-img">${img(WHY.image, "Why choose Pranic Yoga online yoga classes")}</div><a class="btn gold big" href="#classes">${WHY.button}</a></div>
-    <div class="why-r">${WHY.items.map(w => `<div class="wcard"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[w.icon] || ICONS.lotus}</svg><h3>${w.title}</h3><p>${w.text}</p></div>`).join("")}</div></div>`;
-  const t = TESTIMONIALS.items.filter(x => x.text && x.text.trim());
-  $("#stories").hidden = !t.length;
-  $("#stories-box").innerHTML = `<div class="head"><h2>${TESTIMONIALS.title}</h2><p class="sub2">${TESTIMONIALS.subtitle}</p><p class="note">${TESTIMONIALS.note}</p></div>
-    <div class="grid3">${t.map(x => `<div class="tcard"><div class="av">${img(x.image, x.name + " – Pranic Yoga student")}</div><h3>${x.name}, ${x.place}</h3><p class="tsub">${x.tag}</p><p>${x.text}</p><div class="q" aria-hidden="true">“</div></div>`).join("")}</div>`;
-  $("#cta-box").innerHTML = `<h2>${CTA.title}</h2><p>${CTA.text}</p><div class="btns"><a class="btn big" href="${CTA.link}">${CTA.button}</a><a class="btn ghost" href="${SITE.whatsapp}" target="_blank" rel="noopener">Chat on WhatsApp</a></div>`;
-}
+.lvl{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.96);color:var(--green);font-weight:700;font-size:.78rem;padding:4px 12px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.rform .hint{font-size:.85rem;color:#6d756f;margin:0}
+.rform .med-d textarea{margin-top:6px;resize:vertical}
 
-/* ===== SEO: dynamic page meta + structured data (JSON-LD) ===== */
-function setHead({ title, desc, canonical, image }) {
-  document.title = title;
-  const put = (sel, tag, attrs, attr, val) => {
-    let el = document.head.querySelector(sel);
-    if (!el) { el = document.createElement(tag); Object.keys(attrs).forEach(k => el.setAttribute(k, attrs[k])); document.head.appendChild(el); }
-    el.setAttribute(attr, val);
-  };
-  put('meta[name="description"]', "meta", { name: "description" }, "content", desc);
-  put('link[rel="canonical"]', "link", { rel: "canonical" }, "href", canonical);
-  put('meta[property="og:title"]', "meta", { property: "og:title" }, "content", title);
-  put('meta[property="og:description"]', "meta", { property: "og:description" }, "content", desc);
-  put('meta[property="og:url"]', "meta", { property: "og:url" }, "content", canonical);
-  put('meta[property="og:type"]', "meta", { property: "og:type" }, "content", "website");
-  put('meta[property="og:image"]', "meta", { property: "og:image" }, "content", image);
-  put('meta[name="twitter:card"]', "meta", { name: "twitter:card" }, "content", "summary_large_image");
-}
-function injectLD(obj, id) {
-  let s = document.getElementById(id);
-  if (!s) { s = document.createElement("script"); s.type = "application/ld+json"; s.id = id; document.head.appendChild(s); }
-  s.textContent = JSON.stringify(obj);
-}
-const classUrl = (c, kind) => `${SITE.url}class.html?t=${kind}&id=${c.id}`;
-const MONTHS = { Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12 };
-const DAYS = { sunday: "Sunday", monday: "Monday", tuesday: "Tuesday", wednesday: "Wednesday", thursday: "Thursday", friday: "Friday", saturday: "Saturday" };
-function isoStart(c) {            // "02 Nov 2026" + "6:00 AM – 7:00 AM IST" -> 2026-11-02T06:00:00+05:30
-  const d = /^(\d{1,2})\s+([A-Za-z]{3})\w*\s+(\d{4})$/.exec(String(c.date).trim()), t = /(\d{1,2}):(\d{2})\s*(AM|PM)/i.exec(c.time || "");
-  if (!d || !MONTHS[d[2]] || !t) return null;
-  let h = +t[1] % 12; if (/pm/i.test(t[3])) h += 12;
-  const p = (n) => String(n).padStart(2, "0");
-  return `${d[3]}-${p(MONTHS[d[2]])}-${p(d[1])}T${p(h)}:${t[2]}:00+05:30`;
-}
-function courseLD(c, kind) {
-  const num = /\d/.test(c.price) ? String(c.price).replace(/[^\d.]/g, "") : "0";
-  const inst = { "@type": "CourseInstance", courseMode: "online", instructor: { "@type": "Person", name: instructorFor(c).name } };
-  const start = isoStart(c), ev = /every\s+(\w+)/i.exec(c.date || "");
-  if (start) inst.startDate = start;
-  else if (ev && DAYS[ev[1].toLowerCase()]) inst.courseSchedule = { "@type": "Schedule", repeatFrequency: "P1W", byDay: "https://schema.org/" + DAYS[ev[1].toLowerCase()] };
-  else if (ev) inst.courseSchedule = { "@type": "Schedule", repeatFrequency: "P1D" };
-  return {
-    "@context": "https://schema.org", "@type": "Course", name: c.title.trim(), description: c.about, url: classUrl(c, kind),
-    educationalLevel: c.level || "All Levels", inLanguage: langCodes(c.language), provider: { "@type": "Organization", name: SITE.name, sameAs: SITE.url },
-    offers: { "@type": "Offer", category: c.type, price: c.type === "Paid" ? num : "0", priceCurrency: "INR", availability: "https://schema.org/InStock", url: classUrl(c, kind) },
-    hasCourseInstance: inst
-  };
-}
-function classSEO(c, kind) {
-  const title = `${c.seoTitle || c.title.trim()} | ${SITE.name}`;
-  const desc = c.seoDesc || `${c.short} ${c.level || "All levels"} online yoga class by ${SITE.name}.`;
-  setHead({ title, desc, canonical: classUrl(c, kind), image: SITE.url + "images/og-image.png" });
-  injectLD(courseLD(c, kind), "ld-course");
-  injectLD({ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: SITE.url },
-    { "@type": "ListItem", position: 2, name: kind === "special" ? "Special Classes" : "Classes", item: SITE.url + (kind === "special" ? "#special" : "#classes") },
-    { "@type": "ListItem", position: 3, name: c.title.trim(), item: classUrl(c, kind) }] }, "ld-crumb");
-}
-function homeSEO() {
-  if (INSTRUCTORS.length > 1) injectLD({ "@context": "https://schema.org", "@graph": INSTRUCTORS.slice(1).map((x, k) => ({ "@type": "Person", "@id": SITE.url + "#instructor-" + (k + 2), name: x.name, jobTitle: x.role, description: x.tagline, worksFor: { "@id": SITE.url + "#org" } })) }, "ld-people");
-  const items = [...CLASSES.map(c => [c, "class"]), ...SPECIAL.map(c => [c, "special"])];
-  injectLD({ "@context": "https://schema.org", "@type": "ItemList", name: "Online yoga classes by " + SITE.name,
-    itemListElement: items.map(([c, k], i) => ({ "@type": "ListItem", position: i + 1, url: classUrl(c, k), name: c.title.trim() })) }, "ld-list");
-}
+.dark .head h2{color:#fff}.dark .head p{color:#c9d6cb}
+.itabs{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:-14px 0 44px}
+.itabs button{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:40px;padding:6px 20px 6px 6px;font:600 1rem var(--body);cursor:pointer;transition:background .2s}
+.itabs button:hover,.itabs button.on{background:var(--gold);border-color:var(--gold)}
+.tav{width:40px;height:40px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#a9bfa4,#d9c28f);flex:none}.tav img{width:100%;height:100%;object-fit:cover;object-position:top}
+.inst .iname{font:700 clamp(2rem,4vw,2.6rem) var(--head);color:#fff;margin:.2rem 0 1rem}
+.ilang2{margin:0 0 1rem}.ilang2 b{color:var(--gold)}
+.lang{position:absolute;right:12px;bottom:12px;background:rgba(27,42,33,.9);color:#fff;font-weight:700;font-size:.78rem;padding:4px 12px;border-radius:20px}
+.cr{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 1.2rem}.cr span{background:var(--sand);color:var(--dark);font-weight:600;font-size:.88rem;padding:5px 14px;border-radius:20px}
+.by .irole{display:block;font-style:normal;font-size:.85rem;font-weight:700;color:var(--green)}
+.by .iabout{font-size:.92rem;margin:6px 0 0}.by .ilang{font-size:.85rem;color:#6d756f;margin:4px 0 0}.by .link{display:inline-block;margin-top:8px;font-size:.92rem}
 
-/* ===== INSTRUCTORS: several profiles, matched to classes by name ===== */
-const norm = (s) => String(s || "").trim().toLowerCase().replace(/\s+/g, " ");
-const shortBio = (p) => { const t = (p.bio && p.bio[0]) || ""; return t.length > 190 ? t.slice(0, 190).replace(/\s+\S*$/, "") + "…" : t; };
-function instructorFor(c) {
-  const nm = norm(c.instructor), p = nm ? INSTRUCTORS.find(x => norm(x.name) === nm) : INSTRUCTORS[0];
-  if (p) return { name: p.name, role: p.role || "", tagline: nm ? (p.tagline || c.tagline || "") : (c.tagline || p.tagline || ""), image: nm ? (p.image || c.instructorImage) : (c.instructorImage || p.image),
-    about: c.instructorBio || shortBio(p), languages: p.languages || [], profile: true };
-  return { name: c.instructor, role: c.instructorRole || "", tagline: c.tagline || "", image: c.instructorImage || "",
-    about: c.instructorBio || "", languages: [], profile: false };
+.icar{position:relative;max-width:1100px;margin:auto}
+.iview{overflow:hidden;padding:4px 0}
+.itrack{display:flex;gap:24px}
+.icar:not(.multi) .itrack{display:block}
+.islide{flex:0 0 100%;min-width:0;box-sizing:border-box}
+.icar.multi .islide{flex-basis:86%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:26px;padding:38px 36px;opacity:.38;transform:scale(.97);transition:opacity .6s,transform .6s}
+.icar.multi .islide.cur{opacity:1;transform:none}
+.icar.multi .inst{gap:44px}
+.inav{display:flex;justify-content:center;margin-top:30px}
+.idots{display:flex;gap:10px;align-items:center}
+.idots button{width:11px;height:11px;border-radius:10px;border:0;padding:0;background:rgba(255,255,255,.35);cursor:pointer;transition:width .3s,background .3s}
+.idots button.on{background:var(--gold);width:32px}
+@media(max-width:860px){.icar.multi .islide{flex-basis:88%;padding:26px 20px}.icar.multi .inst{gap:36px}}
+@media(prefers-reduced-motion:reduce){.icar.multi .islide{transition:none}}
+
+/* MOBILE */
+@media(max-width:860px){
+ .burger{display:block}
+ .bar{height:72px}.logo img{height:52px}.flogo{height:68px}
+ nav{display:none;position:absolute;top:72px;left:0;right:0;background:#fff;flex-direction:column;padding:20px;gap:16px;box-shadow:0 8px 14px rgba(0,0,0,.1)}
+ .nav-open nav{display:flex}
+ .hero-grid,.inst,#contact-box,.detail{grid-template-columns:1fr}
+ #hero{padding:44px 0 100px}.hero-art{margin:10px auto 0;max-width:300px}
+ .inst{gap:44px}.portrait-wrap{max-width:290px}.portrait-wrap::before{inset:14px -12px -14px 12px}
+ .plan.featured{transform:none}.section{padding:56px 0}
+ .side{position:static;margin-top:0}.detail{gap:28px}
 }
-function instructorBox(c) {
-  const t = instructorFor(c);
-  return `<div class="by"><div class="avatar">${img(t.image, t.name + " – yoga instructor")}</div>
-    <div><span>Your instructor</span><b>${t.name}</b>${t.tagline ? `<p>${t.tagline}</p>` : ""}</div></div>`;
-}
-function renderInstructors() {
-  const n = INSTRUCTORS.length, multi = n > 1;
-  const slide = (i, k) => `<div class="islide${k ? "" : " cur"}" data-i="${k}" role="group" aria-roledescription="slide" aria-label="${k + 1} of ${n}" aria-hidden="${k !== 0}">
-    <div class="inst"><div class="portrait-wrap"><div class="portrait">${img(i.image, i.name + " – certified yoga and pranayama instructor")}</div></div>
-    <div class="inst-text"><p class="role">${i.role}</p><h3 class="iname">${i.name}</h3>
-      ${(i.bio || []).map(b => `<p>${b}</p>`).join("")}
-      ${i.stats && i.stats.length ? `<div class="stats">${i.stats.map(s => `<div><b>${s.n}</b><span>${s.l}</span></div>`).join("")}</div>` : ""}
-      ${i.languages && i.languages.length ? `<p class="ilang2">Teaches in: <b>${i.languages.join(", ")}</b></p>` : ""}
-      <ul class="chips">${(i.credentials || []).map(c => `<li>${c}</li>`).join("")}</ul></div></div></div>`;
-  const dots = multi ? `<div class="inav"><div class="idots">${INSTRUCTORS.map((x, k) => `<button type="button" class="${k ? "" : "on"}" aria-label="Show ${x.name}" title="${x.name}"></button>`).join("")}</div></div>` : "";
-  $("#instructor-box").innerHTML = `<div class="head"><h2>${multi ? "Meet Your Instructors" : "Meet Your Instructor"}</h2></div>
-    <div class="icar${multi ? " multi" : ""}"${multi ? ' aria-roledescription="carousel" aria-label="Instructors"' : ""}><div class="iview"><div class="itrack">${INSTRUCTORS.map(slide).join("")}</div></div>${dots}</div>`;
-  if (multi) initInstructorSlider();
-}
-/* Card slider: the next instructor peeks in from the right so visitors can see there is more. Loops forever. */
-let iTimer = null;
-function initInstructorSlider() {
-  const box = $("#instructor-box"), track = box.querySelector(".itrack"), dots = [...box.querySelectorAll(".idots button")], car = box.querySelector(".icar");
-  const still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches, MS = still ? 0 : 700, EASE = "transform " + MS + "ms cubic-bezier(.3,.7,.2,1)";
-  const AUTO_MS = 4000;                                   // time each instructor stays (milliseconds). Lower = faster
-  let busy = false;
-  const step = () => track.children[0].getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0);
-  const mark = (cur) => { [...track.children].forEach(s => { s.classList.toggle("cur", s === cur); s.setAttribute("aria-hidden", s !== cur); }); dots.forEach((d, x) => d.classList.toggle("on", x === +cur.dataset.i)); };
-  const next = () => {
-    if (busy) return; busy = true;
-    mark(track.children[1]);
-    track.style.transition = EASE; track.style.transform = `translateX(-${step()}px)`;
-    setTimeout(() => { track.style.transition = "none"; track.appendChild(track.children[0]); track.style.transform = "none"; busy = false; }, MS + 30);
-  };
-  const prev = () => {
-    if (busy) return; busy = true;
-    const w = step(); track.style.transition = "none"; track.insertBefore(track.lastElementChild, track.children[0]);
-    track.style.transform = `translateX(-${w}px)`; void track.offsetWidth;
-    mark(track.children[0]); track.style.transition = EASE; track.style.transform = "none";
-    setTimeout(() => { busy = false; }, MS + 30);
-  };
-  const jump = (t) => { track.style.transition = "none"; track.style.transform = "none"; while (+track.children[0].dataset.i !== t) track.appendChild(track.children[0]); mark(track.children[0]); };
-  const stop = () => { clearInterval(iTimer); iTimer = null; };
-  const start = () => { stop(); if (!still) iTimer = setInterval(next, AUTO_MS); };
-  dots.forEach((d, x) => d.addEventListener("click", () => { jump(x); start(); }));
-  car.addEventListener("mouseenter", stop); car.addEventListener("mouseleave", start);
-  car.addEventListener("focusin", stop); car.addEventListener("focusout", start);
-  let x0 = null;
-  car.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; stop(); }, { passive: true });
-  car.addEventListener("touchend", (e) => { if (x0 !== null) { const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 45) (dx < 0 ? next : prev)(); } x0 = null; start(); });
-  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
-  start();
-}
-const LANGS = { english: "en", telugu: "te", hindi: "hi", tamil: "ta", kannada: "kn", malayalam: "ml", marathi: "mr", bengali: "bn", gujarati: "gu", odia: "or", punjabi: "pa" };
-function langCodes(s) {
-  const l = String(s || "English").split(/\s*(?:&|,|\/|\+|\band\b)\s*/i).filter(Boolean).map(x => LANGS[x.trim().toLowerCase()] || x.trim());
-  return l.length > 1 ? l : l[0];
-}
+@media(prefers-reduced-motion:reduce){.wa::after,.dots i{animation:none}*{transition:none!important;scroll-behavior:auto!important}}
