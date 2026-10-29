@@ -223,39 +223,6 @@ const INSTRUCTORS = [
   credentials: ["200-hr Yoga Teacher Training", "2+ years teaching experience", "100+ students guided"]
 },
 
-{
-  name: "Gitanjali",
-  role: "Certified Yoga Instructor",
-  languages: ["English"],   // languages this instructor teaches in (optional)
-  tagline: "Helping you breathe better, move better and live calmer.", /* shown at the bottom of every class page */
-  image: "images/instructor.jpg",
-  bio: ["I have been practising yoga for the past six years, learning from different masters and exploring various paths, from Sivananda to Sadhguru, and from Kriya Yoga and Karma Yoga to Vedanta, Samkhya, Tantra, and Mantra.","Through my journey of learning and teaching, I realised that all these paths share a common goal: to help us become more aware of ourselves.","Today, we live surrounded by distractions, from the moment we wake up until we go to sleep. We often forget to connect with ourselves. I believe that our breath is one of the simplest ways to begin this journey. When we learn to understand and control our breath, we can develop better awareness of our minds.","This is why I started Pranic Yoga — to help people connect with their breath through breathing practices and other forms of yoga, bringing more awareness and balance into everyday life."],
-  stats: [{n:"100+",l:"Students guided"},{n:"2+",l:"Years teaching"},{n:"200hr",l:"Certified"}],
-  credentials: ["200-hr Yoga Teacher Training", "2+ years teaching experience", "100+ students guided"]
-},
-
-{
-  name: "Sandya",
-  role: "Certified Yoga Instructor",
-  languages: ["English"],   // languages this instructor teaches in (optional)
-  tagline: "Helping you breathe better, move better and live calmer.", /* shown at the bottom of every class page */
-  image: "images/instructor.jpg",
-  bio: ["I have been practising yoga for the past six years, learning from different masters and exploring various paths, from Sivananda to Sadhguru, and from Kriya Yoga and Karma Yoga to Vedanta, Samkhya, Tantra, and Mantra.","Through my journey of learning and teaching, I realised that all these paths share a common goal: to help us become more aware of ourselves.","Today, we live surrounded by distractions, from the moment we wake up until we go to sleep. We often forget to connect with ourselves. I believe that our breath is one of the simplest ways to begin this journey. When we learn to understand and control our breath, we can develop better awareness of our minds.","This is why I started Pranic Yoga — to help people connect with their breath through breathing practices and other forms of yoga, bringing more awareness and balance into everyday life."],
-  stats: [{n:"100+",l:"Students guided"},{n:"2+",l:"Years teaching"},{n:"200hr",l:"Certified"}],
-  credentials: ["200-hr Yoga Teacher Training", "2+ years teaching experience", "100+ students guided"]
-},
-
-{
-  name: "Sneha",
-  role: "Certified Yoga Instructor",
-  languages: ["English"],   // languages this instructor teaches in (optional)
-  tagline: "Helping you breathe better, move better and live calmer.", /* shown at the bottom of every class page */
-  image: "images/instructor.jpg",
-  bio: ["I have been practising yoga for the past six years, learning from different masters and exploring various paths, from Sivananda to Sadhguru, and from Kriya Yoga and Karma Yoga to Vedanta, Samkhya, Tantra, and Mantra.","Through my journey of learning and teaching, I realised that all these paths share a common goal: to help us become more aware of ourselves.","Today, we live surrounded by distractions, from the moment we wake up until we go to sleep. We often forget to connect with ourselves. I believe that our breath is one of the simplest ways to begin this journey. When we learn to understand and control our breath, we can develop better awareness of our minds.","This is why I started Pranic Yoga — to help people connect with their breath through breathing practices and other forms of yoga, bringing more awareness and balance into everyday life."],
-  stats: [{n:"100+",l:"Students guided"},{n:"2+",l:"Years teaching"},{n:"200hr",l:"Certified"}],
-  credentials: ["200-hr Yoga Teacher Training", "2+ years teaching experience", "100+ students guided"]
-},
-
 
 
 
