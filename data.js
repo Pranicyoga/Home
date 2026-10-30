@@ -225,7 +225,7 @@ const ESSENCE = {
 const INSTRUCTORS = [
 {
   name: "Saikumar",
-  role: "Certified Yoga Instructor",
+  role: "Certified Yoga Instructor & Founder",
   languages: ["English"],   // languages this instructor teaches in (optional)
   tagline: "Helping you breathe better, move better and live calmer.", /* shown at the bottom of every class page */
   image: "images/instructor.jpg",
