@@ -8,11 +8,11 @@ const SITE = {
   name: "Pranic Yoga",
   url: "https://pranicyoga.github.io/Home/",   /* your live website address (keep the trailing slash). Used for SEO */
   tagline: "Return to the Breath, Return to Yourself",
-  phone: "+91 70326 32374",
+  phone: "+91 94923 60482",
   email: "hello@pranicyoga.in",
   /* FORMS: paste your Google Apps Script Web App URL below (steps in apps-script.gs) */
   formsUrl: "https://script.google.com/macros/s/AKfycbylL_46SDlib409fsWxv5k0LpIXr2UKG-cdas-ocqjLL84Ts01o2fHGQ2bw6kSnCKty/exec",
-  whatsapp: "https://wa.me/917032632374?text=Namaskaram!+May+I+know+more+about+Pranic+Yoga+classes",
+  whatsapp: "https://wa.me/919492360482?text=Namaskaram!+May+I+know+more+about+Pranic+Yoga+classes",
   waGreeting: "Namaste! Want to join a free yoga class? Tap here and chat with us on WhatsApp.", /* chat pop-up text */
   address: "Online Classes, India",
   instagram: "#", youtube: "#", facebook: "#",
