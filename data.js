@@ -210,7 +210,18 @@ const MEMBERSHIPS = [
     link: "https://rzp.io/rzp/z8sDdVDQ" }
 ];
 
-/* ---------- INSTRUCTORS ----------  IMAGE: 700 x 900 px (portrait). The FIRST one is the main instructor. */
+/* ---------- NEW: THE ESSENCE OF PRANIC YOGA (text only, shown just above the instructors) ---------- */
+const ESSENCE = {
+  title: "The Essence of Pranic Yoga",
+  paragraphs: [
+    "Through my journey of learning and teaching, I realised that all these paths share a common goal: to help us become more aware of ourselves.",
+    "Today, we live surrounded by distractions, from the moment we wake up until we go to sleep. We often forget to connect with ourselves. I believe that our breath is one of the simplest ways to begin this journey. When we learn to understand and control our breath, we can develop better awareness of our minds.",
+    "This is why I started Pranic Yoga — to help people connect with their breath through breathing practices and other forms of yoga, bringing more awareness and balance into everyday life."
+  ]
+};
+
+/* ---------- INSTRUCTORS ----------  IMAGE: 400 x 500 px (4:5 portrait, shown as a small thumbnail). The FIRST one is the main instructor.
+   On the home page each instructor card shows the FIRST paragraph of "bio" (or a "short" line if you add one). */
 const INSTRUCTORS = [
 {
   name: "Saikumar",
