@@ -241,7 +241,7 @@ const INSTRUCTORS = [
   tagline: "Find your balance through mindful movement and conscious breathing.",
   image: "images/instructor_2.jpg",
   bio: [
-    "My yoga journey has taught me that wellness is not just about physical fitness, but also about finding harmony between the body, breath, and mind. I enjoy helping people discover yoga at their own pace, whether they are beginners or have been practising for years. My teaching focuses on mindful movement, breathing techniques, flexibility, and relaxation. I believe that even a few minutes of conscious practice can bring a positive change to our daily routine. Through Pranic Yoga, I hope to make yoga approachable and meaningful for everyone, helping individuals build a healthier relationship with themselves." ],
+    "My yoga journey has taught me that wellness is not just about physical fitness, but also about finding harmony between the body, breath, and mind. I enjoy helping people discover yoga at their own pace, whether they are beginners or have been practising for years. I believe that even a few minutes of conscious practice can bring a positive change to our daily routine. " ],
   stats: [{n:"100+",l:"Students guided"},{n:"2+",l:"Years teaching"},{n:"200hr",l:"Training certified"}],
   credentials: ["200-hr Yoga Teacher Training", "Hatha Yoga & Pranayama", "Beginner-friendly yoga instruction"]
 },
@@ -252,7 +252,7 @@ const INSTRUCTORS = [
   tagline: "Move with awareness, breathe with purpose, and grow with every practice.",
   image: "images/instructor_3.jpg",
   bio: [
-    "For me, yoga is a beautiful way to understand our bodies and develop a deeper connection with ourselves. I believe that every individual has a different body, lifestyle, and learning pace. My approach is to create a comfortable environment where students can explore yoga without pressure or comparison. My sessions focus on foundational yoga postures, body alignment, flexibility, and breathing awareness to help students develop a consistent practice. At Pranic Yoga, I aim to guide people towards a lifestyle where movement and mindfulness become a natural part of everyday life."
+    "For me, yoga is a beautiful way to understand our bodies and develop a deeper connection with ourselves. I believe that every individual has a different body, lifestyle, and learning pace. My approach is to create a comfortable environment where students can explore yoga without pressure or comparison. "
   ],
   stats: [{n:"80+",l:"Students guided"},{n:"2+",l:"Years teaching"},{n:"200hr",l:"Training certified"}],
   credentials: ["200-hr Yoga Teacher Training", "Yoga Asanas & Body Alignment", "Flexibility and mobility practices"]
@@ -264,7 +264,7 @@ const INSTRUCTORS = [
   tagline: "Discover strength, flexibility, and inner calm through yoga.",
   image: "images/instructor_4.jpg",
   bio: [
-    "I see yoga as a journey of continuous learning, where every practice gives us an opportunity to understand ourselves better. I enjoy guiding students through yoga practices that improve physical awareness, balance, strength, and flexibility. My teaching approach combines traditional yoga postures with mindful breathing and relaxation. I encourage students to listen to their bodies and progress gradually rather than rushing towards perfection. At Pranic Yoga, my intention is to help people experience yoga beyond exercise and make it a sustainable part of their everyday lives."
+    "I see yoga as a journey of continuous learning, where every practice gives us an opportunity to understand ourselves better. I enjoy guiding students through yoga practices that improve physical awareness, balance, strength, and flexibility. My teaching approach combines traditional yoga postures with mindful breathing and relaxation. "
   ],
   stats: [{n:"90+",l:"Students guided"},{n:"3+",l:"Years teaching"},{n:"200hr",l:"Training certified"}],
   credentials: ["200-hr Yoga Teacher Training", "Traditional Yoga Asanas", "Balance, strength & relaxation practices"]
@@ -276,7 +276,7 @@ const INSTRUCTORS = [
   tagline: "Let every breath bring you closer to a healthier and calmer you.",
   image: "images/instructor_5.jpg",
   bio: [
-    "I believe that yoga is more than a physical practice; it is an opportunity to slow down, reconnect with ourselves, and bring greater awareness into our lives. I am passionate about guiding people through mindful yoga sessions that encourage relaxation, better breathing habits, and a sense of overall well-being. My sessions emphasise gentle yoga movements, breathing practices, meditation, and relaxation techniques. I believe consistency and patience are the foundations of a meaningful yoga journey. Through Pranic Yoga, I wish to help students create moments of stillness in their busy lives and experience the benefits of practising yoga regularly."
+    "I believe that yoga is more than a physical practice; it is an opportunity to slow down, reconnect with ourselves, and bring greater awareness into our lives. I am passionate about guiding people through mindful yoga sessions that encourage relaxation, better breathing habits, and a sense of overall well-being. I believe consistency and patience are the foundations of a meaningful yoga journey."
   ],
   stats: [{n:"120+",l:"Students guided"},{n:"3+",l:"Years teaching"},{n:"200hr",l:"Training certified"}],
   credentials: ["200-hr Yoga Teacher Training", "Pranayama & Meditation", "Relaxation and mindfulness practices"]
