@@ -55,6 +55,7 @@ function renderHome() {
       <button class="btn" onclick="openJoin(${i})">Join Now</button>
     </div>`).join("");
 
+  renderEssence();
   renderInstructors();
 
   $("#faq-list").innerHTML = FAQ.map(f => `<details><summary>${f.q}</summary><p>${f.a}</p></details>`).join("");
@@ -324,52 +325,49 @@ function instructorBox(c) {
   return `<div class="by"><div class="avatar">${img(t.image, t.name + " – yoga instructor")}</div>
     <div><span>Your instructor</span><b>${t.name}</b>${t.tagline ? `<p>${t.tagline}</p>` : ""}</div></div>`;
 }
-function renderInstructors() {
-  const n = INSTRUCTORS.length, multi = n > 1;
-  const slide = (i, k) => `<div class="islide${k ? "" : " cur"}" data-i="${k}" role="group" aria-roledescription="slide" aria-label="${k + 1} of ${n}" aria-hidden="${k !== 0}">
-    <div class="inst"><div class="portrait-wrap"><div class="portrait">${img(i.image, i.name + " – certified yoga and pranayama instructor")}</div></div>
-    <div class="inst-text"><p class="role">${i.role}</p><h3 class="iname">${i.name}</h3>
-      ${(i.bio || []).map(b => `<p>${b}</p>`).join("")}
-      ${i.stats && i.stats.length ? `<div class="stats">${i.stats.map(s => `<div><b>${s.n}</b><span>${s.l}</span></div>`).join("")}</div>` : ""}
-      ${i.languages && i.languages.length ? `<p class="ilang2">Teaches in: <b>${i.languages.join(", ")}</b></p>` : ""}
-      <ul class="chips">${(i.credentials || []).map(c => `<li>${c}</li>`).join("")}</ul></div></div></div>`;
-  const dots = multi ? `<div class="inav"><div class="idots">${INSTRUCTORS.map((x, k) => `<button type="button" class="${k ? "" : "on"}" aria-label="Show ${x.name}" title="${x.name}"></button>`).join("")}</div></div>` : "";
-  $("#instructor-box").innerHTML = `<div class="head"><h2>${multi ? "Meet Your Instructors" : "Meet Your Instructor"}</h2></div>
-    <div class="icar${multi ? " multi" : ""}"${multi ? ' aria-roledescription="carousel" aria-label="Instructors"' : ""}><div class="iview"><div class="itrack">${INSTRUCTORS.map(slide).join("")}</div></div>${dots}</div>`;
-  if (multi) initInstructorSlider();
+function renderEssence() {
+  $("#essence-box").innerHTML = `<div class="head"><h2>${ESSENCE.title}</h2></div>
+    <div class="essence">${ESSENCE.paragraphs.map((p, k) => `<p${k === 0 ? ' class="lead-p"' : ""}>${p}</p>`).join("")}</div>`;
 }
-/* Card slider: the next instructor peeks in from the right so visitors can see there is more. Loops forever. */
+/* Instructor thumbnail cards: several cards in a row that slide along in a loop. */
+function renderInstructors() {
+  const n = INSTRUCTORS.length;
+  let list = INSTRUCTORS.slice();
+  if (n > 1) while (list.length < 8) list = list.concat(INSTRUCTORS);   // repeat the cards so the row always looks full
+  const card = (i, k) => `<article class="icard" data-i="${k % n}" aria-hidden="${k >= n}">
+    <div class="ihead"><div class="ithumb">${img(i.image, i.name + " – yoga instructor")}</div>
+      <div><p class="role">${i.role || ""}</p><h3 class="iname">${i.name}</h3></div></div>
+    <p class="idesc">${i.short || (i.bio || [])[0] || ""}</p></article>`;
+  $("#instructor-box").innerHTML = `<div class="head"><h2>${n > 1 ? "Meet Your Instructors" : "Meet Your Instructor"}</h2></div>
+    <div class="icar${n > 1 ? " multi" : ""}"${n > 1 ? ' aria-roledescription="carousel" aria-label="Instructors"' : ""}><div class="iview"><div class="itrack">${list.map(card).join("")}</div></div></div>`;
+  if (n > 1) initInstructorSlider();
+}
 let iTimer = null;
 function initInstructorSlider() {
-  const box = $("#instructor-box"), track = box.querySelector(".itrack"), dots = [...box.querySelectorAll(".idots button")], car = box.querySelector(".icar");
-  const still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches, MS = still ? 0 : 700, EASE = "transform " + MS + "ms cubic-bezier(.3,.7,.2,1)";
-  const AUTO_MS = 4000;                                   // time each instructor stays (milliseconds). Lower = faster
+  const box = $("#instructor-box"), track = box.querySelector(".itrack"), car = box.querySelector(".icar");
+  const still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches, MS = still ? 0 : 600, EASE = "transform " + MS + "ms cubic-bezier(.3,.7,.2,1)";
+  const AUTO_MS = 2500;                                   // time between slides (milliseconds). Lower = faster
   let busy = false;
   const step = () => track.children[0].getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0);
-  const mark = (cur) => { [...track.children].forEach(s => { s.classList.toggle("cur", s === cur); s.setAttribute("aria-hidden", s !== cur); }); dots.forEach((d, x) => d.classList.toggle("on", x === +cur.dataset.i)); };
+  const place = (x, anim) => { track.style.transition = anim ? EASE : "none"; track.style.transform = `translateX(${x}px)`; };
   const next = () => {
-    if (busy) return; busy = true;
-    mark(track.children[1]);
-    track.style.transition = EASE; track.style.transform = `translateX(-${step()}px)`;
-    setTimeout(() => { track.style.transition = "none"; track.appendChild(track.children[0]); track.style.transform = "none"; busy = false; }, MS + 30);
+    if (busy) return; busy = true; place(-step(), true);
+    setTimeout(() => { track.appendChild(track.children[0]); place(0, false); busy = false; }, MS + 30);
   };
   const prev = () => {
     if (busy) return; busy = true;
-    const w = step(); track.style.transition = "none"; track.insertBefore(track.lastElementChild, track.children[0]);
-    track.style.transform = `translateX(-${w}px)`; void track.offsetWidth;
-    mark(track.children[0]); track.style.transition = EASE; track.style.transform = "none";
+    track.insertBefore(track.lastElementChild, track.children[0]); place(-step(), false); void track.offsetWidth; place(0, true);
     setTimeout(() => { busy = false; }, MS + 30);
   };
-  const jump = (t) => { track.style.transition = "none"; track.style.transform = "none"; while (+track.children[0].dataset.i !== t) track.appendChild(track.children[0]); mark(track.children[0]); };
   const stop = () => { clearInterval(iTimer); iTimer = null; };
   const start = () => { stop(); if (!still) iTimer = setInterval(next, AUTO_MS); };
-  dots.forEach((d, x) => d.addEventListener("click", () => { jump(x); start(); }));
   car.addEventListener("mouseenter", stop); car.addEventListener("mouseleave", start);
   car.addEventListener("focusin", stop); car.addEventListener("focusout", start);
   let x0 = null;
   car.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; stop(); }, { passive: true });
   car.addEventListener("touchend", (e) => { if (x0 !== null) { const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 45) (dx < 0 ? next : prev)(); } x0 = null; start(); });
   document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+  window.addEventListener("resize", () => place(0, false));
   start();
 }
 const LANGS = { english: "en", telugu: "te", hindi: "hi", tamil: "ta", kannada: "kn", malayalam: "ml", marathi: "mr", bengali: "bn", gujarati: "gu", odia: "or", punjabi: "pa" };
