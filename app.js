@@ -335,9 +335,9 @@ function renderInstructors() {
   let list = INSTRUCTORS.slice();
   if (n > 1) while (list.length < 8) list = list.concat(INSTRUCTORS);   // repeat the cards so the row always looks full
   const card = (i, k) => `<article class="icard" data-i="${k % n}" aria-hidden="${k >= n}">
-    <div class="ihead"><div class="ithumb">${img(i.image, i.name + " – yoga instructor")}</div>
-      <div><p class="role">${i.role || ""}</p><h3 class="iname">${i.name}</h3></div></div>
-    <p class="idesc">${i.short || (i.bio || [])[0] || ""}</p></article>`;
+    <div class="ithumb">${img(i.image, i.name + " – yoga instructor")}</div>
+    <div class="ibody"><p class="role">${i.role || ""}</p><h3 class="iname">${i.name}</h3><span class="irule"></span>
+      <p class="idesc">${i.short || (i.bio || [])[0] || ""}</p></div></article>`;
   $("#instructor-box").innerHTML = `<div class="head"><h2>${n > 1 ? "Meet Your Instructors" : "Meet Your Instructor"}</h2></div>
     <div class="icar${n > 1 ? " multi" : ""}"${n > 1 ? ' aria-roledescription="carousel" aria-label="Instructors"' : ""}><div class="iview"><div class="itrack">${list.map(card).join("")}</div></div></div>`;
   if (n > 1) initInstructorSlider();
