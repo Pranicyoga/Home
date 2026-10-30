@@ -226,17 +226,74 @@ const INSTRUCTORS = [
 {
   name: "Saikumar",
   role: "Certified Yoga Instructor & Founder",
-  languages: ["English"],   // languages this instructor teaches in (optional)
+  languages: ["Hindi & English"],   // languages this instructor teaches in (optional)
   tagline: "Helping you breathe better, move better and live calmer.", /* shown at the bottom of every class page */
-  image: "images/instructor.jpg",
+  image: "images/instructor_1.jpg",
   bio: ["I have been practising yoga for the past six years, learning from different masters and exploring various paths, from Sivananda to Sadhguru, and from Kriya Yoga and Karma Yoga to Vedanta, Samkhya, Tantra, and Mantra.","Through my journey of learning and teaching, I realised that all these paths share a common goal: to help us become more aware of ourselves.","Today, we live surrounded by distractions, from the moment we wake up until we go to sleep. We often forget to connect with ourselves. I believe that our breath is one of the simplest ways to begin this journey. When we learn to understand and control our breath, we can develop better awareness of our minds.","This is why I started Pranic Yoga — to help people connect with their breath through breathing practices and other forms of yoga, bringing more awareness and balance into everyday life."],
   stats: [{n:"100+",l:"Students guided"},{n:"2+",l:"Years teaching"},{n:"200hr",l:"Certified"}],
   credentials: ["200-hr Yoga Teacher Training", "2+ years teaching experience", "100+ students guided"]
 },
 
-
-
-
+{
+  name: "Monika",
+  role: "Certified Yoga Instructor",
+  languages: ["Hindi & English"],
+  tagline: "Find your balance through mindful movement and conscious breathing.",
+  image: "images/instructor_2.jpg",
+  bio: [
+    "My yoga journey has taught me that wellness is not just about physical fitness, but also about finding harmony between the body, breath, and mind.",
+    "I enjoy helping people discover yoga at their own pace, whether they are beginners or have been practising for years.",
+    "My teaching focuses on mindful movement, breathing techniques, flexibility, and relaxation. I believe that even a few minutes of conscious practice can bring a positive change to our daily routine.",
+    "Through Pranic Yoga, I hope to make yoga approachable and meaningful for everyone, helping individuals build a healthier relationship with themselves."
+  ],
+  stats: [{n:"100+",l:"Students guided"},{n:"2+",l:"Years teaching"},{n:"200hr",l:"Training certified"}],
+  credentials: ["200-hr Yoga Teacher Training", "Hatha Yoga & Pranayama", "Beginner-friendly yoga instruction"]
+},
+{
+  name: "Sneha",
+  role: "Certified Yoga Instructor",
+  languages: ["Telugu & English"],
+  tagline: "Move with awareness, breathe with purpose, and grow with every practice.",
+  image: "images/instructor_3.jpg",
+  bio: [
+    "For me, yoga is a beautiful way to understand our bodies and develop a deeper connection with ourselves.",
+    "I believe that every individual has a different body, lifestyle, and learning pace. My approach is to create a comfortable environment where students can explore yoga without pressure or comparison.",
+    "My sessions focus on foundational yoga postures, body alignment, flexibility, and breathing awareness to help students develop a consistent practice.",
+    "At Pranic Yoga, I aim to guide people towards a lifestyle where movement and mindfulness become a natural part of everyday life."
+  ],
+  stats: [{n:"80+",l:"Students guided"},{n:"2+",l:"Years teaching"},{n:"200hr",l:"Training certified"}],
+  credentials: ["200-hr Yoga Teacher Training", "Yoga Asanas & Body Alignment", "Flexibility and mobility practices"]
+},
+{
+  name: "Sandya",
+  role: "Certified Yoga Instructor",
+  languages: ["Kannada & English"],
+  tagline: "Discover strength, flexibility, and inner calm through yoga.",
+  image: "images/instructor_3.jpg",
+  bio: [
+    "I see yoga as a journey of continuous learning, where every practice gives us an opportunity to understand ourselves better.",
+    "I enjoy guiding students through yoga practices that improve physical awareness, balance, strength, and flexibility.",
+    "My teaching approach combines traditional yoga postures with mindful breathing and relaxation. I encourage students to listen to their bodies and progress gradually rather than rushing towards perfection.",
+    "At Pranic Yoga, my intention is to help people experience yoga beyond exercise and make it a sustainable part of their everyday lives."
+  ],
+  stats: [{n:"90+",l:"Students guided"},{n:"3+",l:"Years teaching"},{n:"200hr",l:"Training certified"}],
+  credentials: ["200-hr Yoga Teacher Training", "Traditional Yoga Asanas", "Balance, strength & relaxation practices"]
+},
+{
+  name: "Gitanjali",
+  role: "Certified Yoga Instructor",
+  languages: ["Hindi & English"],
+  tagline: "Let every breath bring you closer to a healthier and calmer you.",
+  image: "images/instructor_3.jpg",
+  bio: [
+    "I believe that yoga is more than a physical practice; it is an opportunity to slow down, reconnect with ourselves, and bring greater awareness into our lives.",
+    "I am passionate about guiding people through mindful yoga sessions that encourage relaxation, better breathing habits, and a sense of overall well-being.",
+    "My sessions emphasise gentle yoga movements, breathing practices, meditation, and relaxation techniques. I believe consistency and patience are the foundations of a meaningful yoga journey.",
+    "Through Pranic Yoga, I wish to help students create moments of stillness in their busy lives and experience the benefits of practising yoga regularly."
+  ],
+  stats: [{n:"120+",l:"Students guided"},{n:"3+",l:"Years teaching"},{n:"200hr",l:"Training certified"}],
+  credentials: ["200-hr Yoga Teacher Training", "Pranayama & Meditation", "Relaxation and mindfulness practices"]
+},
 
 
    
