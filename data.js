@@ -262,7 +262,7 @@ const INSTRUCTORS = [
   role: "Certified Yoga Instructor",
   languages: ["Kannada & English"],
   tagline: "Discover strength, flexibility, and inner calm through yoga.",
-  image: "images/instructor_3.jpg",
+  image: "images/instructor_4.jpg",
   bio: [
     "I see yoga as a journey of continuous learning, where every practice gives us an opportunity to understand ourselves better. I enjoy guiding students through yoga practices that improve physical awareness, balance, strength, and flexibility. My teaching approach combines traditional yoga postures with mindful breathing and relaxation. I encourage students to listen to their bodies and progress gradually rather than rushing towards perfection. At Pranic Yoga, my intention is to help people experience yoga beyond exercise and make it a sustainable part of their everyday lives."
   ],
@@ -274,7 +274,7 @@ const INSTRUCTORS = [
   role: "Certified Yoga Instructor",
   languages: ["Hindi & English"],
   tagline: "Let every breath bring you closer to a healthier and calmer you.",
-  image: "images/instructor_3.jpg",
+  image: "images/instructor_5.jpg",
   bio: [
     "I believe that yoga is more than a physical practice; it is an opportunity to slow down, reconnect with ourselves, and bring greater awareness into our lives. I am passionate about guiding people through mindful yoga sessions that encourage relaxation, better breathing habits, and a sense of overall well-being. My sessions emphasise gentle yoga movements, breathing practices, meditation, and relaxation techniques. I believe consistency and patience are the foundations of a meaningful yoga journey. Through Pranic Yoga, I wish to help students create moments of stillness in their busy lives and experience the benefits of practising yoga regularly."
   ],
