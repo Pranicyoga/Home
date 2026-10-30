@@ -109,7 +109,7 @@ const CLASSES = [
     level: "Beginner",   // Beginner, Intermediate, Expert or All Levels
     language: "Hindi & English",   // language the class is taught in: English, Telugu, Hindi or "English & Telugu"
     seoTitle: "Online Pranayama Class for Beginners",   // shown in Google results (keep under about 45 characters)
-    seoDesc: "Join a live online pranayama class for beginners. Learn breathing exercises, breath awareness and a simple 41-day practice plan with Pranic Yoga.",   // Google description (about 150 characters)
+    seoDesc: "Join a live online pranayama class for beginners. Learn breathing exercises, breath awareness and a simple 21-day practice plan with Pranic Yoga.",   // Google description (about 150 characters)
     date: "Will be announced",
     time: "6:00 AM – 7:00 AM IST",
     mode: "Online (Zoom)",
@@ -125,7 +125,7 @@ const CLASSES = [
         "Learn to practise slow, gentle and comfortable breathing",
         "Discover simple breathing techniques for daily relaxation",
         "Build awareness of your breath and attention",
-        "Follow a 41-day practice plan and observe your progress"
+        "Follow a 21-day practice plan and observe your progress"
     ],
     bring: "A quiet space, comfortable clothing, a yoga mat or chair, and a water bottle.",
     instructor: "",
