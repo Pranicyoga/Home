@@ -214,9 +214,9 @@ const MEMBERSHIPS = [
 const ESSENCE = {
   title: "The Essence of Pranic Yoga",
   paragraphs: [
-    "Through my journey of learning and teaching, I realised that all these paths share a common goal: to help us become more aware of ourselves.",
-    "Today, we live surrounded by distractions, from the moment we wake up until we go to sleep. We often forget to connect with ourselves. I believe that our breath is one of the simplest ways to begin this journey. When we learn to understand and control our breath, we can develop better awareness of our minds.",
-    "This is why I started Pranic Yoga, to help people connect with their breath through breathing practices and other forms of yoga, bringing more awareness and balance into everyday life."
+    "In the traditional yogic path, the journey unfolds through six practices: Shatkarma, Asana, Pranayama, Mudra, Bandha, Dhyana, and ultimately Samadhi. Each practice has its own purpose, guiding us towards a deeper understanding of ourselves.",
+    "However, in modern times, yoga is often limited to physical postures. Due to busy lifestyles and a lack of awareness, many practitioners give most of their attention to Asanas while overlooking Pranayama. In doing so, they may miss an essential aspect of yoga — Prana, the vital life force that connects the body, breath, and mind.",
+    "This understanding inspired me to start Pranic Yoga. My intention is to bring the focus back to the essence of yoga by helping people understand, experience, and become more conscious of their Prana through mindful breathing and other traditional yogic practices. Because yoga is not just about how we move our bodies, but also about how consciously we breathe and live."
   ]
 };
 
